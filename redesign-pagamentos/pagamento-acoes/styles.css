@@ -54,20 +54,25 @@
     color: #47607d;
 }
 
-.payment-actions {
+.payment-hero-row {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.payment-hero-row .payment-hero {
+    flex: 1 1 auto;
+}
+
+.payment-features-card {
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    flex: 0 0 auto;
-    flex-wrap: wrap;
+    background: rgba(var(--brand-primary-rgb), .045);
+    border-color: rgba(var(--brand-primary-rgb), .18);
 }
 
 .payment-new-features {
-    border: 1px solid rgba(var(--brand-primary-rgb), .18);
-    border-radius: 14px;
-    background: rgba(var(--brand-primary-rgb), .045);
-    padding: 10px 12px 12px;
     display: grid;
     gap: 7px;
 }
@@ -543,7 +548,8 @@
 
 .compact-tour button {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
+    align-self: center;
     border: 0;
     border-radius: 999px;
     background: var(--brand-primary);
@@ -551,6 +557,27 @@
     padding: 9px 12px;
     font-size: var(--fs-sm);
     font-weight: 900;
+    cursor: pointer;
+}
+
+.compact-tour__dismiss {
+    grid-column: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+}
+
+.compact-tour__dismiss input {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    accent-color: var(--brand-primary);
     cursor: pointer;
 }
 
@@ -622,7 +649,9 @@ body.payments-focus-mode .app-shell {
 
 body.payments-focus-mode .sidebar,
 body.payments-focus-mode .breadcrumb,
+body.payments-focus-mode .payment-hero-row,
 body.payments-focus-mode .payment-hero,
+body.payments-focus-mode .payment-features-card,
 body.payments-focus-mode .payment-filters label,
 body.payments-focus-mode .payment-filter-grid .clear-filters,
 body.payments-focus-mode .payment-filter-grid .export-menu {
@@ -1788,15 +1817,19 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .payment-hero-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
     .payment-hero {
         grid-template-columns: 1fr;
         display: grid;
         justify-items: start;
     }
 
-    .payment-actions {
-        justify-content: flex-start;
-        flex-wrap: wrap;
+    .payment-features-card {
+        width: 100%;
     }
 
     .payment-new-features {

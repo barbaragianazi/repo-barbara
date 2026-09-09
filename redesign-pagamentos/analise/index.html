@@ -76,17 +76,21 @@
             <strong>Análises</strong>
           </nav>
 
-          <section class="payment-hero summary-card">
-            <div>
-              <h1>Análises</h1>
-              <p>Panorama das ações de pagamento por status, campanha, participante e período.</p>
-            </div>
-            <div class="overview-hero-meta">
-              <span class="overview-hero-meta__label">Período analisado</span>
-              <strong id="overviewPeriodLabel">Últimos 12 meses</strong>
-              <span id="overviewRangeLabel" class="overview-hero-meta__range">—</span>
-            </div>
-          </section>
+          <div class="overview-hero-row">
+            <section class="payment-hero summary-card">
+              <div>
+                <h1>Análises</h1>
+                <p>Panorama das ações de pagamento por status, campanha, participante e período.</p>
+              </div>
+            </section>
+            <aside class="overview-period-card summary-card" aria-label="Período analisado">
+              <div class="overview-hero-meta">
+                <span class="overview-hero-meta__label">Período analisado</span>
+                <strong id="overviewPeriodLabel">Últimos 12 meses</strong>
+                <span id="overviewRangeLabel" class="overview-hero-meta__range">—</span>
+              </div>
+            </aside>
+          </div>
 
           <section class="payment-filters summary-card overview-filters" aria-label="Filtros da visão geral">
             <div class="payment-filter-grid">
@@ -296,7 +300,6 @@
             <article class="summary-card overview-list">
               <div class="overview-chart__head">
                 <h2>Maiores valores em análise</h2>
-                <a class="overview-list__link" href="../pagamento-acoes/index.html">Ver todas</a>
               </div>
               <div class="column-filters-active" id="overviewTopValuesChips" aria-live="polite"></div>
               <div class="payments-table-wrap">
@@ -312,12 +315,19 @@
                   <tbody id="overviewTopValues"></tbody>
                 </table>
               </div>
+              <div class="pagination-bar overview-pagination" id="overviewTopValuesPagination"
+                aria-label="Paginação dos maiores valores em análise">
+                <span id="overviewTopValuesSummary">Página 1 de 1</span>
+                <div class="pagination-actions">
+                  <button class="btn btn-secondary btn-sm" id="overviewTopValuesPrev" type="button">Anterior</button>
+                  <button class="btn btn-secondary btn-sm" id="overviewTopValuesNext" type="button">Próxima</button>
+                </div>
+              </div>
             </article>
 
             <article class="summary-card overview-list">
               <div class="overview-chart__head">
                 <h2>Últimas ações incluídas</h2>
-                <a class="overview-list__link" href="../pagamento-acoes/index.html">Ver todas</a>
               </div>
               <div class="column-filters-active" id="overviewRecentChips" aria-live="polite"></div>
               <div class="payments-table-wrap">
@@ -333,6 +343,14 @@
                   </thead>
                   <tbody id="overviewRecent"></tbody>
                 </table>
+              </div>
+              <div class="pagination-bar overview-pagination" id="overviewRecentPagination"
+                aria-label="Paginação das últimas ações incluídas">
+                <span id="overviewRecentSummary">Página 1 de 1</span>
+                <div class="pagination-actions">
+                  <button class="btn btn-secondary btn-sm" id="overviewRecentPrev" type="button">Anterior</button>
+                  <button class="btn btn-secondary btn-sm" id="overviewRecentNext" type="button">Próxima</button>
+                </div>
               </div>
             </article>
           </section>
@@ -784,8 +802,30 @@
          de "Pagamento das acoes". O escopo e apenas as (ate) 6 linhas ja exibidas:
          renderX() recalcula o recorte e guarda em xBase; paintX() aplica o motor
          de filtros por cima e redesenha. */
+      const OVERVIEW_PAGE_SIZE = 6;
+      const listPages = { topValues: 1, recent: 1 };
       let topValuesBase = [];
       let recentBase = [];
+
+      /* Recorta `items` na página atual, corrigindo a página quando ela passa a não
+         existir (menos resultados após um filtro). */
+      function paginateList(items, page) {
+        const totalPages = Math.max(1, Math.ceil(items.length / OVERVIEW_PAGE_SIZE));
+        const current = Math.min(Math.max(1, page), totalPages);
+        const start = (current - 1) * OVERVIEW_PAGE_SIZE;
+        return { current, totalPages, start, pageItems: items.slice(start, start + OVERVIEW_PAGE_SIZE) };
+      }
+
+      function updateListPager(prefix, current, totalPages, total, start, count) {
+        const summary = document.getElementById(`${prefix}Summary`);
+        const prev = document.getElementById(`${prefix}Prev`);
+        const next = document.getElementById(`${prefix}Next`);
+        summary.textContent = total
+          ? `Página ${current} de ${totalPages} · ${start + 1}-${start + count} de ${total}`
+          : 'Nenhum registro';
+        prev.disabled = !total || current <= 1;
+        next.disabled = !total || current >= totalPages;
+      }
 
       function topValuesRow(item) {
         return `
@@ -813,28 +853,34 @@
 
       function paintTopValues() {
         const items = topValuesFilters.apply(topValuesBase);
-        topValuesHost.innerHTML = items.map(topValuesRow).join('')
+        const { current, totalPages, start, pageItems } = paginateList(items, listPages.topValues);
+        listPages.topValues = current;
+        topValuesHost.innerHTML = pageItems.map(topValuesRow).join('')
           || `<tr><td colspan="4" class="overview-table__empty">${topValuesBase.length ? 'Nenhuma ação com os filtros aplicados.' : 'Nenhuma ação em análise no período.'}</td></tr>`;
+        updateListPager('overviewTopValues', current, totalPages, items.length, start, pageItems.length);
       }
 
       function paintRecent() {
         const items = recentFilters.apply(recentBase);
-        recentHost.innerHTML = items.map(recentRow).join('')
+        const { current, totalPages, start, pageItems } = paginateList(items, listPages.recent);
+        listPages.recent = current;
+        recentHost.innerHTML = pageItems.map(recentRow).join('')
           || `<tr><td colspan="5" class="overview-table__empty">${recentBase.length ? 'Nenhuma ação com os filtros aplicados.' : 'Nenhuma ação no período.'}</td></tr>`;
+        updateListPager('overviewRecent', current, totalPages, items.length, start, pageItems.length);
       }
 
       function renderTopValues(data) {
         topValuesBase = data
           .filter((item) => item.statusGroup === 'processing')
-          .sort((a, b) => parseBRL(b.value) - parseBRL(a.value))
-          .slice(0, 6);
+          .sort((a, b) => parseBRL(b.value) - parseBRL(a.value));
+        listPages.topValues = 1;
         paintTopValues();
       }
 
       function renderRecent(data) {
         recentBase = [...data]
-          .sort((a, b) => parseBRDate(b.includedAt) - parseBRDate(a.includedAt))
-          .slice(0, 6);
+          .sort((a, b) => parseBRDate(b.includedAt) - parseBRDate(a.includedAt));
+        listPages.recent = 1;
         paintRecent();
       }
 
@@ -849,7 +895,7 @@
           { field: 'campaign', type: 'list' },
           { field: 'value', type: 'range' }
         ],
-        onChange: paintTopValues
+        onChange: () => { listPages.topValues = 1; paintTopValues(); }
       });
 
       const recentFilters = window.BipperGridColumnFilters.create({
@@ -864,7 +910,7 @@
           { field: 'includedAt', type: 'date' },
           { field: 'value', type: 'range' }
         ],
-        onChange: paintRecent
+        onChange: () => { listPages.recent = 1; paintRecent(); }
       });
 
       /* ---------- Chart.js ---------- */
@@ -1641,6 +1687,20 @@
       }
       topValuesHost.addEventListener('click', openRowDetail);
       recentHost.addEventListener('click', openRowDetail);
+
+      /* Paginação das listas de apoio (paginateList corrige a página fora do intervalo). */
+      function bindListPager(prefix, key, paint) {
+        document.getElementById(`${prefix}Prev`).addEventListener('click', () => {
+          listPages[key] -= 1;
+          paint();
+        });
+        document.getElementById(`${prefix}Next`).addEventListener('click', () => {
+          listPages[key] += 1;
+          paint();
+        });
+      }
+      bindListPager('overviewTopValues', 'topValues', paintTopValues);
+      bindListPager('overviewRecent', 'recent', paintRecent);
 
       renderWithSkeleton();
     })();

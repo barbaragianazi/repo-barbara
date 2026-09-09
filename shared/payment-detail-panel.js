@@ -323,10 +323,14 @@
               `).join('')}
             </select>
           </label>
-          ${isTable ? `
+          ${isTable && !window.__bipperNavTipsOff ? `
             <div class="compact-tour compact-tour--inline payment-records-scroll-tip is-visible" role="status">
               <strong>Rolagem lateral do grid</strong>
               <span>Segure <kbd>Shift</kbd> e role o mouse — ou arraste com dois dedos no trackpad — para ver todas as colunas.</span>
+              <label class="compact-tour__dismiss">
+                <input type="checkbox" data-dismiss-inline-tour-forever>
+                Não exibir novamente
+              </label>
               <button type="button" data-dismiss-inline-tour aria-label="Fechar dica">Entendi</button>
             </div>
           ` : '<span class="payment-records-toolbar__spacer" aria-hidden="true"></span>'}
@@ -486,7 +490,11 @@
     detailContent.addEventListener('click', (event) => {
       const dismissInlineTour = event.target.closest('[data-dismiss-inline-tour]');
       if (dismissInlineTour) {
-        dismissInlineTour.closest('.compact-tour')?.classList.remove('is-visible');
+        const tourEl = dismissInlineTour.closest('.compact-tour');
+        if (tourEl?.querySelector('[data-dismiss-inline-tour-forever]')?.checked) {
+          window.__bipperNavTipsOff = true;
+        }
+        tourEl?.classList.remove('is-visible');
         return;
       }
 

@@ -543,7 +543,8 @@
 
 .compact-tour button {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
+    align-self: center;
     border: 0;
     border-radius: 999px;
     background: var(--brand-primary);
@@ -551,6 +552,27 @@
     padding: 9px 12px;
     font-size: var(--fs-sm);
     font-weight: 900;
+    cursor: pointer;
+}
+
+.compact-tour__dismiss {
+    grid-column: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+}
+
+.compact-tour__dismiss input {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    accent-color: var(--brand-primary);
     cursor: pointer;
 }
 
@@ -624,6 +646,7 @@ body.payments-focus-mode .app-shell {
 body.payments-focus-mode .sidebar,
 body.payments-focus-mode .breadcrumb,
 body.payments-focus-mode .payment-hero,
+body.payments-focus-mode .overview-period-card,
 body.payments-focus-mode .payment-filters label,
 body.payments-focus-mode .clear-filters,
 body.payments-focus-mode .payment-filter-grid .export-menu {
@@ -1965,11 +1988,33 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
     gap: 16px;
 }
 
+.overview-hero-row {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.overview-hero-row .payment-hero {
+    flex: 1 1 auto;
+}
+
+.overview-period-card {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    min-width: 240px;
+}
+
 .overview-hero-meta {
     display: grid;
     gap: 2px;
-    text-align: right;
+    text-align: center;
     flex: 0 0 auto;
+    justify-content: center;
+}
+
+.overview-period-card .overview-hero-meta {
+    width: 100%;
 }
 
 .overview-hero-meta__label {
@@ -2501,15 +2546,18 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
     min-width: 0;
 }
 
-.overview-list__link {
-    flex-shrink: 0;
-    color: var(--brand-primary);
-    font-size: var(--fs-md);
-    font-weight: 800;
+.overview-pagination {
+    margin: 2px -18px -18px;
+    padding: 12px 18px;
+    min-height: 0;
+    background: transparent;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
-.overview-list__link:hover {
-    text-decoration: underline;
+.overview-pagination .btn-sm {
+    min-height: 34px;
+    padding: 0 14px;
+    font-size: var(--fs-sm);
 }
 
 .overview-table {
@@ -2638,6 +2686,16 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
 }
 
 @media (max-width: 980px) {
+    .overview-hero-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .overview-period-card {
+        width: 100%;
+        min-width: 0;
+    }
+
     .overview-hero-meta {
         text-align: left;
     }

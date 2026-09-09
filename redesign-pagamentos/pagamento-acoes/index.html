@@ -75,13 +75,15 @@
             <strong>Pagamento das ações</strong>
           </nav>
 
-          <section class="payment-hero summary-card">
-            <div>
-              <h1>Pagamento das ações</h1>
-              <p>Acompanhe solicitações, etapas e valores por campanha.</p>
-            </div>
-            <div class="payment-actions">
-              <div class="payment-new-features" aria-label="Novidades do módulo">
+          <div class="payment-hero-row">
+            <section class="payment-hero summary-card">
+              <div>
+                <h1>Pagamento das ações</h1>
+                <p>Acompanhe solicitações, etapas e valores por campanha.</p>
+              </div>
+            </section>
+            <aside class="payment-features-card summary-card" aria-label="Novidades do módulo">
+              <div class="payment-new-features">
                 <span class="payment-new-features__title">Novos modos de visualização</span>
                 <div class="payment-new-features__controls">
                   <div class="feature-with-info"
@@ -106,12 +108,16 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </aside>
+          </div>
 
           <div class="compact-tour compact-tour--inline" id="compactTour" role="status">
             <strong id="tourTitle">Modo compacto ativo</strong>
             <span id="tourText">Clique em uma linha da ação para abrir os detalhes completos ao lado.</span>
+            <label class="compact-tour__dismiss">
+              <input type="checkbox" id="tourDismissForever">
+              Não exibir novamente
+            </label>
             <button id="dismissCompactTour" type="button" aria-label="Fechar dica">Entendi</button>
           </div>
 
@@ -245,6 +251,7 @@
     const compactTour = document.getElementById('compactTour');
     const tourTitle = document.getElementById('tourTitle');
     const tourText = document.getElementById('tourText');
+    const tourDismissForever = document.getElementById('tourDismissForever');
     const focusToggle = document.getElementById('focusToggle');
     const focusExitToggle = document.getElementById('focusExitToggle');
 
@@ -938,10 +945,8 @@
       }
       const anchorRect = anchor.getBoundingClientRect();
       if (focusMode) {
-        // CSS deixa o balao como position: fixed -> coordenadas de viewport,
-        // alinhado pela direita do botao (que fica colado na borda direita)
         compactTour.style.top = `${anchorRect.bottom + 10}px`;
-        compactTour.style.right = `${window.innerWidth - anchorRect.right}px`;
+        compactTour.style.right = `${Math.max(12, window.innerWidth - anchorRect.right)}px`;
         compactTour.style.left = 'auto';
       } else {
         const parentRect = tourOffsetParent.getBoundingClientRect();
@@ -952,8 +957,10 @@
     }
 
     function showTour(title, text) {
+      if (window.__bipperNavTipsOff) return;
       tourTitle.textContent = title;
       tourText.innerHTML = text;
+      if (tourDismissForever) tourDismissForever.checked = false;
       compactTour.classList.add('is-visible');
       positionTour();
       // reposiciona apos o layout assentar (troca de modo foco muda a pagina)
@@ -961,6 +968,9 @@
     }
 
     function hideTour() {
+      if (tourDismissForever && tourDismissForever.checked) {
+        window.__bipperNavTipsOff = true;
+      }
       compactTour.classList.remove('is-visible');
     }
 
