@@ -1,0 +1,11 @@
+{
+  "name": "repo-barbara",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Repositorio front-end estatico para projetos avulsos, com shell visual compartilhado.",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node scripts/gerar-datas-projetos.js",
+    "datas": "node scripts/gerar-datas-projetos.js"
+  }
+}

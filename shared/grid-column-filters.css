@@ -1,0 +1,306 @@
+/* ===== Filtros e ordenacao por coluna do grid =========================
+   Reaproveitado por: redesign-pagamentos/pagamento-acoes e /analise.
+   Depende de um <table class="payments-table"> e do Font Awesome (funil).
+   Comportamento em shared/grid-column-filters.js. ===================== */
+.column-filters-active {
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: -4px 0 2px;
+}
+
+.column-filters-active.has-filters {
+    display: flex;
+}
+
+/* Modo foco: o grid da pagina vira 2 linhas fixas; a barra de chips sairia do
+   lugar. O funil aceso em cada coluna ja sinaliza o filtro ativo aqui. */
+body.payments-focus-mode .column-filters-active {
+    display: none;
+}
+
+.col-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 280px;
+    min-height: 30px;
+    padding: 4px 10px;
+    border: 1px solid rgba(var(--brand-primary-rgb), .35);
+    border-radius: 999px;
+    background: rgba(var(--brand-primary-rgb), .08);
+    color: var(--ink);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+}
+
+.col-chip:hover {
+    background: rgba(var(--brand-primary-rgb), .16);
+    border-color: rgba(var(--brand-primary-rgb), .55);
+}
+
+.col-chip__label {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.col-chip__value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.col-chip__x {
+    font-size: var(--fs-md);
+    line-height: 1;
+    color: var(--brand-primary);
+}
+
+/* O botao "Limpar tudo" da barra de chips nao usa mais estilo de chip: e o
+   mesmo .btn.btn-secondary.clear-filters da barra de ferramentas (montado em
+   grid-column-filters.js e estilizado no styles.css de cada tela). */
+
+/* Cabecalho filtravel: rotulo clicavel (ordena) + funil (abre popover).
+   Como a tabela e table-layout: fixed, o funil rouba espaco do texto do header
+   -> padding lateral menor, funil compacto e seta de ordenacao so no hover/ativo. */
+.payments-table th.is-filterable {
+    padding: 6px 6px 6px 10px;
+}
+
+.payments-table th .th-inner {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    min-width: 0;
+}
+
+.payments-table th .th-sort {
+    flex: 1 1 auto;
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    padding: 4px 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.payments-table th .th-sort__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.payments-table th .th-sort__caret {
+    flex: 0 0 auto;
+    margin-left: 4px;
+    font-size: 10px;
+    color: var(--brand-primary);
+    display: none;
+}
+
+.payments-table th.is-sorted .th-sort__caret,
+.payments-table th:hover .th-sort__caret {
+    display: inline-block;
+}
+
+.payments-table th:hover .th-sort__caret {
+    color: var(--muted);
+}
+
+.payments-table th.is-sorted .th-sort__caret {
+    color: var(--brand-primary);
+}
+
+.payments-table th .col-filter-btn {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--muted);
+    font-size: 10px;
+    cursor: pointer;
+    opacity: .45;
+    transition: opacity .15s ease, background .15s ease, color .15s ease;
+}
+
+.payments-table th:hover .col-filter-btn,
+.payments-table th .col-filter-btn:hover {
+    opacity: 1;
+}
+
+.payments-table th .col-filter-btn:hover {
+    background: rgba(var(--brand-primary-rgb), .12);
+    color: var(--brand-primary);
+}
+
+.payments-table th.has-filter .col-filter-btn {
+    opacity: 1;
+    color: var(--brand-primary);
+    background: rgba(var(--brand-primary-rgb), .14);
+}
+
+/* Popover de filtro (preso ao body, position: fixed) */
+.col-popover {
+    position: fixed;
+    z-index: 500;
+    width: 264px;
+    max-height: min(440px, 72vh);
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+    color: var(--text);
+    font-size: var(--fs-md);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.col-popover.is-open {
+    display: flex;
+}
+
+.col-popover__head {
+    font-weight: 800;
+    color: var(--ink);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.col-popover__input {
+    width: 100%;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-2);
+    color: var(--ink);
+    font: inherit;
+}
+
+.col-popover__list {
+    overflow: auto;
+    max-height: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px;
+}
+
+.col-popover__check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 1.3;
+}
+
+.col-popover__check:hover {
+    background: var(--surface-2);
+}
+
+.col-popover__check--all {
+    font-weight: 700;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    margin-bottom: 2px;
+}
+
+.col-popover__check input,
+.col-popover__modes input {
+    flex: 0 0 auto;
+}
+
+.col-popover__row {
+    display: flex;
+    gap: 8px;
+}
+
+.col-popover__row label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+.col-popover__row input {
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-2);
+    color: var(--ink);
+    font: inherit;
+}
+
+.col-popover__modes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: var(--fs-sm);
+}
+
+.col-popover__modes label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.col-popover__foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.col-popover__btn {
+    flex: 1;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.col-popover__btn--primary {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #fff;
+}
+
+.col-popover__btn:hover {
+    filter: brightness(.97);
+}
+
+.col-popover__check[hidden],
+.col-popover__row[hidden] {
+    display: none !important;
+}

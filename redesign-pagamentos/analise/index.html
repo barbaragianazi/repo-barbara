@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../../shared/app-shell.css">
   <link rel="stylesheet" href="../../shared/custom-select.css">
   <link rel="stylesheet" href="../../shared/custom-date.css">
+  <link rel="stylesheet" href="../../shared/grid-column-filters.css">
   <link rel="stylesheet" href="../../css/app.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -184,6 +185,7 @@
               <div class="overview-chart__head">
                 <div>
                   <h2>Evolução de ações pagas</h2>
+                  <p class="overview-chart__sub">Apenas ações com pagamento efetivado (status Pago). Ações em análise e canceladas não entram aqui.</p>
                 </div>
                 <span class="overview-chart-hint">
                   <svg class="overview-chart-hint__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -196,14 +198,38 @@
                   Clique nas barras, fatias ou meses nos gráficos para cruzar os dados.
                 </span>
               </div>
-              <div class="overview-chart__canvas overview-chart__canvas--tall">
+              <div class="overview-chart__canvas overview-chart__canvas--tall" id="timelineCanvas">
                 <canvas id="chartTimeline" aria-label="Gráfico de evolução de ações pagas" role="img"></canvas>
+              </div>
+              <div class="overview-chart__empty" id="timelineEmpty" aria-live="polite" hidden>
+                <div class="table-empty-state">
+                  <div class="table-empty-state__icon">
+                    <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                  </div>
+                  <strong class="table-empty-state__title">Nenhuma ação paga neste recorte</strong>
+                  <p class="table-empty-state__text">
+                    Este gráfico mostra só pagamentos efetivados. Pode haver ações em análise ou canceladas no recorte — confira os KPIs e os demais cards. Ajuste o período ou limpe os filtros para ver a evolução dos pagamentos.
+                  </p>
+                  <button class="btn btn-secondary clear-filters is-active table-empty-state__action" type="button" id="timelineEmptyClear">
+                    <svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path
+                        d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21">
+                      </path>
+                      <path d="m5.082 11.09 8.828 8.828"></path>
+                    </svg>
+                    <span>Limpar filtros</span>
+                  </button>
+                </div>
               </div>
             </article>
 
             <article class="summary-card overview-chart overview-chart--half">
               <div class="overview-chart__head">
-                <h2>Top 10 participantes por valor</h2>
+                <div>
+                  <h2>Top 10 participantes por valor</h2>
+                  <p class="overview-chart__sub">Soma de ações em análise e pagas. Não inclui canceladas.</p>
+                </div>
               </div>
               <div class="overview-chart__canvas overview-chart__canvas--tall">
                 <canvas id="chartParticipants" aria-label="Gráfico de top participantes por valor" role="img"></canvas>
@@ -212,7 +238,10 @@
 
             <article class="summary-card overview-chart overview-chart--half">
               <div class="overview-chart__head">
-                <h2>Valor por campanha</h2>
+                <div>
+                  <h2>Valor por campanha</h2>
+                  <p class="overview-chart__sub">Soma de ações em análise e pagas. Não inclui canceladas.</p>
+                </div>
               </div>
               <div class="overview-chart__canvas overview-chart__canvas--tall">
                 <canvas id="chartCampaigns" aria-label="Gráfico de valor por campanha" role="img"></canvas>
@@ -237,8 +266,10 @@
 
             <article class="summary-card overview-chart overview-chart--split">
               <div class="overview-chart__head">
-                <h2>Valor por tipo de conta</h2>
-                <!-- <p class="overview-chart__sub">Origem do saldo utilizado.</p> -->
+                <div>
+                  <h2>Valor por tipo de conta</h2>
+                  <p class="overview-chart__sub">Soma de ações em análise e pagas. Não inclui canceladas.</p>
+                </div>
               </div>
               <div class="overview-chart__body">
                 <div class="overview-chart__canvas overview-chart__canvas--donut">
@@ -251,7 +282,6 @@
             <article class="summary-card overview-chart overview-chart--split">
               <div class="overview-chart__head">
                 <h2>Tipo de pagamento</h2>
-                <!-- <p class="overview-chart__sub">Por número de ações.</p> -->
               </div>
               <div class="overview-chart__body">
                 <div class="overview-chart__canvas overview-chart__canvas--donut">
@@ -268,8 +298,9 @@
                 <h2>Maiores valores em análise</h2>
                 <a class="overview-list__link" href="../pagamento-acoes/index.html">Ver todas</a>
               </div>
+              <div class="column-filters-active" id="overviewTopValuesChips" aria-live="polite"></div>
               <div class="payments-table-wrap">
-                <table class="payments-table overview-table">
+                <table class="payments-table overview-table" id="overviewTopValuesTable">
                   <thead>
                     <tr>
                       <th>Ação</th>
@@ -288,8 +319,9 @@
                 <h2>Últimas ações incluídas</h2>
                 <a class="overview-list__link" href="../pagamento-acoes/index.html">Ver todas</a>
               </div>
+              <div class="column-filters-active" id="overviewRecentChips" aria-live="polite"></div>
               <div class="payments-table-wrap">
-                <table class="payments-table overview-table">
+                <table class="payments-table overview-table" id="overviewRecentTable">
                   <thead>
                     <tr>
                       <th>Código</th>
@@ -321,6 +353,7 @@
   <script src="../../shared/custom-date.js"></script>
   <script src="../../shared/data/payments.js"></script>
   <script src="../../shared/payment-detail-panel.js"></script>
+  <script src="../../shared/grid-column-filters.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
   <script>
     (function () {
@@ -443,6 +476,24 @@
         return `${label}/${String(year).slice(2)}`;
       }
 
+      /* Lista contínua de meses (YYYY-MM) entre duas datas, inclusive — usada para o
+         eixo do gráfico de evolução não pular meses sem ação. */
+      function monthsBetween(startDate, endDate) {
+        const keys = [];
+        let year = startDate.getFullYear();
+        let month = startDate.getMonth();
+        const endYear = endDate.getFullYear();
+        const endMonth = endDate.getMonth();
+        let guard = 0;
+        while ((year < endYear || (year === endYear && month <= endMonth)) && guard < 600) {
+          keys.push(`${year}-${String(month + 1).padStart(2, '0')}`);
+          month += 1;
+          if (month > 11) { month = 0; year += 1; }
+          guard += 1;
+        }
+        return keys;
+      }
+
       /* ---------- Filtro ---------- */
       function parseISODate(value, endOfDay = false) {
         if (!value) return null;
@@ -508,9 +559,9 @@
           const date = parseBRDate(item.includedAt);
           if (date < range.start || date >= range.end) return false;
           if (state.status && item.statusGroup !== state.status) return false;
-          if (state.campaign && item.campaign !== state.campaign) return false;
-          if (state.participant && item.participant !== state.participant) return false;
-          if (state.account && item.accountType !== state.account) return false;
+          if (state.campaign && (item.campaign || 'Não informado') !== state.campaign) return false;
+          if (state.participant && (item.participant || 'Não informado') !== state.participant) return false;
+          if (state.account && (item.accountType || 'Não informado') !== state.account) return false;
           if (state.paymentType && (item.paymentType || 'Não informado') !== state.paymentType) return false;
           return true;
         });
@@ -549,7 +600,11 @@
 
         data.forEach((item) => {
           const value = parseBRL(item.value);
-          totalValue += value;
+          const isCanceled = item.statusGroup === 'canceled';
+          // Cancelados não representam valor realizado nem em andamento: ficam de fora
+          // dos rollups de valor (ticket médio, top participantes, campanha, tipo de conta).
+          // Continuam contando em byStatus, totalCount e cancellationRate.
+          if (!isCanceled) totalValue += value;
           if (byStatus[item.statusGroup]) {
             byStatus[item.statusGroup].value += value;
             byStatus[item.statusGroup].count += 1;
@@ -565,27 +620,31 @@
           month.count += 1;
           byMonth.set(mKey, month);
 
-          const addTo = (map, rawKey) => {
-            const key = rawKey || 'Não informado';
-            map.set(key, (map.get(key) || 0) + value);
-          };
-          addTo(byParticipant, item.participant);
-          addTo(byCampaign, item.campaign);
-          addTo(byAccount, item.accountType);
+          if (!isCanceled) {
+            const addTo = (map, rawKey) => {
+              const key = rawKey || 'Não informado';
+              map.set(key, (map.get(key) || 0) + value);
+            };
+            addTo(byParticipant, item.participant);
+            addTo(byCampaign, item.campaign);
+            addTo(byAccount, item.accountType);
+          }
 
           const ptKey = item.paymentType || 'Não informado';
           byPaymentType.set(ptKey, (byPaymentType.get(ptKey) || 0) + 1);
         });
 
         const monthKeys = [...byMonth.keys()].sort();
+        const activeCount = byStatus.processing.count + byStatus.paid.count;
 
         const topEntries = (map, limit) => [...map.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit);
 
         return {
           totalValue,
           totalCount: data.length,
+          activeCount,
           activeCampaigns: campaigns.size,
-          ticket: data.length ? totalValue / data.length : 0,
+          ticket: activeCount ? totalValue / activeCount : 0,
           avgAnalysisDays: byStatus.processing.count ? analysisDaysTotal / byStatus.processing.count : 0,
           cancellationRate: data.length ? (byStatus.canceled.count / data.length) * 100 : 0,
           byStatus,
@@ -643,7 +702,19 @@
       }
 
       function renderKpis(agg, previousAgg) {
+        const analiseEPagasValue = agg.byStatus.processing.value + agg.byStatus.paid.value;
+        const prevAnaliseEPagasValue = previousAgg
+          ? previousAgg.byStatus.processing.value + previousAgg.byStatus.paid.value
+          : null;
+        const pctOf = (part) => (analiseEPagasValue ? Math.round((part / analiseEPagasValue) * 100) : 0);
         kpiHost.innerHTML = [
+          kpiCard({
+            title: 'Ações em análise e pagas', value: formatCompactBRL(analiseEPagasValue),
+            sub: `${pctOf(agg.byStatus.processing.value)}% em análise · ${pctOf(agg.byStatus.paid.value)}% pagas`,
+            icon: 'fa-layer-group',
+            token: '--brand-primary', fallback: '#ff6b00',
+            trend: previousAgg && computeTrend(analiseEPagasValue, prevAnaliseEPagasValue)
+          }),
           kpiCard({
             title: 'Em análise', value: formatCompactBRL(agg.byStatus.processing.value),
             sub: `${int0.format(agg.byStatus.processing.count)} ações`, icon: 'fa-hourglass-half',
@@ -664,15 +735,9 @@
           }),
           kpiCard({
             title: 'Ticket médio', value: formatCompactBRL(agg.ticket),
-            sub: `${int0.format(agg.totalCount)} ações no período`, icon: 'fa-receipt',
+            sub: `${int0.format(agg.activeCount)} ações em análise e pagas`, icon: 'fa-receipt',
             token: '--brand-primary', fallback: '#ff6b00',
             trend: previousAgg && computeTrend(agg.ticket, previousAgg.ticket)
-          }),
-          kpiCard({
-            title: 'Campanhas ativas', value: int0.format(agg.activeCampaigns),
-            sub: 'com ações no período', icon: 'fa-bullhorn',
-            token: '--brand-primary', fallback: '#ff6b00',
-            trend: previousAgg && computeTrend(agg.activeCampaigns, previousAgg.activeCampaigns)
           })
         ].join('');
       }
@@ -715,38 +780,92 @@
         `).join('');
       }
 
-      function renderTopValues(data) {
-        const items = data
-          .filter((item) => item.statusGroup === 'processing')
-          .sort((a, b) => parseBRL(b.value) - parseBRL(a.value))
-          .slice(0, 6);
-        topValuesHost.innerHTML = items.map((item) => `
+      /* As duas listas de apoio ganham o mesmo filtro/ordenacao por coluna do grid
+         de "Pagamento das acoes". O escopo e apenas as (ate) 6 linhas ja exibidas:
+         renderX() recalcula o recorte e guarda em xBase; paintX() aplica o motor
+         de filtros por cima e redesenha. */
+      let topValuesBase = [];
+      let recentBase = [];
+
+      function topValuesRow(item) {
+        return `
           <tr data-row-index="${rows.indexOf(item)}">
             ${tooltipCell(item.action, 34)}
             ${tooltipCell(item.participant, 26)}
             ${tooltipCell(item.campaign, 26)}
             <td class="overview-table__value">${brl2.format(parseBRL(item.value))}</td>
           </tr>
-        `).join('') || '<tr><td colspan="4" class="overview-table__empty">Nenhuma ação em análise no período.</td></tr>';
+        `;
+      }
+
+      function recentRow(item) {
+        const meta = STATUS_META[item.statusGroup];
+        return `
+          <tr data-row-index="${rows.indexOf(item)}">
+            <td>${item.code}</td>
+            ${tooltipCell(item.action, 30)}
+            <td><span class="overview-pill overview-pill--${item.statusGroup}">${meta ? meta.label : item.status}</span></td>
+            <td>${item.includedAt}</td>
+            <td class="overview-table__value">${brl2.format(parseBRL(item.value))}</td>
+          </tr>
+        `;
+      }
+
+      function paintTopValues() {
+        const items = topValuesFilters.apply(topValuesBase);
+        topValuesHost.innerHTML = items.map(topValuesRow).join('')
+          || `<tr><td colspan="4" class="overview-table__empty">${topValuesBase.length ? 'Nenhuma ação com os filtros aplicados.' : 'Nenhuma ação em análise no período.'}</td></tr>`;
+      }
+
+      function paintRecent() {
+        const items = recentFilters.apply(recentBase);
+        recentHost.innerHTML = items.map(recentRow).join('')
+          || `<tr><td colspan="5" class="overview-table__empty">${recentBase.length ? 'Nenhuma ação com os filtros aplicados.' : 'Nenhuma ação no período.'}</td></tr>`;
+      }
+
+      function renderTopValues(data) {
+        topValuesBase = data
+          .filter((item) => item.statusGroup === 'processing')
+          .sort((a, b) => parseBRL(b.value) - parseBRL(a.value))
+          .slice(0, 6);
+        paintTopValues();
       }
 
       function renderRecent(data) {
-        const items = [...data]
+        recentBase = [...data]
           .sort((a, b) => parseBRDate(b.includedAt) - parseBRDate(a.includedAt))
           .slice(0, 6);
-        recentHost.innerHTML = items.map((item) => {
-          const meta = STATUS_META[item.statusGroup];
-          return `
-            <tr data-row-index="${rows.indexOf(item)}">
-              <td>${item.code}</td>
-              ${tooltipCell(item.action, 30)}
-              <td><span class="overview-pill overview-pill--${item.statusGroup}">${meta ? meta.label : item.status}</span></td>
-              <td>${item.includedAt}</td>
-              <td class="overview-table__value">${brl2.format(parseBRL(item.value))}</td>
-            </tr>
-          `;
-        }).join('') || '<tr><td colspan="5" class="overview-table__empty">Nenhuma ação no período.</td></tr>';
+        paintRecent();
       }
+
+      const topValuesFilters = window.BipperGridColumnFilters.create({
+        table: document.getElementById('overviewTopValuesTable'),
+        chipsHost: document.getElementById('overviewTopValuesChips'),
+        parseBRL,
+        parseBRDate,
+        columns: [
+          { field: 'action', type: 'text' },
+          { field: 'participant', type: 'list' },
+          { field: 'campaign', type: 'list' },
+          { field: 'value', type: 'range' }
+        ],
+        onChange: paintTopValues
+      });
+
+      const recentFilters = window.BipperGridColumnFilters.create({
+        table: document.getElementById('overviewRecentTable'),
+        chipsHost: document.getElementById('overviewRecentChips'),
+        parseBRL,
+        parseBRDate,
+        columns: [
+          { field: 'code', type: 'text' },
+          { field: 'action', type: 'text' },
+          { field: 'statusGroup', type: 'list', labelFn: (v) => (STATUS_META[v] ? STATUS_META[v].label : v) },
+          { field: 'includedAt', type: 'date' },
+          { field: 'value', type: 'range' }
+        ],
+        onChange: paintRecent
+      });
 
       /* ---------- Chart.js ---------- */
       function baseChartOptions(t) {
@@ -902,85 +1021,105 @@
 
         /* Evolução de ações pagas — barras (valor pago) + linha (nº de ações pagas). Clique = filtra o mês.
            Sempre restrito ao status "pago", então ignora o filtro de status no cruzamento.
-           O eixo de meses vem de todas as ações do período (qualquer status) para a linha do
-           tempo não ter buracos: meses sem pagamento aparecem zerados. */
+           O eixo cobre TODOS os meses do período selecionado (não só os que têm ação), pra
+           série temporal não ficar comprimida escondendo meses vazios. */
         const timelineRows = getFilteredRows('month', 'status');
         const paidByMonth = new Map();
         timelineRows.forEach((item) => {
+          if (item.statusGroup !== 'paid') return;
           const key = monthKey(parseBRDate(item.includedAt));
-          if (!paidByMonth.has(key)) paidByMonth.set(key, { value: 0, count: 0 });
-          if (item.statusGroup === 'paid') {
-            const entry = paidByMonth.get(key);
-            entry.value += parseBRL(item.value);
-            entry.count += 1;
-          }
+          const entry = paidByMonth.get(key) || { value: 0, count: 0 };
+          entry.value += parseBRL(item.value);
+          entry.count += 1;
+          paidByMonth.set(key, entry);
         });
-        const paidMonths = [...paidByMonth.keys()].sort()
-          .map((key) => ({ key, label: monthLabel(key), ...paidByMonth.get(key) }));
-        charts.timeline = new Chart(document.getElementById('chartTimeline'), {
-          type: 'bar',
-          data: {
-            labels: paidMonths.map((m) => m.label),
-            datasets: [
-              {
-                type: 'bar',
-                label: 'Valor pago',
-                data: paidMonths.map((m) => m.value),
-                backgroundColor: highlightColors(`rgba(${t.brandRgb}, .55)`, paidMonths.map((m) => m.key), state.month),
-                hoverBackgroundColor: `rgba(${t.brandRgb}, .8)`,
-                borderRadius: 6,
-                yAxisID: 'y'
-              },
-              {
-                type: 'line',
-                label: 'Nº de ações pagas',
-                data: paidMonths.map((m) => m.count),
-                borderColor: '#2563eb',
-                backgroundColor: '#2563eb',
-                tension: 0.35,
-                borderWidth: 2,
-                pointRadius: paidMonths.map((m) => (m.key === state.month ? 6 : 3)),
-                yAxisID: 'y1'
-              }
-            ]
-          },
-          options: {
-            ...baseChartOptions(t),
-            ...crossInteractions('month', (i) => paidMonths[i].key),
-            scales: {
-              x: { grid: { display: false }, ticks: { color: t.muted } },
-              y: {
-                position: 'left',
-                grid: { color: t.line },
-                ticks: { color: t.muted, callback: (v) => formatCompactBRL(v) }
-              },
-              y1: {
-                position: 'right',
-                grid: { drawOnChartArea: false },
-                ticks: { color: t.muted, precision: 0 }
-              }
+
+        const timelineRange = periodRange();
+        const timelineDates = timelineRows
+          .map((item) => parseBRDate(item.includedAt))
+          .sort((a, b) => a - b);
+        const axisStart = (timelineRange && timelineRange.start) || timelineDates[0] || new Date();
+        const axisEnd = (timelineRange && timelineRange.end) || new Date();
+        const axisMonths = axisStart <= axisEnd ? monthsBetween(axisStart, axisEnd) : [];
+        const paidMonths = axisMonths.map((key) => {
+          const entry = paidByMonth.get(key) || { value: 0, count: 0 };
+          return { key, label: monthLabel(key), value: entry.value, count: entry.count };
+        });
+
+        /* Sem nenhuma ação paga no recorte, o gráfico vira uma linha reta no zero e
+           não comunica nada — troca pelo empty state padrão (com "Limpar filtros"). */
+        const timelineHasData = paidMonths.some((m) => m.count > 0);
+        const timelineCanvas = document.getElementById('timelineCanvas');
+        const timelineEmpty = document.getElementById('timelineEmpty');
+        timelineCanvas.hidden = !timelineHasData;
+        timelineEmpty.hidden = timelineHasData;
+
+        if (timelineHasData) {
+          charts.timeline = new Chart(document.getElementById('chartTimeline'), {
+            type: 'bar',
+            data: {
+              labels: paidMonths.map((m) => m.label),
+              datasets: [
+                {
+                  type: 'bar',
+                  label: 'Valor pago',
+                  data: paidMonths.map((m) => m.value),
+                  backgroundColor: highlightColors(`rgba(${t.brandRgb}, .55)`, paidMonths.map((m) => m.key), state.month),
+                  hoverBackgroundColor: `rgba(${t.brandRgb}, .8)`,
+                  borderRadius: 6,
+                  yAxisID: 'y'
+                },
+                {
+                  type: 'line',
+                  label: 'Nº de ações pagas',
+                  data: paidMonths.map((m) => m.count),
+                  borderColor: '#2563eb',
+                  backgroundColor: '#2563eb',
+                  tension: 0.35,
+                  borderWidth: 2,
+                  pointRadius: paidMonths.map((m) => (m.key === state.month ? 6 : 3)),
+                  yAxisID: 'y1'
+                }
+              ]
             },
-            plugins: {
-              ...baseChartOptions(t).plugins,
-              legend: {
-                ...baseChartOptions(t).plugins.legend,
-                position: 'bottom',
-                labels: {
-                  ...baseChartOptions(t).plugins.legend.labels,
-                  padding: 18
+            options: {
+              ...baseChartOptions(t),
+              ...crossInteractions('month', (i) => paidMonths[i].key),
+              scales: {
+                x: { grid: { display: false }, ticks: { color: t.muted } },
+                y: {
+                  position: 'left',
+                  grid: { color: t.line },
+                  ticks: { color: t.muted, callback: (v) => formatCompactBRL(v) }
+                },
+                y1: {
+                  position: 'right',
+                  grid: { drawOnChartArea: false },
+                  ticks: { color: t.muted, precision: 0 }
                 }
               },
-              tooltip: {
-                ...baseChartOptions(t).plugins.tooltip,
-                callbacks: {
-                  label: (ctx) => (ctx.dataset.yAxisID === 'y'
-                    ? ` ${ctx.dataset.label}: ${brl2.format(ctx.parsed.y)}`
-                    : ` ${ctx.dataset.label}: ${int0.format(ctx.parsed.y)}`)
+              plugins: {
+                ...baseChartOptions(t).plugins,
+                legend: {
+                  ...baseChartOptions(t).plugins.legend,
+                  position: 'bottom',
+                  labels: {
+                    ...baseChartOptions(t).plugins.legend.labels,
+                    padding: 18
+                  }
+                },
+                tooltip: {
+                  ...baseChartOptions(t).plugins.tooltip,
+                  callbacks: {
+                    label: (ctx) => (ctx.dataset.yAxisID === 'y'
+                      ? ` ${ctx.dataset.label}: ${brl2.format(ctx.parsed.y)}`
+                      : ` ${ctx.dataset.label}: ${int0.format(ctx.parsed.y)}`)
+                  }
                 }
               }
             }
-          }
-        });
+          });
+        }
 
         const donutOptions = (extraTooltip, interactions) => ({
           ...baseChartOptions(t),
@@ -1148,6 +1287,10 @@
       }
 
       function renderChartsSkeleton() {
+        // durante o skeleton, o canvas da timeline volta a aparecer (com shimmer) e o
+        // empty state some — quem decide de novo é o render() ao terminar.
+        document.getElementById('timelineCanvas').hidden = false;
+        document.getElementById('timelineEmpty').hidden = true;
         document.querySelectorAll('.overview-chart__canvas').forEach((canvas) => {
           canvas.classList.add('is-loading', 'skeleton-shimmer');
         });
@@ -1200,8 +1343,9 @@
         const btn = document.getElementById('ovClearFilters');
         btn.classList.toggle('is-active', active);
         btn.setAttribute('aria-pressed', String(active));
-        // botão do empty state segue o mesmo visual do de cima
+        // botões dos empty states seguem o mesmo visual do de cima
         document.getElementById('overviewEmptyClear').classList.toggle('is-active', active);
+        document.getElementById('timelineEmptyClear').classList.toggle('is-active', active);
       }
 
       /* ---------- Cross-filter (clique nos gráficos) ---------- */
@@ -1285,8 +1429,11 @@
         }
         activeFiltersHost.classList.add('has-filters');
         activeFiltersHost.innerHTML = chips.join('')
-          + '<button type="button" class="overview-filter-chip overview-filter-chip--clear" '
-          + 'data-clear-dim="__all">Limpar tudo</button>';
+          + '<button type="button" class="btn btn-secondary clear-filters is-active" data-clear-dim="__all">'
+          + '<svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+          + '<path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"></path>'
+          + '<path d="m5.082 11.09 8.828 8.828"></path></svg>'
+          + '<span>Limpar filtros</span></button>';
       }
 
       activeFiltersHost.addEventListener('click', (event) => {
@@ -1464,6 +1611,10 @@
       });
 
       document.getElementById('overviewEmptyClear').addEventListener('click', () => {
+        document.getElementById('ovClearFilters').click();
+      });
+
+      document.getElementById('timelineEmptyClear').addEventListener('click', () => {
         document.getElementById('ovClearFilters').click();
       });
 

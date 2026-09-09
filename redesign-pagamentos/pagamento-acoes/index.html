@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../../shared/base-components.css">
   <link rel="stylesheet" href="../../shared/app-shell.css">
   <link rel="stylesheet" href="../../shared/custom-select.css">
+  <link rel="stylesheet" href="../../shared/grid-column-filters.css">
   <link rel="stylesheet" href="../../css/app.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -83,7 +84,8 @@
               <div class="payment-new-features" aria-label="Novidades do módulo">
                 <span class="payment-new-features__title">Novos modos de visualização</span>
                 <div class="payment-new-features__controls">
-                  <div class="feature-with-info" data-feature-tip="Alterne entre tabela completa e uma visão compacta para leitura rápida.">
+                  <div class="feature-with-info"
+                    data-feature-tip="Alterne entre tabela completa e uma visão compacta para leitura rápida.">
                     <div class="view-mode-toggle" role="group" aria-label="Modo de visualização" tabindex="0">
                       <button class="is-active" type="button" data-view-mode="full">
                         <i class="fa-solid fa-list" aria-hidden="true"></i>
@@ -95,7 +97,8 @@
                       </button>
                     </div>
                   </div>
-                  <div class="feature-with-info" data-feature-tip="Oculta filtros e navegação para priorizar o grid. Pressione Esc para sair.">
+                  <div class="feature-with-info"
+                    data-feature-tip="Oculta filtros e navegação para priorizar o grid. Pressione Esc para sair.">
                     <button class="btn btn-secondary focus-toggle" id="focusToggle" type="button">
                       <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i>
                       <span>Modo foco</span>
@@ -113,30 +116,26 @@
           </div>
 
           <section class="payment-filters summary-card" aria-label="Filtros dos pagamentos">
-            <!-- <div>
-              <h2>Filtros dos pagamentos</h2>
-              <p>Use os campos abaixo para localizar ações específicas.</p>
-            </div> -->
             <div class="payment-filter-grid">
 
               <div class="payment-tabs" role="tablist" aria-label="Status dos pagamentos">
-                <button class="is-active" type="button" data-status="processing">Em análise <span class="payment-tabs__count" data-tab-count></span></button>
-                <button type="button" data-status="paid">Pagos <span class="payment-tabs__count" data-tab-count></span></button>
-                <button type="button" data-status="canceled">Cancelados <span class="payment-tabs__count" data-tab-count></span></button>
+                <button class="is-active" type="button" data-status="processing">Em análise <span
+                    class="payment-tabs__count" data-tab-count></span></button>
+                <button type="button" data-status="paid">Pagos <span class="payment-tabs__count"
+                    data-tab-count></span></button>
+                <button type="button" data-status="canceled">Cancelados <span class="payment-tabs__count"
+                    data-tab-count></span></button>
               </div>
 
               <label class="search-field">
-                <!-- <span>Pesquisar ações</span> -->
                 <input id="searchInput" type="search" placeholder="Pesquisar ações">
               </label>
               <label>
-                <!-- <span>Tipo da Conta</span> -->
                 <select class="payment-filter-select" id="accountFilter">
                   <option value="">Todos os tipos de contas</option>
                 </select>
               </label>
               <label>
-                <!-- <span>Campanha</span> -->
                 <select class="payment-filter-select" id="campaignFilter">
                   <option value="">Todas as campanhas</option>
                 </select>
@@ -169,6 +168,8 @@
               </div>
             </div>
           </section>
+
+          <div class="column-filters-active" id="columnFiltersActive" aria-live="polite"></div>
 
           <section class="payments-table-card summary-card">
             <div class="payments-table-wrap">
@@ -225,9 +226,11 @@
   <script>
     // Dataset movido para shared/data/payments.js (fonte única, compartilhada com a Visão geral).
     const expandedPayments = window.BipperPayments.all;
+    const { parseBRL, parseBRDate } = window.BipperPayments;
     const detailPanelInstance = window.BipperPaymentDetailPanel.create();
 
-    const state = { status: 'processing', search: '', account: '', campaign: '', page: 1, pageSize: 8, viewMode: 'full' };
+    const DEFAULT_PAGE_SIZE = 8;
+    const state = { status: 'processing', search: '', page: 1, pageSize: DEFAULT_PAGE_SIZE, viewMode: 'full', columnFilters: {}, sort: { field: null, dir: null } };
     const body = document.getElementById('paymentsBody');
     const paymentsTableCard = document.querySelector('.payments-table-card');
     const paymentsEmptyState = document.getElementById('paymentsEmptyState');
@@ -268,8 +271,7 @@
       return expandedPayments.filter((item) => (
         item.statusGroup === state.status &&
         matchesSearch(item) &&
-        (!state.account || item.accountType === state.account) &&
-        (!state.campaign || item.campaign === state.campaign)
+        passesColumnFilters(item)
       ));
     }
 
@@ -277,8 +279,7 @@
       return expandedPayments.filter((item) => (
         item.statusGroup === status &&
         matchesSearch(item) &&
-        (!state.account || item.accountType === state.account) &&
-        (!state.campaign || item.campaign === state.campaign)
+        passesColumnFilters(item)
       )).length;
     }
 
@@ -330,6 +331,460 @@
       return `<span class="participant-cell"><i class="fa-solid ${participantIcon(name)} participant-cell__icon" aria-hidden="true"></i>${cell(name)}</span>`;
     }
 
+    /* ===== Filtros e ordenação por coluna ====================================
+       Cada <th> filtrável ganha um funil que abre um popover preso ao body
+       (position: fixed, pra escapar do overflow do grid e dos th sticky).
+       O estado vive em state.columnFilters[campo] e combina em E com a busca
+       e a aba de status. Campanha e Tipo de conta espelham os selects do topo. */
+    const COLUMN_FILTERS = [
+      { field: 'code', type: 'text' },
+      { field: 'action', type: 'text' },
+      { field: 'participantCode', type: 'text' },
+      { field: 'participant', type: 'list' },
+      { field: 'stage', type: 'list', labelFn: stageLabel },
+      { field: 'status', type: 'list' },
+      { field: 'actionType', type: 'list' },
+      { field: 'value', type: 'range' },
+      { field: 'request', type: 'text' },
+      { field: 'campaign', type: 'list', topSelect: () => campaignFilter },
+      { field: 'paymentType', type: 'list' },
+      { field: 'includedAt', type: 'date' },
+      { field: 'accountType', type: 'list', topSelect: () => accountFilter },
+      { field: 'scheduledAt', type: 'date', scheduleModes: true }
+    ];
+    const COLUMN_BY_FIELD = Object.fromEntries(COLUMN_FILTERS.map((cfg) => [cfg.field, cfg]));
+    const COLUMN_STORAGE_KEY = 'bipper.pagamento-acoes.filtros';
+    const brlWhole = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+    const columnChipsHost = document.getElementById('columnFiltersActive');
+
+    function optionLabel(cfg, rawValue) {
+      const base = cfg.labelFn ? cfg.labelFn(rawValue) : rawValue;
+      return String(base == null || base === '' ? '—' : base);
+    }
+
+    /* Opcoes do checklist = so os valores que realmente aparecem no grid hoje
+       (aba de status + busca + demais filtros de coluna, menos o filtro desta
+       propria coluna). Assim escolher uma opcao nunca leva a um empty state.
+       Valores ja selecionados entram sempre, pra continuar sendo desmarcaveis. */
+    function columnOptions(cfg) {
+      const rows = expandedPayments.filter((item) => (
+        item.statusGroup === state.status &&
+        matchesSearch(item) &&
+        passesColumnFilters(item, cfg.field)
+      ));
+      const set = new Set(rows.map((item) => optionLabel(cfg, item[cfg.field])));
+      const current = state.columnFilters[cfg.field];
+      if (current && current.values) current.values.forEach((value) => set.add(value));
+      return [...set].sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true }));
+    }
+
+    function isRealDate(value) {
+      return value instanceof Date && !Number.isNaN(value.getTime());
+    }
+
+    function isoToDate(iso, endOfDay) {
+      if (!iso) return null;
+      const [y, m, d] = iso.split('-').map(Number);
+      if (!y || !m || !d) return null;
+      return endOfDay ? new Date(y, m - 1, d, 23, 59, 59, 999) : new Date(y, m - 1, d);
+    }
+
+    function passesColumnFilters(item, exceptField) {
+      return Object.keys(state.columnFilters).every((field) => {
+        if (field === exceptField) return true;
+        const cfg = COLUMN_BY_FIELD[field];
+        const f = state.columnFilters[field];
+        if (!cfg || !f) return true;
+        if (cfg.type === 'text') {
+          return String(item[field] || '').toLowerCase().includes(String(f.text || '').toLowerCase());
+        }
+        if (cfg.type === 'list') {
+          return f.values.includes(optionLabel(cfg, item[field]));
+        }
+        if (cfg.type === 'range') {
+          const n = parseBRL(item[field]);
+          if (f.min != null && n < f.min) return false;
+          if (f.max != null && n > f.max) return false;
+          return true;
+        }
+        if (cfg.type === 'date') {
+          const d = parseBRDate(item[field]);
+          const real = isRealDate(d);
+          if (f.mode === 'scheduled' && !real) return false;
+          if (f.mode === 'unscheduled') return !real;
+          const from = isoToDate(f.from);
+          const to = isoToDate(f.to, true);
+          if (from && (!real || d < from)) return false;
+          if (to && (!real || d > to)) return false;
+          return true;
+        }
+        return true;
+      });
+    }
+
+    function filterIsEmpty(cfg, f) {
+      if (!cfg || !f) return true;
+      if (cfg.type === 'text') return !String(f.text || '').trim();
+      if (cfg.type === 'list') return !f.values || !f.values.length;
+      if (cfg.type === 'range') return f.min == null && f.max == null;
+      if (cfg.type === 'date') return !f.mode && !f.from && !f.to;
+      return true;
+    }
+
+    function persistColumnFilters() {
+      try {
+        localStorage.setItem(COLUMN_STORAGE_KEY, JSON.stringify({ columnFilters: state.columnFilters, sort: state.sort }));
+      } catch (error) { /* storage indisponível */ }
+    }
+
+    function loadPersistedColumnFilters() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(COLUMN_STORAGE_KEY) || '{}');
+        if (saved && saved.columnFilters && typeof saved.columnFilters === 'object') {
+          Object.keys(saved.columnFilters).forEach((field) => {
+            const cfg = COLUMN_BY_FIELD[field];
+            const value = saved.columnFilters[field];
+            if (cfg && !filterIsEmpty(cfg, value)) state.columnFilters[field] = value;
+          });
+        }
+        if (saved && saved.sort && saved.sort.field && COLUMN_BY_FIELD[saved.sort.field]) {
+          state.sort = { field: saved.sort.field, dir: saved.sort.dir === 'desc' ? 'desc' : 'asc' };
+        }
+      } catch (error) { /* ignora estado salvo inválido */ }
+    }
+
+    function syncTopSelectsFromState() {
+      COLUMN_FILTERS.filter((cfg) => cfg.topSelect).forEach((cfg) => {
+        const select = cfg.topSelect();
+        const f = state.columnFilters[cfg.field];
+        select.value = (f && f.values && f.values.length === 1) ? f.values[0] : '';
+      });
+    }
+
+    function setColumnFilter(field, value) {
+      const cfg = COLUMN_BY_FIELD[field];
+      if (filterIsEmpty(cfg, value)) delete state.columnFilters[field];
+      else state.columnFilters[field] = value;
+      if (cfg && cfg.topSelect) {
+        const select = cfg.topSelect();
+        const f = state.columnFilters[field];
+        select.value = (f && f.values && f.values.length === 1) ? f.values[0] : '';
+      }
+      persistColumnFilters();
+      renderColumnFilterChips();
+      syncColumnFilterIndicators();
+      resetPageAndRender();
+    }
+
+    function describeFilter(cfg, f) {
+      if (cfg.type === 'text') return `contém "${f.text}"`;
+      if (cfg.type === 'list') {
+        return f.values.length <= 2
+          ? f.values.join(', ')
+          : `${f.values.slice(0, 2).join(', ')} +${f.values.length - 2}`;
+      }
+      if (cfg.type === 'range') {
+        const lo = f.min != null ? brlWhole.format(f.min) : null;
+        const hi = f.max != null ? brlWhole.format(f.max) : null;
+        if (lo && hi) return `${lo} – ${hi}`;
+        return lo ? `a partir de ${lo}` : `até ${hi}`;
+      }
+      if (cfg.type === 'date') {
+        if (f.mode === 'unscheduled') return 'não agendados';
+        const parts = [];
+        if (f.mode === 'scheduled') parts.push('agendados');
+        if (f.from) parts.push(`de ${f.from.split('-').reverse().join('/')}`);
+        if (f.to) parts.push(`até ${f.to.split('-').reverse().join('/')}`);
+        return parts.join(' ') || 'qualquer';
+      }
+      return '';
+    }
+
+    function renderColumnFilterChips() {
+      const fields = Object.keys(state.columnFilters);
+      if (!fields.length) {
+        columnChipsHost.classList.remove('has-filters');
+        columnChipsHost.innerHTML = '';
+        return;
+      }
+      columnChipsHost.classList.add('has-filters');
+      columnChipsHost.innerHTML = fields.map((field) => {
+        const cfg = COLUMN_BY_FIELD[field];
+        return `
+          <button type="button" class="col-chip" data-clear-field="${field}" aria-label="Remover filtro ${escapeHtml(COLUMN_LABELS[field])}">
+            <span class="col-chip__label">${escapeHtml(COLUMN_LABELS[field])}:</span>
+            <span class="col-chip__value">${escapeHtml(describeFilter(cfg, state.columnFilters[field]))}</span>
+            <span class="col-chip__x" aria-hidden="true">&times;</span>
+          </button>`;
+      }).join('')
+        + '<button type="button" class="btn btn-secondary clear-filters is-active" data-clear-field="__all">'
+        + '<svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+        + '<path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"></path>'
+        + '<path d="m5.082 11.09 8.828 8.828"></path></svg>'
+        + '<span>Limpar filtros</span></button>';
+    }
+
+    function syncColumnFilterIndicators() {
+      document.querySelectorAll('.payments-table thead th[data-col-field]').forEach((th) => {
+        const field = th.dataset.colField;
+        th.classList.toggle('has-filter', Boolean(state.columnFilters[field]));
+        const sorted = state.sort.field === field ? state.sort.dir : null;
+        th.classList.toggle('is-sorted', Boolean(sorted));
+        const caret = th.querySelector('.th-sort__caret');
+        if (caret) {
+          caret.className = 'th-sort__caret fa-solid '
+            + (sorted === 'asc' ? 'fa-sort-up' : sorted === 'desc' ? 'fa-sort-down' : 'fa-sort');
+        }
+      });
+    }
+
+    const COLUMN_LABELS = {};
+
+    function initColumnFilters() {
+      const ths = document.querySelectorAll('.payments-table thead th');
+      COLUMN_FILTERS.forEach((cfg, index) => {
+        const th = ths[index];
+        if (!th) return;
+        const label = th.textContent.trim();
+        COLUMN_LABELS[cfg.field] = label;
+        th.dataset.colField = cfg.field;
+        th.classList.add('is-filterable');
+        th.innerHTML = `
+          <span class="th-inner">
+            <button type="button" class="th-sort" title="Ordenar por ${escapeHtml(label)}"><span class="th-sort__text">${escapeHtml(label)}</span><i class="th-sort__caret fa-solid fa-sort" aria-hidden="true"></i></button>
+            <button type="button" class="col-filter-btn" aria-haspopup="dialog" aria-label="Filtrar ${escapeHtml(label)}"><i class="fa-solid fa-filter" aria-hidden="true"></i></button>
+          </span>`;
+        th.querySelector('.th-sort').addEventListener('click', () => toggleSort(cfg.field));
+        th.querySelector('.col-filter-btn').addEventListener('click', (event) => {
+          event.stopPropagation();
+          openColumnPopover(cfg, event.currentTarget);
+        });
+      });
+
+      columnChipsHost.addEventListener('click', (event) => {
+        const btn = event.target.closest('[data-clear-field]');
+        if (!btn) return;
+        if (btn.dataset.clearField === '__all') { clearFilters.click(); return; }
+        setColumnFilter(btn.dataset.clearField, null);
+      });
+    }
+
+    /* ---------- Ordenação ---------- */
+    function toggleSort(field) {
+      if (state.sort.field !== field) state.sort = { field, dir: 'asc' };
+      else if (state.sort.dir === 'asc') state.sort.dir = 'desc';
+      else state.sort = { field: null, dir: null };
+      state.page = 1;
+      persistColumnFilters();
+      syncColumnFilterIndicators();
+      renderRowsWithSkeleton();
+    }
+
+    function compareValues(cfg, a, b) {
+      if (cfg && cfg.type === 'range') return parseBRL(a) - parseBRL(b);
+      if (cfg && cfg.type === 'date') {
+        const da = parseBRDate(a);
+        const db = parseBRDate(b);
+        return (isRealDate(da) ? da.getTime() : Infinity) - (isRealDate(db) ? db.getTime() : Infinity);
+      }
+      return String(a || '').localeCompare(String(b || ''), 'pt-BR', { numeric: true });
+    }
+
+    function sortRows(rows) {
+      const { field, dir } = state.sort;
+      if (!field) return rows;
+      const cfg = COLUMN_BY_FIELD[field];
+      const mult = dir === 'desc' ? -1 : 1;
+      return [...rows].sort((a, b) => mult * compareValues(cfg, a[field], b[field]));
+    }
+
+    /* ---------- Popover ---------- */
+    let colPopover;
+    let colPopoverField = null;
+
+    function ensurePopover() {
+      if (colPopover) return colPopover;
+      colPopover = document.createElement('div');
+      colPopover.className = 'col-popover';
+      colPopover.setAttribute('role', 'dialog');
+      document.body.appendChild(colPopover);
+      document.addEventListener('mousedown', (event) => {
+        if (!colPopover.classList.contains('is-open')) return;
+        if (event.target.closest('.col-popover') || event.target.closest('.col-filter-btn')) return;
+        closeColumnPopover();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && colPopover.classList.contains('is-open')) {
+          event.stopPropagation();
+          closeColumnPopover();
+        }
+      });
+      window.addEventListener('resize', closeColumnPopover);
+      const wrap = document.querySelector('.payments-table-wrap');
+      if (wrap) wrap.addEventListener('scroll', closeColumnPopover);
+      return colPopover;
+    }
+
+    function closeColumnPopover() {
+      if (colPopover) colPopover.classList.remove('is-open');
+      colPopoverField = null;
+    }
+
+    function openColumnPopover(cfg, anchorBtn) {
+      const pop = ensurePopover();
+      if (colPopoverField === cfg.field && pop.classList.contains('is-open')) {
+        closeColumnPopover();
+        return;
+      }
+      colPopoverField = cfg.field;
+      pop.innerHTML = buildPopoverContent(cfg);
+      pop.classList.add('is-open');
+      wirePopover(cfg, pop);
+      positionPopover(anchorBtn);
+    }
+
+    function positionPopover(anchorBtn) {
+      const r = anchorBtn.getBoundingClientRect();
+      const pop = colPopover;
+      pop.style.visibility = 'hidden';
+      pop.style.left = '0px';
+      pop.style.top = '0px';
+      const pw = pop.offsetWidth;
+      const ph = pop.offsetHeight;
+      let left = Math.max(12, Math.min(r.left, window.innerWidth - pw - 12));
+      let top = r.bottom + 6;
+      if (top + ph > window.innerHeight - 12) top = Math.max(12, r.top - ph - 6);
+      pop.style.left = `${left}px`;
+      pop.style.top = `${top}px`;
+      pop.style.visibility = '';
+    }
+
+    function buildPopoverContent(cfg) {
+      const current = state.columnFilters[cfg.field] || {};
+      const head = `<div class="col-popover__head">${escapeHtml(COLUMN_LABELS[cfg.field] || '')}</div>`;
+      let body = '';
+      if (cfg.type === 'text') {
+        body = `<input type="text" class="col-popover__input" data-role="text" placeholder="Contém…" value="${escapeHtml(current.text || '')}">`;
+      } else if (cfg.type === 'list') {
+        const chosen = new Set(current.values || []);
+        body = `
+          <input type="search" class="col-popover__input" data-role="search" placeholder="Buscar…">
+          <label class="col-popover__check col-popover__check--all">
+            <input type="checkbox" data-role="all"><span>Selecionar todos</span>
+          </label>
+          <div class="col-popover__list" data-role="list">
+            ${columnOptions(cfg).map((opt) => `
+              <label class="col-popover__check">
+                <input type="checkbox" value="${escapeHtml(opt)}" ${chosen.has(opt) ? 'checked' : ''}><span>${escapeHtml(opt)}</span>
+              </label>`).join('')}
+          </div>`;
+      } else if (cfg.type === 'range') {
+        body = `
+          <div class="col-popover__row">
+            <label>Mín<input type="number" inputmode="decimal" data-role="min" value="${current.min != null ? current.min : ''}"></label>
+            <label>Máx<input type="number" inputmode="decimal" data-role="max" value="${current.max != null ? current.max : ''}"></label>
+          </div>`;
+      } else if (cfg.type === 'date') {
+        const mode = current.mode || 'any';
+        const modes = cfg.scheduleModes ? `
+          <div class="col-popover__modes" data-role="modes">
+            <label><input type="radio" name="colDateMode" value="any" ${mode === 'any' ? 'checked' : ''}><span>Qualquer</span></label>
+            <label><input type="radio" name="colDateMode" value="scheduled" ${mode === 'scheduled' ? 'checked' : ''}><span>Agendados</span></label>
+            <label><input type="radio" name="colDateMode" value="unscheduled" ${mode === 'unscheduled' ? 'checked' : ''}><span>Não agendados</span></label>
+          </div>` : '';
+        body = `
+          ${modes}
+          <div class="col-popover__row" data-role="dates">
+            <label>De<input type="date" data-role="from" value="${current.from || ''}"></label>
+            <label>Até<input type="date" data-role="to" value="${current.to || ''}"></label>
+          </div>`;
+      }
+      const foot = `
+        <div class="col-popover__foot">
+          <button type="button" class="col-popover__btn" data-role="clear">Limpar</button>
+          <button type="button" class="col-popover__btn col-popover__btn--primary" data-role="apply">Aplicar</button>
+        </div>`;
+      return head + body + foot;
+    }
+
+    function wirePopover(cfg, pop) {
+      const apply = () => {
+        setColumnFilter(cfg.field, readPopover(cfg, pop));
+        closeColumnPopover();
+      };
+      pop.querySelector('[data-role="apply"]').addEventListener('click', apply);
+      pop.querySelector('[data-role="clear"]').addEventListener('click', () => {
+        setColumnFilter(cfg.field, null);
+        closeColumnPopover();
+      });
+
+      const textInput = pop.querySelector('[data-role="text"]');
+      if (textInput) {
+        textInput.focus();
+        textInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') apply(); });
+      }
+
+      if (cfg.type === 'list') {
+        const search = pop.querySelector('[data-role="search"]');
+        const list = pop.querySelector('[data-role="list"]');
+        const allBox = pop.querySelector('[data-role="all"]');
+        const boxes = () => [...list.querySelectorAll('input[type="checkbox"]')];
+        const syncAll = () => {
+          const visible = boxes().filter((b) => !b.closest('label').hidden);
+          allBox.checked = visible.length > 0 && visible.every((b) => b.checked);
+        };
+        search.addEventListener('input', () => {
+          const q = search.value.trim().toLowerCase();
+          boxes().forEach((b) => { b.closest('label').hidden = Boolean(q) && !b.value.toLowerCase().includes(q); });
+          syncAll();
+        });
+        allBox.addEventListener('change', () => {
+          boxes().forEach((b) => { if (!b.closest('label').hidden) b.checked = allBox.checked; });
+        });
+        list.addEventListener('change', syncAll);
+        syncAll();
+      }
+
+      if (cfg.type === 'date' && cfg.scheduleModes) {
+        const modes = pop.querySelector('[data-role="modes"]');
+        const dates = pop.querySelector('[data-role="dates"]');
+        const syncDates = () => {
+          dates.hidden = modes.querySelector('input:checked').value === 'unscheduled';
+        };
+        modes.addEventListener('change', syncDates);
+        syncDates();
+      }
+    }
+
+    function readPopover(cfg, pop) {
+      if (cfg.type === 'text') {
+        const text = pop.querySelector('[data-role="text"]').value.trim();
+        return text ? { text } : null;
+      }
+      if (cfg.type === 'list') {
+        const values = [...pop.querySelectorAll('[data-role="list"] input:checked')].map((b) => b.value);
+        return values.length ? { values } : null;
+      }
+      if (cfg.type === 'range') {
+        const min = pop.querySelector('[data-role="min"]').value;
+        const max = pop.querySelector('[data-role="max"]').value;
+        return (min || max) ? { min: min !== '' ? Number(min) : null, max: max !== '' ? Number(max) : null } : null;
+      }
+      if (cfg.type === 'date') {
+        const modeEl = pop.querySelector('[data-role="modes"] input:checked');
+        const mode = modeEl ? modeEl.value : 'any';
+        if (mode === 'unscheduled') return { mode };
+        const from = pop.querySelector('[data-role="from"]').value;
+        const to = pop.querySelector('[data-role="to"]').value;
+        const result = {};
+        if (mode === 'scheduled') result.mode = 'scheduled';
+        if (from) result.from = from;
+        if (to) result.to = to;
+        return Object.keys(result).length ? result : null;
+      }
+      return null;
+    }
+
     function updateGridTooltips() {
       body.querySelectorAll('.cell-clamp[data-full-text]').forEach((item) => {
         const isTruncated = item.scrollWidth - item.clientWidth > 1;
@@ -368,7 +823,7 @@
     }
 
     function renderRows() {
-      const rows = getFilteredPayments();
+      const rows = sortRows(getFilteredPayments());
       const isEmpty = rows.length === 0;
       paymentsTableCard.classList.toggle('is-empty', isEmpty);
 
@@ -425,7 +880,7 @@
     }
 
     function hasActiveFilters() {
-      return Boolean(state.search || state.account || state.campaign);
+      return Boolean(state.search || Object.keys(state.columnFilters).length);
     }
 
     const STATUS_TAB_LABELS = { processing: 'em análise', paid: 'pagos', canceled: 'cancelados' };
@@ -521,23 +976,72 @@
       );
     }
 
+    const tableWrap = document.querySelector('.payments-table-wrap');
+    const tableHead = document.querySelector('.payments-table thead');
+
+    // Seletor Completo/Compacto: no modo foco a hero some, entao movemos o mesmo
+    // elemento (mesmos botoes, mesmos listeners) para dentro da barra de filtros,
+    // logo antes do botao "Sair do modo foco". Ao sair, ele volta para o lugar
+    // original dentro da caixa "Novos modos de visualizacao".
+    const viewModeFeature = document.querySelector('.view-mode-toggle').closest('.feature-with-info');
+    const viewModeHome = viewModeFeature.parentElement;
+    const viewModeAnchor = viewModeFeature.nextElementSibling;
+    const filterGrid = document.querySelector('.payment-filter-grid');
+
+    function placeViewModeToggle(focusMode) {
+      if (focusMode) filterGrid.insertBefore(viewModeFeature, focusExitToggle);
+      else viewModeHome.insertBefore(viewModeFeature, viewModeAnchor);
+    }
+
+    // No modo foco o grid ocupa a tela toda. Medimos a area visivel do grid e
+    // ampliamos o pageSize para preencher todo o espaco disponivel. Ao voltar a
+    // exibicao convencional, o pageSize retorna para DEFAULT_PAGE_SIZE e a
+    // paginacao volta ao comportamento normal (nenhuma dessas mudancas persiste).
+    function focusRowsThatFit() {
+      if (!tableWrap) return DEFAULT_PAGE_SIZE;
+      const headH = tableHead ? tableHead.getBoundingClientRect().height : 44;
+      const sampleRow = body.querySelector('tr');
+      const rowH = sampleRow ? sampleRow.getBoundingClientRect().height : 46;
+      const available = tableWrap.clientHeight - headH;
+      if (rowH <= 0 || available <= 0) return DEFAULT_PAGE_SIZE;
+      return Math.max(DEFAULT_PAGE_SIZE, Math.floor(available / rowH));
+    }
+
+    function syncFocusPageSize() {
+      const focusMode = document.body.classList.contains('payments-focus-mode');
+      const nextSize = focusMode ? focusRowsThatFit() : DEFAULT_PAGE_SIZE;
+      if (nextSize === state.pageSize) return;
+      state.pageSize = nextSize;
+      state.page = 1;
+      renderRowsWithSkeleton();
+    }
+
     function setFocusMode(enabled) {
       document.body.classList.toggle('payments-focus-mode', enabled);
+      placeViewModeToggle(enabled);
       focusToggle.querySelector('span').textContent = enabled ? 'Sair do foco' : 'Modo foco';
       focusToggle.querySelector('i').className = enabled
         ? 'fa-solid fa-down-left-and-up-right-to-center'
         : 'fa-solid fa-up-right-and-down-left-from-center';
       if (enabled) {
         showTour('Modo foco ativo', 'A tela está focada no grid. Clique em uma linha para ver detalhes e pressione Esc para sair.');
+        // espera o layout do modo foco assentar antes de medir a area do grid
+        requestAnimationFrame(() => requestAnimationFrame(syncFocusPageSize));
       } else {
         hideTour();
+        syncFocusPageSize();
       }
     }
 
     fillSelect(accountFilter, uniqueValues('accountType'));
     fillSelect(campaignFilter, uniqueValues('campaign'));
+    loadPersistedColumnFilters();
+    initColumnFilters();
+    syncTopSelectsFromState();
     window.BipperCustomSelect?.enhanceAll(document.querySelector('.payment-filters'));
     syncClearFiltersState();
+    renderColumnFilterChips();
+    syncColumnFilterIndicators();
     updateTabCounts();
     renderRowsWithSkeleton();
 
@@ -588,23 +1092,24 @@
     });
 
     accountFilter.addEventListener('change', () => {
-      state.account = accountFilter.value;
-      resetPageAndRender();
+      setColumnFilter('accountType', accountFilter.value ? { values: [accountFilter.value] } : null);
     });
 
     campaignFilter.addEventListener('change', () => {
-      state.campaign = campaignFilter.value;
-      resetPageAndRender();
+      setColumnFilter('campaign', campaignFilter.value ? { values: [campaignFilter.value] } : null);
     });
 
     clearFilters.addEventListener('click', () => {
       state.search = '';
-      state.account = '';
-      state.campaign = '';
+      state.columnFilters = {};
+      state.sort = { field: null, dir: null };
       searchInput.value = '';
       accountFilter.value = '';
       campaignFilter.value = '';
+      persistColumnFilters();
       syncClearFiltersState();
+      renderColumnFilterChips();
+      syncColumnFilterIndicators();
       resetPageAndRender();
     });
 
@@ -637,6 +1142,7 @@
 
     window.addEventListener('resize', () => {
       requestAnimationFrame(updateGridTooltips);
+      if (document.body.classList.contains('payments-focus-mode')) syncFocusPageSize();
     });
 
     document.addEventListener('keydown', (event) => {

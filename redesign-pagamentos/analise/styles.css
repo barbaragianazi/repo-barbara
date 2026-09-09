@@ -1,6 +1,4 @@
-﻿/* Base compartilhada do fluxo de pagamentos. */
-
-.payments-page {
+﻿.payments-page {
     position: relative;
     display: grid;
     gap: 18px;
@@ -35,7 +33,6 @@
 }
 
 .payment-hero {
-    /* min-height: 142px; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -117,8 +114,6 @@
     transition: opacity .14s ease, transform .14s ease;
 }
 
-/* :focus-visible (via :has) em vez de :focus-within: com :focus-within o tooltip
-   ficava preso apos o clique de mouse ate clicar fora. Assim so aparece no teclado. */
 .feature-with-info:hover::after,
 .feature-with-info:has(:focus-visible)::after {
     opacity: 1;
@@ -210,7 +205,6 @@
     min-width: 110px;
 }
 
-/* Os dois dropdowns dividem igualmente o espaco livre da linha */
 .payment-filter-grid label:has(#accountFilter),
 .payment-filter-grid label:has(#campaignFilter) {
     flex: 1 1 0;
@@ -218,7 +212,6 @@
 }
 
 .payment-filter-grid span {
-    /* color: var(--ink); */
     font-size: var(--fs-md);
     font-weight: 800;
 }
@@ -245,7 +238,7 @@
     display: block;
 }
 
-.payment-filter-grid .cs-select > select {
+.payment-filter-grid .cs-select>select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -254,7 +247,7 @@
     text-overflow: ellipsis;
 }
 
-.payment-filter-grid .cs-select > select::-ms-expand {
+.payment-filter-grid .cs-select>select::-ms-expand {
     display: none;
 }
 
@@ -474,7 +467,7 @@
     background: var(--surface-2);
 }
 
-.pagination-bar > span {
+.pagination-bar>span {
     color: var(--muted);
     font-size: var(--fs-sm);
     font-weight: 600;
@@ -510,7 +503,6 @@
     cursor: not-allowed;
 }
 
-/* Toast de dicas â€” flutua no topo da tela (modo compacto/foco, rolagem do grid) */
 .compact-tour {
     position: fixed;
     left: 50%;
@@ -549,8 +541,6 @@
     font-size: var(--fs-md);
 }
 
-/* Keycap <kbd> vem de shared/base-components.css. */
-
 .compact-tour button {
     grid-column: 2;
     grid-row: 1 / span 2;
@@ -564,8 +554,6 @@
     cursor: pointer;
 }
 
-/* Flutuante: posicionada por JS logo abaixo da caixa "Novos modos de visualizacao".
-   top/right sao definidos inline em positionTour(); os valores aqui sao sÃ³ fallback. */
 .compact-tour--inline {
     position: absolute;
     left: auto;
@@ -604,6 +592,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .compact-tour,
     .compact-tour.is-visible {
         transform: translate(-50%, 0);
@@ -658,8 +647,6 @@ body.payments-focus-mode .payments-page {
     grid-template-rows: auto minmax(0, 1fr);
 }
 
-/* Modo foco: hero (e a caixa de modos) somem, entao o balao vira position: fixed
-   e o JS o ancora abaixo do botao "Sair do modo foco". top/left vem inline. */
 body.payments-focus-mode .compact-tour--inline {
     position: fixed;
     left: 0;
@@ -719,13 +706,9 @@ body.payments-focus-mode .payments-table-wrap {
 body.payments-focus-mode .payments-table th {
     position: sticky;
     top: 0;
-    /* acima das celulas fixas do corpo (z-index 3) ao rolar na vertical */
     z-index: 4;
 }
 
-/* Cabecalho das duas colunas travadas: canto fixo nos dois eixos.
-   Precisa vencer os demais th (todos sticky/z-index 4 no modo foco),
-   senao "PARTICIPANTE" & cia rolam por cima de "CODIGO"/"ACAO". */
 body.payments-focus-mode .payments-table th:nth-child(1),
 body.payments-focus-mode .payments-table th:nth-child(2) {
     z-index: 6;
@@ -936,17 +919,9 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
 }
 
 .table-link {
-    /* color: var(--ink); */
-    /* font-weight: 600; */
-    /* text-decoration: underline; */
     text-decoration-color: rgba(15, 23, 42, .28);
     text-underline-offset: 3px;
 }
-/* 
-.cell-strong {
-    color: var(--ink);
-    font-weight: 900;
-} */
 
 .payment-detail-overlay {
     position: fixed;
@@ -971,12 +946,10 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
     z-index: 250;
     width: min(1100px, calc(100vw - 24px));
     height: min(var(--detail-panel-height, 1100px), calc(100vh - 24px));
-    border-radius: 8px;
-    background: var(--surface);
+    border-radius: 24px;
     box-shadow: var(--shadow-md);
     display: grid;
     grid-template-rows: auto 1fr;
-    overflow: hidden;
     opacity: 0;
     pointer-events: none;
     transform: translate(-50%, -50%) scale(.98);
@@ -995,6 +968,7 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
     padding: 14px 22px 12px;
     background: linear-gradient(180deg, #cf3512 0%, #f04a1f 100%);
     color: #fff;
+    border-radius: 24px 24px 0 0;
 }
 
 .payment-detail-header__top,
@@ -1154,6 +1128,9 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
     min-height: 0;
     display: grid;
     grid-template-rows: auto minmax(0, 1fr);
+    background: var(--surface);
+    border-radius: 0 0 24px 24px;
+    overflow: hidden;
 }
 
 .payment-detail-tabs {
@@ -1257,7 +1234,7 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
     padding-bottom: 16px;
 }
 
-.detail-section + .detail-section {
+.detail-section+.detail-section {
     border-top: 1px solid var(--line);
 }
 
@@ -1293,7 +1270,7 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
     border-radius: 8px;
     background: var(--surface-2);
     color: var(--muted);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     padding: 8px 12px;
     display: inline-flex;
     align-items: center;
@@ -1403,7 +1380,6 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
     flex: 1 1 220px;
 }
 
-/* Flutuante: ancorada abaixo do seletor Cards/Tabela, sem ocupar espaco na toolbar */
 .payment-records-scroll-tip {
     top: calc(100% + 8px);
     right: 0;
@@ -1431,7 +1407,7 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
     outline: 0;
 }
 
-.payment-records-sort .cs-select > select {
+.payment-records-sort .cs-select>select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -1439,7 +1415,7 @@ body.payments-focus-mode .payments-table th:nth-child(2) {
     padding-right: 30px;
 }
 
-.payment-records-sort .cs-select > select::-ms-expand {
+.payment-records-sort .cs-select>select::-ms-expand {
     display: none;
 }
 
@@ -1836,7 +1812,6 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
         width: 100%;
     }
 
-    /* Dentro da barra de filtros o Exportar acompanha os demais controles */
     .payment-filter-grid .export-menu,
     .payment-filter-grid .export-menu__trigger {
         width: auto;
@@ -1872,6 +1847,11 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
 
     .payment-detail-panel.is-visible {
         transform: none;
+    }
+
+    .payment-detail-header,
+    .payment-detail-shell {
+        border-radius: 0;
     }
 
     .payment-detail-header {
@@ -1933,6 +1913,7 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
 }
 
 @media (max-width: 640px) {
+
     .form-grid,
     .asset-grid {
         grid-template-columns: 1fr;
@@ -1980,15 +1961,6 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
     }
 }
 
-
-/* Estilos especificos da tela de analise. */
-
-/* ===================================================================
-   Redesign Pagamentos - Visao geral (dashboard)
-   Graficos via Chart.js. Reusa .summary-card, .metrics-grid,
-   .metric-card, .payments-table e .payment-filters.
-   =================================================================== */
-
 .overview-page {
     gap: 16px;
 }
@@ -2028,7 +2000,6 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
     min-width: 150px;
 }
 
-/* ---- Barra de filtros ativos (cross-filter pelos grÃ¡ficos) ---- */
 .overview-active-filters {
     display: flex;
     flex-wrap: wrap;
@@ -2079,17 +2050,6 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
     font-size: var(--fs-md);
     line-height: 1;
     color: var(--brand-primary);
-}
-
-.overview-filter-chip--clear {
-    border-color: var(--line);
-    background: var(--surface);
-    color: var(--muted);
-}
-
-.overview-filter-chip--clear:hover {
-    background: var(--surface-3);
-    border-color: var(--muted);
 }
 
 .overview-period {
@@ -2208,6 +2168,17 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
 
 .overview-empty .table-empty-state__icon {
     font-size: 24px;
+}
+
+.overview-chart__empty {
+    display: grid;
+    place-items: center;
+    min-height: 340px;
+    border-radius: var(--radius-md);
+}
+
+.overview-chart__empty .table-empty-state {
+    padding: 24px 20px;
 }
 
 .overview-kpis .metric-card {
@@ -2354,7 +2325,6 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
     inset: 0;
 }
 
-/* Roscas: canvas + tabela-legenda lado a lado */
 .overview-chart__body {
     display: flex;
     align-items: center;
@@ -2392,7 +2362,6 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
     border-bottom: 0;
 }
 
-/* Legenda clicÃ¡vel (cross-filter): hover, selecionada e esmaecida */
 .overview-legend--interactive tr {
     cursor: pointer;
     transition: opacity .15s ease;
@@ -2496,7 +2465,7 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
     gap: 6px;
 }
 
-.overview-tooltip__row + .overview-tooltip__row {
+.overview-tooltip__row+.overview-tooltip__row {
     margin-top: 4px;
 }
 
@@ -2700,6 +2669,10 @@ body.payments-compact-mode .payments-table td:nth-child(14) {
 
     .overview-chart__canvas--tall {
         height: 300px;
+        min-height: 300px;
+    }
+
+    .overview-chart__empty {
         min-height: 300px;
     }
 

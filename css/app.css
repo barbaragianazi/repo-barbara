@@ -132,13 +132,16 @@
     box-shadow: var(--shadow-sm);
 }
 
-/* Meta do card: chips de cliente, status, nÂº de telas e data da Ãºltima alteraÃ§Ã£o. */
 .project-card__meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 6px;
     margin-top: 12px;
+}
+
+.project-chip[hidden] {
+    display: none;
 }
 
 .project-chip {

@@ -443,11 +443,18 @@ body.sidebar-collapsed .nav-submenu .nav-submenu--nested {
     transform: none;
     min-width: 0;
     margin: 3px 0 3px 8px;
-    padding: 0 0 0 8px;
+    padding: 0;
     border: 0;
-    border-left: 1px solid rgba(255, 255, 255, .12);
     background: none;
     box-shadow: none;
+}
+
+/* Flyout recolhido: largura acompanha o texto (sem reticências). O traço laranja
+   do item ativo continua; só a linha divisória do subgrupo saiu (acima). */
+body.sidebar-collapsed .nav-submenu .nav-link__label,
+body.sidebar-collapsed .nav-submenu .nav-submenu__label {
+    overflow: visible;
+    text-overflow: clip;
 }
 
 body.sidebar-collapsed .nav-submenu__link--parent .nav-link__chevron {
@@ -932,7 +939,8 @@ body.sidebar-collapsed .nav-submenu {
     top: 50%;
     left: calc(100% + 10px);
     transform: translateY(-50%);
-    min-width: 196px;
+    min-width: max-content;
+    max-width: 340px;
     margin: 0;
     padding: 10px;
     border: 1px solid rgba(255, 255, 255, .1);

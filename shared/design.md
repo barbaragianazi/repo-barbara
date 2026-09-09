@@ -2,6 +2,15 @@
 
 Guia principal de decisão visual. Documenta paleta, tipografia, espaçamentos, radius, sombras, botões, inputs, cards, modais, layout, responsividade e regras para criar novas telas mantendo consistência
 
+## Regras de trabalho
+
+- Nunca fazer commit sem autorizacao explicita da Barbara.
+- Nunca responder em ingles; todas as respostas devem ser em portugues.
+
+## Relacao com os READMEs
+
+O `README.md` da raiz e o ponto central da documentacao do projeto. O `shared/README.md` resume o uso pratico da pasta `shared/`. Este arquivo permanece como a referencia visual detalhada e deve ser consultado antes de criar ou alterar telas.
+
 Este documento registra os padroes visuais e tecnicos observados no projeto atual. Use-o como referencia obrigatoria ao criar novas telas em outro projeto, mantendo os mesmos tokens, componentes, proporcoes e comportamento responsivo.
 
 Este arquivo e a fonte de decisao visual do sistema. Para reaproveitamento tecnico direto, use tambem os arquivos da pasta `shared/`:
