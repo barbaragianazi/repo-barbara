@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redesign Pagamentos - Pagamento de ações</title>
+  <link rel="icon" type="image/png" href="../../shared/assets/logos/fav-icon.png">
+  <link rel="stylesheet" href="../../shared/design-tokens.css">
+  <link rel="stylesheet" href="../../shared/base-components.css">
+  <link rel="stylesheet" href="../../shared/app-shell.css">
+  <link rel="stylesheet" href="../../shared/custom-select.css">
+  <link rel="stylesheet" href="../../css/app.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+      <div class="brand" data-brands-url="../../shared/data/brands.json">
+        <div class="brand__area" aria-label="Marca ativa">
+          <button class="brand__logo-btn" type="button" aria-label="Selecionar marca" aria-haspopup="true"
+            aria-expanded="false">
+            <img src="../../shared/assets/logos/zoetis-dark.svg" alt="Zoetis" class="brand__logo" data-logo="dark">
+          </button>
+          <div class="brand-dropdown" role="menu" aria-label="Selecionar marca"></div>
+        </div>
+        <button class="brand__toggle" id="sidebarToggle" type="button" aria-label="Recolher menu" aria-expanded="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </button>
+      </div>
+      <div data-shell-menu data-menu-url="../../config/menu.json"></div>
+      <div class="theme-toggle" role="group" aria-label="Tema do portal">
+        <button type="button" class="theme-toggle__btn" data-theme-choice="light"
+          data-tooltip="Alternar para tema light" aria-label="Tema claro" aria-pressed="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+          </svg>
+        </button>
+        <button type="button" class="theme-toggle__btn" data-theme-choice="dark" data-tooltip="Alternar para tema dark"
+          aria-label="Tema escuro" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path>
+          </svg>
+        </button>
+      </div>
+      <div data-shell-profile></div>
+    </aside>
+    <button class="sidebar-overlay" id="sidebarOverlay" type="button" aria-label="Fechar menu"></button>
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="openMenu" type="button" aria-label="Abrir menu" aria-expanded="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4 6h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 18h16"></path>
+          </svg>
+        </button>
+      </header>
+      <section class="content">
+        <div class="payments-page">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../../index.html">Início</a>
+            <span>Pagamento</span>
+            <strong>Pagamento das ações</strong>
+          </nav>
+
+          <section class="payment-hero summary-card">
+            <div>
+              <h1>Pagamento das ações</h1>
+              <p>Acompanhe solicitações, etapas e valores por campanha.</p>
+            </div>
+            <div class="payment-actions">
+              <div class="payment-new-features" aria-label="Novidades do módulo">
+                <span class="payment-new-features__title">Novos modos de visualização</span>
+                <div class="payment-new-features__controls">
+                  <div class="feature-with-info" data-feature-tip="Alterne entre tabela completa e uma visão compacta para leitura rápida.">
+                    <div class="view-mode-toggle" role="group" aria-label="Modo de visualização" tabindex="0">
+                      <button class="is-active" type="button" data-view-mode="full">
+                        <i class="fa-solid fa-list" aria-hidden="true"></i>
+                        <span>Completo</span>
+                      </button>
+                      <button type="button" data-view-mode="compact">
+                        <i class="fa-solid fa-compress" aria-hidden="true"></i>
+                        <span>Compacto</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="feature-with-info" data-feature-tip="Oculta filtros e navegação para priorizar o grid. Pressione Esc para sair.">
+                    <button class="btn btn-secondary focus-toggle" id="focusToggle" type="button">
+                      <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i>
+                      <span>Modo foco</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="compact-tour compact-tour--inline" id="compactTour" role="status">
+            <strong id="tourTitle">Modo compacto ativo</strong>
+            <span id="tourText">Clique em uma linha da ação para abrir os detalhes completos ao lado.</span>
+            <button id="dismissCompactTour" type="button" aria-label="Fechar dica">Entendi</button>
+          </div>
+
+          <section class="payment-filters summary-card" aria-label="Filtros dos pagamentos">
+            <!-- <div>
+              <h2>Filtros dos pagamentos</h2>
+              <p>Use os campos abaixo para localizar ações específicas.</p>
+            </div> -->
+            <div class="payment-filter-grid">
+
+              <div class="payment-tabs" role="tablist" aria-label="Status dos pagamentos">
+                <button class="is-active" type="button" data-status="processing">Em análise <span class="payment-tabs__count" data-tab-count></span></button>
+                <button type="button" data-status="paid">Pagos <span class="payment-tabs__count" data-tab-count></span></button>
+                <button type="button" data-status="canceled">Cancelados <span class="payment-tabs__count" data-tab-count></span></button>
+              </div>
+
+              <label class="search-field">
+                <!-- <span>Pesquisar ações</span> -->
+                <input id="searchInput" type="search" placeholder="Pesquisar ações">
+              </label>
+              <label>
+                <!-- <span>Tipo da Conta</span> -->
+                <select class="payment-filter-select" id="accountFilter">
+                  <option value="">Todos os tipos de contas</option>
+                </select>
+              </label>
+              <label>
+                <!-- <span>Campanha</span> -->
+                <select class="payment-filter-select" id="campaignFilter">
+                  <option value="">Todas as campanhas</option>
+                </select>
+              </label>
+
+              <button class="btn btn-secondary focus-exit-toggle" id="focusExitToggle" type="button">
+                <i class="fa-solid fa-down-left-and-up-right-to-center" aria-hidden="true"></i>
+                <span>Sair do modo foco (Esc)</span>
+              </button>
+              <button class="btn btn-secondary clear-filters" id="clearFilters" type="button" aria-pressed="false">
+                <svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path
+                    d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21">
+                  </path>
+                  <path d="m5.082 11.09 8.828 8.828"></path>
+                </svg>
+                <span>Limpar filtros</span>
+              </button>
+
+              <div class="export-menu">
+                <button class="btn btn-primary export-menu__trigger" type="button">
+                  <i class="fa-solid fa-file-export" aria-hidden="true"></i>
+                  <span>Exportar</span>
+                </button>
+                <div class="export-menu__popover" aria-hidden="true">
+                  <button type="button"><i class="fa-solid fa-file-csv" aria-hidden="true"></i> CSV</button>
+                  <button type="button"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> PDF</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="payments-table-card summary-card">
+            <div class="payments-table-wrap">
+              <table class="payments-table">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Ação</th>
+                    <th>Cód. participante</th>
+                    <th>Participante</th>
+                    <th>Etapa</th>
+                    <th>Status</th>
+                    <th>Tipo ação</th>
+                    <th>Valor</th>
+                    <th>Solicitação</th>
+                    <th>Campanha</th>
+                    <th>Tipo pagamento</th>
+                    <th>Data inclusão</th>
+                    <th>Tipo conta</th>
+                    <th>Data agendamento</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="paymentsBody"></tbody>
+              </table>
+            </div>
+            <div class="table-empty-state-wrap" id="paymentsEmptyState"></div>
+            <div class="pagination-bar" aria-label="Paginação dos pagamentos">
+              <span id="paginationSummary">Página 1 de 1</span>
+              <div class="pagination-actions">
+                <button class="btn btn-secondary btn-sm" id="prevPage" type="button">Anterior</button>
+                <div class="page-buttons" id="pageButtons"></div>
+                <button class="btn btn-secondary btn-sm" id="nextPage" type="button">Próxima</button>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    window.BipperShellConfig = {
+      app: 'redesign-pagamentos-pagamento-acoes',
+      active: 'redesign-pagamentos-pagamento-acoes',
+      assetPathPrefix: '../../',
+      publicPage: true
+    };
+  </script>
+  <script src="../../shared/app-shell.js"></script>
+  <script src="../../shared/custom-select.js"></script>
+  <script src="../../shared/data/payments.js"></script>
+  <script src="../../shared/payment-detail-panel.js"></script>
+  <script>
+    // Dataset movido para shared/data/payments.js (fonte única, compartilhada com a Visão geral).
+    const expandedPayments = window.BipperPayments.all;
+    const detailPanelInstance = window.BipperPaymentDetailPanel.create();
+
+    const state = { status: 'processing', search: '', account: '', campaign: '', page: 1, pageSize: 8, viewMode: 'full' };
+    const body = document.getElementById('paymentsBody');
+    const paymentsTableCard = document.querySelector('.payments-table-card');
+    const paymentsEmptyState = document.getElementById('paymentsEmptyState');
+    const paginationSummary = document.getElementById('paginationSummary');
+    const pageButtons = document.getElementById('pageButtons');
+    const prevPage = document.getElementById('prevPage');
+    const nextPage = document.getElementById('nextPage');
+    const searchInput = document.getElementById('searchInput');
+    const accountFilter = document.getElementById('accountFilter');
+    const campaignFilter = document.getElementById('campaignFilter');
+    const clearFilters = document.getElementById('clearFilters');
+    const compactTour = document.getElementById('compactTour');
+    const tourTitle = document.getElementById('tourTitle');
+    const tourText = document.getElementById('tourText');
+    const focusToggle = document.getElementById('focusToggle');
+    const focusExitToggle = document.getElementById('focusExitToggle');
+
+    function uniqueValues(key) {
+      return [...new Set(expandedPayments.map((item) => item[key]).filter(Boolean))].sort();
+    }
+
+    function fillSelect(select, values) {
+      values.forEach((value) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+      });
+    }
+
+    function matchesSearch(item) {
+      if (!state.search) return true;
+      const haystack = Object.values(item).join(' ').toLowerCase();
+      return haystack.includes(state.search.toLowerCase());
+    }
+
+    function getFilteredPayments() {
+      return expandedPayments.filter((item) => (
+        item.statusGroup === state.status &&
+        matchesSearch(item) &&
+        (!state.account || item.accountType === state.account) &&
+        (!state.campaign || item.campaign === state.campaign)
+      ));
+    }
+
+    function countForStatus(status) {
+      return expandedPayments.filter((item) => (
+        item.statusGroup === status &&
+        matchesSearch(item) &&
+        (!state.account || item.accountType === state.account) &&
+        (!state.campaign || item.campaign === state.campaign)
+      )).length;
+    }
+
+    function updateTabCounts() {
+      document.querySelectorAll('[data-status]').forEach((tab) => {
+        const countEl = tab.querySelector('[data-tab-count]');
+        if (countEl) countEl.textContent = `(${countForStatus(tab.dataset.status)})`;
+      });
+    }
+
+    function stageClass(stage) {
+      if (stage === 'Concluido' || stage === 'Concluído') return 'is-paid';
+      if (stage === 'Cancelado') return 'is-canceled';
+      return 'is-processing';
+    }
+
+    function stageLabel(stage) {
+      return stage === 'Em análise de pagamento' ? 'Em análise' : stage;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
+    function cell(value, className = '') {
+      const content = String(value || '-');
+      return `<span class="cell-clamp ${className}" data-full-text="${escapeHtml(content)}">${escapeHtml(content)}</span>`;
+    }
+
+    const PARTICIPANT_ICONS = ['fa-briefcase', 'fa-store', 'fa-building', 'fa-shop', 'fa-warehouse', 'fa-people-group', 'fa-user-group', 'fa-handshake'];
+
+    function participantIcon(name) {
+      const key = String(name || '');
+      if (/\b(LTDA|S\.?\/?A|EIRELI|\bME\b|EPP|IMPORTADORA|COM[EÉ]RCIO|COMERCIO|DISTRIBUIDORA|REPRESENTA|IND[UÚ]STRIA)/i.test(key)) {
+        return 'fa-user-tie';
+      }
+      let hash = 0;
+      for (let i = 0; i < key.length; i += 1) hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+      return PARTICIPANT_ICONS[hash % PARTICIPANT_ICONS.length];
+    }
+
+    function participantCell(name) {
+      return `<span class="participant-cell"><i class="fa-solid ${participantIcon(name)} participant-cell__icon" aria-hidden="true"></i>${cell(name)}</span>`;
+    }
+
+    function updateGridTooltips() {
+      body.querySelectorAll('.cell-clamp[data-full-text]').forEach((item) => {
+        const isTruncated = item.scrollWidth - item.clientWidth > 1;
+        item.classList.toggle('is-truncated', isTruncated);
+        if (isTruncated) item.dataset.tooltipText = item.dataset.fullText;
+        else delete item.dataset.tooltipText;
+      });
+    }
+
+    let tableSkeletonTimer;
+
+    function renderTableSkeleton() {
+      paymentsTableCard.classList.add('is-loading');
+      paymentsTableCard.classList.remove('is-empty');
+      paginationSummary.textContent = 'Atualizando dados';
+      pageButtons.innerHTML = '';
+      prevPage.disabled = true;
+      nextPage.disabled = true;
+      body.innerHTML = Array.from({ length: state.pageSize }, () => `
+        <tr>
+          ${Array.from({ length: 15 }, (_, index) => {
+        const widthClass = index % 3 === 0 ? 'table-skeleton-cell--short' : 'table-skeleton-cell--medium';
+        return `<td><span class="table-skeleton-cell ${widthClass} skeleton-shimmer"></span></td>`;
+      }).join('')}
+        </tr>
+      `).join('');
+    }
+
+    function renderRowsWithSkeleton() {
+      window.clearTimeout(tableSkeletonTimer);
+      renderTableSkeleton();
+      tableSkeletonTimer = window.setTimeout(() => {
+        renderRows();
+        paymentsTableCard.classList.remove('is-loading');
+      }, 180);
+    }
+
+    function renderRows() {
+      const rows = getFilteredPayments();
+      const isEmpty = rows.length === 0;
+      paymentsTableCard.classList.toggle('is-empty', isEmpty);
+
+      if (isEmpty) {
+        paginationSummary.textContent = 'Nenhum registro';
+        prevPage.disabled = true;
+        nextPage.disabled = true;
+        pageButtons.innerHTML = '';
+        body.innerHTML = '';
+        paymentsEmptyState.innerHTML = getEmptyStateMarkup();
+        return;
+      }
+
+      const totalPages = Math.max(1, Math.ceil(rows.length / state.pageSize));
+      if (state.page > totalPages) state.page = totalPages;
+      const pageStart = (state.page - 1) * state.pageSize;
+      const pageRows = rows.slice(pageStart, pageStart + state.pageSize);
+
+      paginationSummary.textContent = `Página ${state.page} de ${totalPages} | ${pageStart + 1}-${pageStart + pageRows.length} de ${rows.length}`;
+      prevPage.disabled = state.page <= 1;
+      nextPage.disabled = state.page >= totalPages;
+      pageButtons.innerHTML = Array.from({ length: totalPages }, (_, index) => {
+        const page = index + 1;
+        return `<button class="${page === state.page ? 'is-active' : ''}" type="button" data-page="${page}">${page}</button>`;
+      }).join('');
+
+      body.innerHTML = pageRows.map((item) => `
+        <tr data-row-index="${expandedPayments.indexOf(item)}">
+          <td>${cell(item.code, 'cell-nowrap')}</td>
+          <td>${cell(item.action, 'table-link')}</td>
+          <td>${cell(item.participantCode)}</td>
+          <td>${participantCell(item.participant)}</td>
+          <td><span class="stage-pill ${stageClass(item.stage)}">${stageLabel(item.stage)}</span></td>
+          <td>${cell(item.status)}</td>
+          <td>${cell(item.actionType)}</td>
+          <td>${cell(item.value, 'cell-strong cell-nowrap')}</td>
+          <td>${cell(item.request, 'cell-nowrap')}</td>
+          <td>${cell(item.campaign)}</td>
+          <td>${cell(item.paymentType)}</td>
+          <td>${cell(item.includedAt, 'cell-nowrap')}</td>
+          <td>${cell(item.accountType)}</td>
+          <td>${cell(item.scheduledAt, 'cell-nowrap')}</td>
+          <td><button class="row-action ${item.statusGroup}" type="button">${item.actionLabel}</button></td>
+        </tr>
+      `).join('');
+      requestAnimationFrame(updateGridTooltips);
+    }
+
+    function resetPageAndRender() {
+      state.page = 1;
+      syncClearFiltersState();
+      updateTabCounts();
+      renderRowsWithSkeleton();
+    }
+
+    function hasActiveFilters() {
+      return Boolean(state.search || state.account || state.campaign);
+    }
+
+    const STATUS_TAB_LABELS = { processing: 'em análise', paid: 'pagos', canceled: 'cancelados' };
+
+    function getEmptyStateMarkup() {
+      const statusLabel = STATUS_TAB_LABELS[state.status] || '';
+      if (hasActiveFilters()) {
+        return `
+          <div class="table-empty-state">
+            <div class="table-empty-state__icon"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></div>
+            <strong class="table-empty-state__title">Nenhum resultado encontrado</strong>
+            <p class="table-empty-state__text">Não encontramos pagamentos ${statusLabel} com os filtros aplicados. Ajuste a pesquisa ou limpe os filtros para ver outros resultados.</p>
+            <button class="btn btn-secondary clear-filters is-active table-empty-state__action" type="button" data-empty-clear-filters>
+              <svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path
+                  d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21">
+                </path>
+                <path d="m5.082 11.09 8.828 8.828"></path>
+              </svg>
+              <span>Limpar filtros</span>
+            </button>
+          </div>
+        `;
+      }
+      return `
+        <div class="table-empty-state">
+          <div class="table-empty-state__icon"><i class="fa-solid fa-inbox" aria-hidden="true"></i></div>
+          <strong class="table-empty-state__title">Nenhum pagamento por aqui</strong>
+          <p class="table-empty-state__text">Ainda não há pagamentos ${statusLabel} para exibir nesta categoria.</p>
+        </div>
+      `;
+    }
+
+    function syncClearFiltersState() {
+      const active = hasActiveFilters();
+      clearFilters.classList.toggle('is-active', active);
+      clearFilters.setAttribute('aria-pressed', String(active));
+    }
+
+    const tourAnchor = document.querySelector('.payment-new-features');
+    const tourOffsetParent = document.querySelector('.payments-page');
+
+    // Ancora o balao logo abaixo do controle de modos: a caixa "Novos modos de
+    // visualizacao" normalmente, ou o botao "Sair do modo foco" no modo foco.
+    function positionTour() {
+      if (!compactTour.classList.contains('is-visible')) return;
+      const focusMode = document.body.classList.contains('payments-focus-mode');
+      const anchor = focusMode ? focusExitToggle : tourAnchor;
+      if (!anchor || !tourOffsetParent) {
+        compactTour.style.top = '';
+        compactTour.style.right = '';
+        compactTour.style.left = '';
+        return;
+      }
+      const anchorRect = anchor.getBoundingClientRect();
+      if (focusMode) {
+        // CSS deixa o balao como position: fixed -> coordenadas de viewport,
+        // alinhado pela direita do botao (que fica colado na borda direita)
+        compactTour.style.top = `${anchorRect.bottom + 10}px`;
+        compactTour.style.right = `${window.innerWidth - anchorRect.right}px`;
+        compactTour.style.left = 'auto';
+      } else {
+        const parentRect = tourOffsetParent.getBoundingClientRect();
+        compactTour.style.top = `${anchorRect.bottom - parentRect.top + 10}px`;
+        compactTour.style.right = `${parentRect.right - anchorRect.right}px`;
+        compactTour.style.left = 'auto';
+      }
+    }
+
+    function showTour(title, text) {
+      tourTitle.textContent = title;
+      tourText.innerHTML = text;
+      compactTour.classList.add('is-visible');
+      positionTour();
+      // reposiciona apos o layout assentar (troca de modo foco muda a pagina)
+      requestAnimationFrame(positionTour);
+    }
+
+    function hideTour() {
+      compactTour.classList.remove('is-visible');
+    }
+
+    window.addEventListener('resize', positionTour);
+
+    // Aviso de rolagem horizontal — reaproveita o toast de dicas do topo.
+    function showGridScrollTip() {
+      const wrap = document.querySelector('.payments-table-wrap');
+      if (!wrap || wrap.scrollWidth - wrap.clientWidth <= 8) return;
+      showTour(
+        'Rolagem lateral do grid',
+        'Segure <kbd>Shift</kbd> e role o mouse — ou arraste com dois dedos no trackpad — para ver todas as colunas.'
+      );
+    }
+
+    function setFocusMode(enabled) {
+      document.body.classList.toggle('payments-focus-mode', enabled);
+      focusToggle.querySelector('span').textContent = enabled ? 'Sair do foco' : 'Modo foco';
+      focusToggle.querySelector('i').className = enabled
+        ? 'fa-solid fa-down-left-and-up-right-to-center'
+        : 'fa-solid fa-up-right-and-down-left-from-center';
+      if (enabled) {
+        showTour('Modo foco ativo', 'A tela está focada no grid. Clique em uma linha para ver detalhes e pressione Esc para sair.');
+      } else {
+        hideTour();
+      }
+    }
+
+    fillSelect(accountFilter, uniqueValues('accountType'));
+    fillSelect(campaignFilter, uniqueValues('campaign'));
+    window.BipperCustomSelect?.enhanceAll(document.querySelector('.payment-filters'));
+    syncClearFiltersState();
+    updateTabCounts();
+    renderRowsWithSkeleton();
+
+    document.querySelectorAll('[data-status]').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-status]').forEach((item) => item.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        state.status = tab.dataset.status;
+        resetPageAndRender();
+      });
+    });
+
+    document.querySelectorAll('[data-view-mode]').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-view-mode]').forEach((item) => item.classList.remove('is-active'));
+        button.classList.add('is-active');
+        state.viewMode = button.dataset.viewMode;
+        document.body.classList.toggle('payments-compact-mode', state.viewMode === 'compact');
+        if (state.viewMode === 'compact') {
+          showTour('Modo compacto ativo', 'Serão exibidas apenas as informações principais. Clique em uma linha da ação para abrir os detalhes completos ao lado.');
+        } else {
+          detailPanelInstance.close();
+          showGridScrollTip();
+        }
+        requestAnimationFrame(updateGridTooltips);
+      });
+    });
+
+    body.addEventListener('click', (event) => {
+      const row = event.target.closest('[data-row-index]');
+      if (!row) return;
+      detailPanelInstance.open(expandedPayments[Number(row.dataset.rowIndex)]);
+    });
+
+    paymentsEmptyState.addEventListener('click', (event) => {
+      if (!event.target.closest('[data-empty-clear-filters]')) return;
+      clearFilters.click();
+    });
+
+    document.getElementById('dismissCompactTour').addEventListener('click', hideTour);
+
+    // Mostra o aviso de rolagem ja na abertura da tela (grid é o modo inicial).
+    window.setTimeout(showGridScrollTip, 800);
+
+    searchInput.addEventListener('input', () => {
+      state.search = searchInput.value.trim();
+      resetPageAndRender();
+    });
+
+    accountFilter.addEventListener('change', () => {
+      state.account = accountFilter.value;
+      resetPageAndRender();
+    });
+
+    campaignFilter.addEventListener('change', () => {
+      state.campaign = campaignFilter.value;
+      resetPageAndRender();
+    });
+
+    clearFilters.addEventListener('click', () => {
+      state.search = '';
+      state.account = '';
+      state.campaign = '';
+      searchInput.value = '';
+      accountFilter.value = '';
+      campaignFilter.value = '';
+      syncClearFiltersState();
+      resetPageAndRender();
+    });
+
+    pageButtons.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-page]');
+      if (!button) return;
+      state.page = Number(button.dataset.page);
+      renderRowsWithSkeleton();
+    });
+
+    prevPage.addEventListener('click', () => {
+      state.page = Math.max(1, state.page - 1);
+      renderRowsWithSkeleton();
+    });
+
+    nextPage.addEventListener('click', () => {
+      state.page += 1;
+      renderRowsWithSkeleton();
+    });
+
+    focusToggle.addEventListener('click', () => {
+      setFocusMode(!document.body.classList.contains('payments-focus-mode'));
+      requestAnimationFrame(updateGridTooltips);
+    });
+
+    focusExitToggle.addEventListener('click', () => {
+      setFocusMode(false);
+      requestAnimationFrame(updateGridTooltips);
+    });
+
+    window.addEventListener('resize', () => {
+      requestAnimationFrame(updateGridTooltips);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && document.body.classList.contains('payments-focus-mode')) {
+        setFocusMode(false);
+      }
+    });
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'data-tooltip';
+    document.body.appendChild(tooltip);
+
+    document.addEventListener('mouseover', (event) => {
+      const target = event.target.closest('[data-tooltip-text]');
+      if (!target || !target.dataset.tooltipText) return;
+      tooltip.textContent = target.dataset.tooltipText;
+      tooltip.classList.add('is-visible');
+    });
+
+    document.addEventListener('mousemove', (event) => {
+      if (!tooltip.classList.contains('is-visible')) return;
+      const offset = 14;
+      const maxLeft = window.innerWidth - tooltip.offsetWidth - 12;
+      const maxTop = window.innerHeight - tooltip.offsetHeight - 12;
+      tooltip.style.left = `${Math.max(12, Math.min(event.clientX + offset, maxLeft))}px`;
+      tooltip.style.top = `${Math.max(12, Math.min(event.clientY + offset, maxTop))}px`;
+    });
+
+    document.addEventListener('mouseout', (event) => {
+      if (!event.target.closest('[data-tooltip-text]')) return;
+      tooltip.classList.remove('is-visible');
+    });
+  </script>
+</body>
+
+</html>

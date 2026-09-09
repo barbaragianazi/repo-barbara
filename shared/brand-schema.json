@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Portal Bipper Brand Configuration",
+  "description": "Contrato técnico do brands.json. Define quais campos uma marca precisa ter, como name, primary, secondary, surface, logoLight, logoDark, etc.",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": [
+      "name",
+      "primary",
+      "secondary",
+      "surface",
+      "surfaceAlt",
+      "text",
+      "textLight",
+      "border",
+      "logoLight",
+      "logoDark"
+    ],
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Nome exibido no seletor de marca."
+      },
+      "group": {
+        "type": "string",
+        "description": "Grupo visual no dropdown. Use Marcas ou Revendas."
+      },
+      "primary": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "secondary": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "surface": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "surfaceAlt": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "text": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "textLight": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "border": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "gradient-soft-1": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "gradient-soft-2": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "gradient-soft-3": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      },
+      "logoLight": {
+        "type": "string"
+      },
+      "logoDark": {
+        "type": "string"
+      },
+      "footerLogoLight": {
+        "type": "string"
+      },
+      "footerLogoDark": {
+        "type": "string"
+      },
+      "footerLogoName": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
+  }
+}

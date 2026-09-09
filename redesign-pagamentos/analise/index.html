@@ -1,0 +1,1499 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redesign Pagamentos - Visao geral</title>
+  <link rel="icon" type="image/png" href="../../shared/assets/logos/fav-icon.png">
+  <link rel="stylesheet" href="../../shared/design-tokens.css">
+  <link rel="stylesheet" href="../../shared/base-components.css">
+  <link rel="stylesheet" href="../../shared/app-shell.css">
+  <link rel="stylesheet" href="../../shared/custom-select.css">
+  <link rel="stylesheet" href="../../shared/custom-date.css">
+  <link rel="stylesheet" href="../../css/app.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+      <div class="brand" data-brands-url="../../shared/data/brands.json">
+        <div class="brand__area" aria-label="Marca ativa">
+          <button class="brand__logo-btn" type="button" aria-label="Selecionar marca" aria-haspopup="true"
+            aria-expanded="false">
+            <img src="../../shared/assets/logos/zoetis-dark.svg" alt="Zoetis" class="brand__logo" data-logo="dark">
+          </button>
+          <div class="brand-dropdown" role="menu" aria-label="Selecionar marca"></div>
+        </div>
+        <button class="brand__toggle" id="sidebarToggle" type="button" aria-label="Recolher menu" aria-expanded="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </button>
+      </div>
+      <div data-shell-menu data-menu-url="../../config/menu.json"></div>
+      <div class="theme-toggle" role="group" aria-label="Tema do portal">
+        <button type="button" class="theme-toggle__btn" data-theme-choice="light"
+          data-tooltip="Alternar para tema light" aria-label="Tema claro" aria-pressed="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+          </svg>
+        </button>
+        <button type="button" class="theme-toggle__btn" data-theme-choice="dark" data-tooltip="Alternar para tema dark"
+          aria-label="Tema escuro" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path>
+          </svg>
+        </button>
+      </div>
+      <div data-shell-profile></div>
+    </aside>
+    <button class="sidebar-overlay" id="sidebarOverlay" type="button" aria-label="Fechar menu"></button>
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="openMenu" type="button" aria-label="Abrir menu" aria-expanded="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4 6h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 18h16"></path>
+          </svg>
+        </button>
+      </header>
+      <section class="content">
+        <div class="payments-page overview-page">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../../index.html">Início</a>
+            <span>Pagamento</span>
+            <strong>Análises</strong>
+          </nav>
+
+          <section class="payment-hero summary-card">
+            <div>
+              <h1>Análises</h1>
+              <p>Panorama das ações de pagamento por status, campanha, participante e período.</p>
+            </div>
+            <div class="overview-hero-meta">
+              <span class="overview-hero-meta__label">Período analisado</span>
+              <strong id="overviewPeriodLabel">Últimos 12 meses</strong>
+              <span id="overviewRangeLabel" class="overview-hero-meta__range">—</span>
+            </div>
+          </section>
+
+          <section class="payment-filters summary-card overview-filters" aria-label="Filtros da visão geral">
+            <div class="payment-filter-grid">
+              <div class="overview-period" role="group" aria-label="Período">
+                <button type="button" data-period="3">3 meses</button>
+                <button type="button" data-period="6">6 meses</button>
+                <button type="button" class="is-active" data-period="12">12 meses</button>
+                <button type="button" data-period="all">Tudo</button>
+                <button type="button" data-period="custom" aria-expanded="false" aria-controls="overviewCustomPeriod">Personalizado</button>
+                <div class="overview-period-custom" id="overviewCustomPeriod" data-cd-popover="right" aria-hidden="true">
+                  <label>
+                    <span>Inicial</span>
+                    <input type="date" id="ovCustomStart">
+                  </label>
+                  <label>
+                    <span>Final</span>
+                    <input type="date" id="ovCustomEnd">
+                  </label>
+                </div>
+              </div>
+              <label>
+                <select class="payment-filter-select" id="ovStatusFilter">
+                  <option value="">Todos os status</option>
+                  <option value="processing">Em análise</option>
+                  <option value="paid">Pagos</option>
+                  <option value="canceled">Cancelados</option>
+                </select>
+              </label>
+              <label>
+                <select class="payment-filter-select" id="ovCampaignFilter">
+                  <option value="">Todas as campanhas</option>
+                </select>
+              </label>
+              <label>
+                <select class="payment-filter-select" id="ovParticipantFilter">
+                  <option value="">Todos os participantes</option>
+                </select>
+              </label>
+              <label>
+                <select class="payment-filter-select" id="ovAccountFilter">
+                  <option value="">Todos os tipos de conta</option>
+                </select>
+              </label>
+              <button class="btn btn-secondary clear-filters" id="ovClearFilters" type="button" aria-pressed="false">
+                <svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path
+                    d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21">
+                  </path>
+                  <path d="m5.082 11.09 8.828 8.828"></path>
+                </svg>
+                <span>Limpar filtros</span>
+              </button>
+
+              <div class="export-menu">
+                <button class="btn btn-primary export-menu__trigger" type="button">
+                  <i class="fa-solid fa-file-export" aria-hidden="true"></i>
+                  <span>Exportar</span>
+                </button>
+                <div class="export-menu__popover" aria-hidden="true">
+                  <button type="button"><i class="fa-solid fa-file-csv" aria-hidden="true"></i> CSV</button>
+                  <button type="button"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> PDF</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="overview-active-filters" id="overviewActiveFilters" aria-live="polite"></div>
+
+          <section class="summary-card overview-empty" id="overviewEmpty" aria-live="polite" hidden>
+            <div class="table-empty-state">
+              <div class="table-empty-state__icon">
+                <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
+              </div>
+              <strong class="table-empty-state__title">Nenhuma ação no período</strong>
+              <p class="table-empty-state__text">
+                Não há ações de pagamento para o período e os filtros selecionados. Ajuste o período ou limpe os filtros para ver os dados.
+              </p>
+              <button class="btn btn-secondary clear-filters is-active table-empty-state__action" type="button" id="overviewEmptyClear">
+                <svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path
+                    d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21">
+                  </path>
+                  <path d="m5.082 11.09 8.828 8.828"></path>
+                </svg>
+                <span>Limpar filtros</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="metrics-grid overview-kpis" id="overviewKpis" aria-label="Indicadores"></section>
+
+          <section class="overview-charts" aria-label="Gráficos">
+            <article class="summary-card overview-chart overview-chart--wide">
+              <div class="overview-chart__head">
+                <div>
+                  <h2>Evolução de ações pagas</h2>
+                </div>
+                <span class="overview-chart-hint">
+                  <svg class="overview-chart-hint__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                  </svg>
+                  Clique nas barras, fatias ou meses nos gráficos para cruzar os dados.
+                </span>
+              </div>
+              <div class="overview-chart__canvas overview-chart__canvas--tall">
+                <canvas id="chartTimeline" aria-label="Gráfico de evolução de ações pagas" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="summary-card overview-chart overview-chart--half">
+              <div class="overview-chart__head">
+                <h2>Top 10 participantes por valor</h2>
+              </div>
+              <div class="overview-chart__canvas overview-chart__canvas--tall">
+                <canvas id="chartParticipants" aria-label="Gráfico de top participantes por valor" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="summary-card overview-chart overview-chart--half">
+              <div class="overview-chart__head">
+                <h2>Valor por campanha</h2>
+              </div>
+              <div class="overview-chart__canvas overview-chart__canvas--tall">
+                <canvas id="chartCampaigns" aria-label="Gráfico de valor por campanha" role="img"></canvas>
+              </div>
+            </article>
+
+            <article class="summary-card overview-chart overview-chart--split">
+              <div class="overview-chart__head">
+                <h2>Distribuição por status</h2>
+                <div class="overview-toggle" role="group" aria-label="Métrica do gráfico de status">
+                  <button type="button" class="is-active" data-status-metric="value">Valor</button>
+                  <button type="button" data-status-metric="count">Quantidade</button>
+                </div>
+              </div>
+              <div class="overview-chart__body">
+                <div class="overview-chart__canvas overview-chart__canvas--donut">
+                  <canvas id="chartStatus" aria-label="Gráfico de distribuição por status" role="img"></canvas>
+                </div>
+                <div class="overview-legend" id="legendStatus"></div>
+              </div>
+            </article>
+
+            <article class="summary-card overview-chart overview-chart--split">
+              <div class="overview-chart__head">
+                <h2>Valor por tipo de conta</h2>
+                <!-- <p class="overview-chart__sub">Origem do saldo utilizado.</p> -->
+              </div>
+              <div class="overview-chart__body">
+                <div class="overview-chart__canvas overview-chart__canvas--donut">
+                  <canvas id="chartAccounts" aria-label="Gráfico de valor por tipo de conta" role="img"></canvas>
+                </div>
+                <div class="overview-legend" id="legendAccounts"></div>
+              </div>
+            </article>
+
+            <article class="summary-card overview-chart overview-chart--split">
+              <div class="overview-chart__head">
+                <h2>Tipo de pagamento</h2>
+                <!-- <p class="overview-chart__sub">Por número de ações.</p> -->
+              </div>
+              <div class="overview-chart__body">
+                <div class="overview-chart__canvas overview-chart__canvas--donut">
+                  <canvas id="chartPaymentType" aria-label="Gráfico de tipo de pagamento" role="img"></canvas>
+                </div>
+                <div class="overview-legend" id="legendPaymentType"></div>
+              </div>
+            </article>
+          </section>
+
+          <section class="overview-lists" aria-label="Listas de apoio">
+            <article class="summary-card overview-list">
+              <div class="overview-chart__head">
+                <h2>Maiores valores em análise</h2>
+                <a class="overview-list__link" href="../pagamento-acoes/index.html">Ver todas</a>
+              </div>
+              <div class="payments-table-wrap">
+                <table class="payments-table overview-table">
+                  <thead>
+                    <tr>
+                      <th>Ação</th>
+                      <th>Participante</th>
+                      <th>Campanha</th>
+                      <th>Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewTopValues"></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="summary-card overview-list">
+              <div class="overview-chart__head">
+                <h2>Últimas ações incluídas</h2>
+                <a class="overview-list__link" href="../pagamento-acoes/index.html">Ver todas</a>
+              </div>
+              <div class="payments-table-wrap">
+                <table class="payments-table overview-table">
+                  <thead>
+                    <tr>
+                      <th>Código</th>
+                      <th>Ação</th>
+                      <th>Status</th>
+                      <th>Data inclusão</th>
+                      <th>Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewRecent"></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    window.BipperShellConfig = {
+      app: 'redesign-pagamentos',
+      active: 'redesign-pagamentos-visao-geral',
+      assetPathPrefix: '../../',
+      publicPage: true
+    };
+  </script>
+  <script src="../../shared/app-shell.js"></script>
+  <script src="../../shared/custom-select.js"></script>
+  <script src="../../shared/custom-date.js"></script>
+  <script src="../../shared/data/payments.js"></script>
+  <script src="../../shared/payment-detail-panel.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const DATA = window.BipperPayments;
+      const rows = DATA.all;
+      const parseBRL = DATA.parseBRL;
+      const parseBRDate = DATA.parseBRDate;
+      const detailPanel = window.BipperPaymentDetailPanel.create();
+
+      const STATUS_META = {
+        processing: { label: 'Em análise', token: '--warning', fallback: '#f59e0b' },
+        paid: { label: 'Pagos', token: '--success', fallback: '#10b981' },
+        canceled: { label: 'Cancelados', token: '--danger', fallback: '#ef4444' }
+      };
+
+      const PERIOD_LABELS = {
+        '3': 'Últimos 3 meses',
+        '6': 'Últimos 6 meses',
+        '12': 'Últimos 12 meses',
+        'all': 'Todo o histórico',
+        'custom': 'Período personalizado'
+      };
+
+      const state = {
+        period: '12',
+        customStart: '',
+        customEnd: '',
+        status: '',
+        campaign: '',
+        participant: '',
+        account: '',
+        paymentType: '',
+        month: '',
+        statusMetric: 'value'
+      };
+
+      /* Dimensões cruzáveis pelos gráficos: rótulo do chip + como exibir o valor selecionado. */
+      const CROSS_DIMENSIONS = {
+        status: { label: 'Status', display: (v) => (STATUS_META[v] ? STATUS_META[v].label : v) },
+        campaign: { label: 'Campanha', display: (v) => v },
+        participant: { label: 'Participante', display: (v) => v },
+        account: { label: 'Tipo de conta', display: (v) => v },
+        paymentType: { label: 'Tipo de pagamento', display: (v) => v },
+        month: { label: 'Mês', display: (v) => monthLabel(v) }
+      };
+
+      const charts = {};
+      let renderTimer;
+
+      /* ---------- Tokens de tema para o Chart.js ---------- */
+      function readTokens() {
+        const s = getComputedStyle(document.documentElement);
+        const get = (name, fallback) => (s.getPropertyValue(name).trim() || fallback);
+        return {
+          brand: get('--brand-primary', '#ff6b00'),
+          brandRgb: get('--brand-primary-rgb', '255, 107, 0'),
+          ink: get('--ink', '#0f172a'),
+          text: get('--text', '#263447'),
+          muted: get('--muted', '#65758b'),
+          line: get('--line', '#e5eaf0'),
+          surface: get('--surface-2', '#f8fafc'),
+          success: get('--success', '#10b981'),
+          warning: get('--warning', '#f59e0b'),
+          danger: get('--danger', '#ef4444')
+        };
+      }
+
+      function categoricalPalette(t) {
+        return [t.brand, '#00a7b5', '#2563eb', '#7c3aed', '#db2777', t.success, t.warning, '#64748b', '#0ea5e9', '#f97316'];
+      }
+
+      /* Devolve a mesma cor com opacidade `a` (aceita hex #rgb/#rrggbb e rgb()/rgba()).
+         Usado para esmaecer as categorias não selecionadas no cross-highlight. */
+      function withAlpha(color, a) {
+        if (typeof color !== 'string') return color;
+        if (color[0] === '#') {
+          let h = color.slice(1);
+          if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+          const n = parseInt(h, 16);
+          return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
+        }
+        const m = color.match(/rgba?\(([^)]+)\)/);
+        if (m) {
+          const [r, g, b] = m[1].split(',').map((s) => s.trim());
+          return `rgba(${r}, ${g}, ${b}, ${a})`;
+        }
+        return color;
+      }
+
+      /* Aplica o realce: a cor cheia na categoria selecionada, esmaecida nas demais.
+         Sem seleção, todas ficam cheias. `values[i]` é o valor da categoria i. */
+      function highlightColors(baseColors, values, selectedValue) {
+        return values.map((value, i) => {
+          const base = Array.isArray(baseColors) ? baseColors[i % baseColors.length] : baseColors;
+          if (!selectedValue || selectedValue === value) return base;
+          return withAlpha(base, 0.18);
+        });
+      }
+
+      /* ---------- Formatação ---------- */
+      const brl0 = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+      const brl2 = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 });
+      const int0 = new Intl.NumberFormat('pt-BR');
+
+      function formatCompactBRL(value) {
+        if (value >= 1e6) return `R$ ${(value / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} mi`;
+        if (value >= 1e3) return `R$ ${(value / 1e3).toLocaleString('pt-BR', { maximumFractionDigits: 0 })} mil`;
+        return brl0.format(value);
+      }
+
+      function monthKey(date) {
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+      }
+
+      function monthLabel(key) {
+        const [year, month] = key.split('-').map(Number);
+        const label = new Date(year, month - 1, 1).toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '');
+        return `${label}/${String(year).slice(2)}`;
+      }
+
+      /* ---------- Filtro ---------- */
+      function parseISODate(value, endOfDay = false) {
+        if (!value) return null;
+        const [year, month, day] = value.split('-').map(Number);
+        if (!year || !month || !day) return null;
+        return endOfDay
+          ? new Date(year, month - 1, day, 23, 59, 59, 999)
+          : new Date(year, month - 1, day);
+      }
+
+      function periodRange() {
+        if (state.period === 'all') return null;
+        if (state.period === 'custom') {
+          return {
+            start: parseISODate(state.customStart),
+            end: parseISODate(state.customEnd, true)
+          };
+        }
+        const months = Number(state.period);
+        const ref = new Date();
+        return {
+          start: new Date(ref.getFullYear(), ref.getMonth() - months + 1, 1),
+          end: null
+        };
+      }
+
+      /* exclude: nomes de dimensões cruzadas a ignorar. Serve para o gráfico de origem
+         continuar mostrando todas as categorias enquanto os demais já filtram. */
+      function getFilteredRows(...exclude) {
+        const range = periodRange();
+        const skip = (dim) => exclude.includes(dim);
+        return rows.filter((item) => {
+          const date = parseBRDate(item.includedAt);
+          if (range?.start && date < range.start) return false;
+          if (range?.end && date > range.end) return false;
+          if (!skip('month') && state.month && monthKey(date) !== state.month) return false;
+          if (!skip('status') && state.status && item.statusGroup !== state.status) return false;
+          if (!skip('campaign') && state.campaign && (item.campaign || 'Não informado') !== state.campaign) return false;
+          if (!skip('participant') && state.participant && (item.participant || 'Não informado') !== state.participant) return false;
+          if (!skip('account') && state.account && (item.accountType || 'Não informado') !== state.account) return false;
+          if (!skip('paymentType') && state.paymentType && (item.paymentType || 'Não informado') !== state.paymentType) return false;
+          return true;
+        });
+      }
+
+      /* Faixa do período imediatamente anterior, com a mesma duração do período atual.
+         "Tudo" não tem um período anterior equivalente, então não há comparativo. */
+      function previousPeriodRange() {
+        if (state.period === 'all') return null;
+        // Com um mês específico selecionado no gráfico, "período anterior" não faz sentido.
+        if (state.month) return null;
+        const months = Number(state.period);
+        const ref = new Date();
+        const currentStart = new Date(ref.getFullYear(), ref.getMonth() - months + 1, 1);
+        const previousStart = new Date(ref.getFullYear(), ref.getMonth() - (months * 2) + 1, 1);
+        return { start: previousStart, end: currentStart };
+      }
+
+      function getPreviousPeriodRows() {
+        const range = previousPeriodRange();
+        if (!range) return null;
+        return rows.filter((item) => {
+          const date = parseBRDate(item.includedAt);
+          if (date < range.start || date >= range.end) return false;
+          if (state.status && item.statusGroup !== state.status) return false;
+          if (state.campaign && item.campaign !== state.campaign) return false;
+          if (state.participant && item.participant !== state.participant) return false;
+          if (state.account && item.accountType !== state.account) return false;
+          if (state.paymentType && (item.paymentType || 'Não informado') !== state.paymentType) return false;
+          return true;
+        });
+      }
+
+      /* Retorna null quando a comparação não é possível (sem período anterior ou sem base para calcular %).
+         higherIsBetter controla a cor (verde/vermelho): para métricas onde subir é ruim
+         (ex.: tempo em análise, taxa de cancelamento), passe false — a seta continua
+         mostrando a direção real do movimento, só a cor de bom/ruim se inverte. */
+      function computeTrend(current, previous, higherIsBetter = true) {
+        if (previous == null || !previous) return null;
+        // KPI zerado agora: "↓100%" é redundante com o "R$ 0" e só faz barulho.
+        if (!current) return null;
+        const diff = ((current - previous) / previous) * 100;
+        const direction = diff >= 0 ? 'up' : 'down';
+        const good = higherIsBetter ? direction === 'up' : direction === 'down';
+        return { direction, percent: Math.abs(Math.round(diff)), good };
+      }
+
+      function uniqueSorted(key) {
+        return [...new Set(rows.map((item) => item[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+      }
+
+      /* ---------- Agregações ---------- */
+      function buildAggregations(data) {
+        const byStatus = { processing: { value: 0, count: 0 }, paid: { value: 0, count: 0 }, canceled: { value: 0, count: 0 } };
+        const byMonth = new Map();
+        const byParticipant = new Map();
+        const byCampaign = new Map();
+        const byAccount = new Map();
+        const byPaymentType = new Map();
+        const campaigns = new Set();
+        let totalValue = 0;
+        let analysisDaysTotal = 0;
+        const today = new Date();
+
+        data.forEach((item) => {
+          const value = parseBRL(item.value);
+          totalValue += value;
+          if (byStatus[item.statusGroup]) {
+            byStatus[item.statusGroup].value += value;
+            byStatus[item.statusGroup].count += 1;
+          }
+          if (item.statusGroup === 'processing') {
+            analysisDaysTotal += Math.max(0, Math.floor((today - parseBRDate(item.includedAt)) / 86400000));
+          }
+          campaigns.add(item.campaign);
+
+          const mKey = monthKey(parseBRDate(item.includedAt));
+          const month = byMonth.get(mKey) || { value: 0, count: 0 };
+          month.value += value;
+          month.count += 1;
+          byMonth.set(mKey, month);
+
+          const addTo = (map, rawKey) => {
+            const key = rawKey || 'Não informado';
+            map.set(key, (map.get(key) || 0) + value);
+          };
+          addTo(byParticipant, item.participant);
+          addTo(byCampaign, item.campaign);
+          addTo(byAccount, item.accountType);
+
+          const ptKey = item.paymentType || 'Não informado';
+          byPaymentType.set(ptKey, (byPaymentType.get(ptKey) || 0) + 1);
+        });
+
+        const monthKeys = [...byMonth.keys()].sort();
+
+        const topEntries = (map, limit) => [...map.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit);
+
+        return {
+          totalValue,
+          totalCount: data.length,
+          activeCampaigns: campaigns.size,
+          ticket: data.length ? totalValue / data.length : 0,
+          avgAnalysisDays: byStatus.processing.count ? analysisDaysTotal / byStatus.processing.count : 0,
+          cancellationRate: data.length ? (byStatus.canceled.count / data.length) * 100 : 0,
+          byStatus,
+          months: monthKeys.map((key) => ({ key, label: monthLabel(key), ...byMonth.get(key) })),
+          participants: topEntries(byParticipant, 10),
+          campaigns: topEntries(byCampaign, 8),
+          accounts: [...byAccount.entries()].sort((a, b) => b[1] - a[1]),
+          paymentTypes: [...byPaymentType.entries()].sort((a, b) => b[1] - a[1])
+        };
+      }
+
+      /* ---------- KPIs ---------- */
+      const kpiHost = document.getElementById('overviewKpis');
+
+      function trendMarkup(trend) {
+        if (!trend) return '';
+        return `
+          <span class="metric-trend metric-trend--${trend.good ? 'up' : 'down'}" title="Comparado ao período anterior">
+            <i class="fa-solid fa-arrow-${trend.direction}" aria-hidden="true"></i>${trend.percent}%
+          </span>
+        `;
+      }
+
+      function kpiCard({ title, value, sub, icon, token, fallback, trend }) {
+        const accent = getComputedStyle(document.documentElement).getPropertyValue(token).trim() || fallback;
+        const soft = `color-mix(in srgb, ${accent} 14%, transparent)`;
+        return `
+          <article class="metric-card">
+            <div>
+              <h3>${title}</h3>
+              <strong>${value}</strong>
+              <div class="metric-card__foot">
+                <p>${sub}</p>
+                ${trendMarkup(trend)}
+              </div>
+            </div>
+            <span class="metric-icon" style="--accent:${accent};--soft:${soft}">
+              <i class="fa-solid ${icon}" aria-hidden="true"></i>
+            </span>
+          </article>
+        `;
+      }
+
+      function renderKpiSkeleton() {
+        kpiHost.innerHTML = Array.from({ length: 5 }, () => `
+          <article class="metric-card metric-card--skeleton">
+            <div class="metric-card__skeleton-body">
+              <span class="skeleton-shimmer" style="width:52%;height:12px;border-radius:999px;display:block"></span>
+              <span class="skeleton-shimmer" style="width:74%;height:26px;border-radius:10px;display:block;margin-top:12px"></span>
+              <span class="skeleton-shimmer" style="width:40%;height:11px;border-radius:999px;display:block;margin-top:12px"></span>
+            </div>
+            <span class="metric-icon skeleton-shimmer" style="border:0"></span>
+          </article>
+        `).join('');
+      }
+
+      function renderKpis(agg, previousAgg) {
+        kpiHost.innerHTML = [
+          kpiCard({
+            title: 'Em análise', value: formatCompactBRL(agg.byStatus.processing.value),
+            sub: `${int0.format(agg.byStatus.processing.count)} ações`, icon: 'fa-hourglass-half',
+            token: '--warning', fallback: '#f59e0b',
+            trend: previousAgg && computeTrend(agg.byStatus.processing.value, previousAgg.byStatus.processing.value)
+          }),
+          kpiCard({
+            title: 'Pagos', value: formatCompactBRL(agg.byStatus.paid.value),
+            sub: `${int0.format(agg.byStatus.paid.count)} ações`, icon: 'fa-circle-check',
+            token: '--success', fallback: '#10b981',
+            trend: previousAgg && computeTrend(agg.byStatus.paid.value, previousAgg.byStatus.paid.value)
+          }),
+          kpiCard({
+            title: 'Cancelados', value: formatCompactBRL(agg.byStatus.canceled.value),
+            sub: `${int0.format(agg.byStatus.canceled.count)} ações`, icon: 'fa-ban',
+            token: '--danger', fallback: '#ef4444',
+            trend: previousAgg && computeTrend(agg.byStatus.canceled.value, previousAgg.byStatus.canceled.value)
+          }),
+          kpiCard({
+            title: 'Ticket médio', value: formatCompactBRL(agg.ticket),
+            sub: `${int0.format(agg.totalCount)} ações no período`, icon: 'fa-receipt',
+            token: '--brand-primary', fallback: '#ff6b00',
+            trend: previousAgg && computeTrend(agg.ticket, previousAgg.ticket)
+          }),
+          kpiCard({
+            title: 'Campanhas ativas', value: int0.format(agg.activeCampaigns),
+            sub: 'com ações no período', icon: 'fa-bullhorn',
+            token: '--brand-primary', fallback: '#ff6b00',
+            trend: previousAgg && computeTrend(agg.activeCampaigns, previousAgg.activeCampaigns)
+          })
+        ].join('');
+      }
+
+      /* ---------- Listas de apoio ---------- */
+      const topValuesHost = document.getElementById('overviewTopValues');
+      const recentHost = document.getElementById('overviewRecent');
+
+      /* ---------- Empty state (período/filtros sem dados) ---------- */
+      const emptyHost = document.getElementById('overviewEmpty');
+      const chartsSection = document.querySelector('.overview-charts');
+      const listsSection = document.querySelector('.overview-lists');
+
+      function truncate(text, max) {
+        const value = String(text || '-');
+        return value.length > max ? `${value.slice(0, max - 1)}…` : value;
+      }
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (char) => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[char]));
+      }
+
+      function tooltipCell(text, max, extraClass = '') {
+        const value = String(text || '-');
+        const compact = truncate(value, max);
+        const tooltip = compact !== value ? ` data-tooltip="${escapeHtml(value)}"` : '';
+        const classes = ['overview-table__truncated', extraClass].filter(Boolean).join(' ');
+        return `<td class="${classes}"${tooltip}>${escapeHtml(compact)}</td>`;
+      }
+
+      function tableSkeleton(host, columns, lines) {
+        host.innerHTML = Array.from({ length: lines }, () => `
+          <tr>${Array.from({ length: columns }, () => '<td><span class="table-skeleton-cell table-skeleton-cell--medium skeleton-shimmer"></span></td>').join('')}</tr>
+        `).join('');
+      }
+
+      function renderTopValues(data) {
+        const items = data
+          .filter((item) => item.statusGroup === 'processing')
+          .sort((a, b) => parseBRL(b.value) - parseBRL(a.value))
+          .slice(0, 6);
+        topValuesHost.innerHTML = items.map((item) => `
+          <tr data-row-index="${rows.indexOf(item)}">
+            ${tooltipCell(item.action, 34)}
+            ${tooltipCell(item.participant, 26)}
+            ${tooltipCell(item.campaign, 26)}
+            <td class="overview-table__value">${brl2.format(parseBRL(item.value))}</td>
+          </tr>
+        `).join('') || '<tr><td colspan="4" class="overview-table__empty">Nenhuma ação em análise no período.</td></tr>';
+      }
+
+      function renderRecent(data) {
+        const items = [...data]
+          .sort((a, b) => parseBRDate(b.includedAt) - parseBRDate(a.includedAt))
+          .slice(0, 6);
+        recentHost.innerHTML = items.map((item) => {
+          const meta = STATUS_META[item.statusGroup];
+          return `
+            <tr data-row-index="${rows.indexOf(item)}">
+              <td>${item.code}</td>
+              ${tooltipCell(item.action, 30)}
+              <td><span class="overview-pill overview-pill--${item.statusGroup}">${meta ? meta.label : item.status}</span></td>
+              <td>${item.includedAt}</td>
+              <td class="overview-table__value">${brl2.format(parseBRL(item.value))}</td>
+            </tr>
+          `;
+        }).join('') || '<tr><td colspan="5" class="overview-table__empty">Nenhuma ação no período.</td></tr>';
+      }
+
+      /* ---------- Chart.js ---------- */
+      function baseChartOptions(t) {
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 260 },
+          plugins: {
+            legend: {
+              labels: { color: t.text, font: { family: 'Nunito', size: 12 }, boxWidth: 12, boxHeight: 12, usePointStyle: true }
+            },
+            tooltip: {
+              backgroundColor: t.ink,
+              titleFont: { family: 'Nunito' },
+              bodyFont: { family: 'Nunito' },
+              padding: 10,
+              cornerRadius: 10
+            }
+          }
+        };
+      }
+
+      function destroyCharts() {
+        Object.keys(charts).forEach((key) => {
+          if (charts[key]) { charts[key].destroy(); delete charts[key]; }
+        });
+        hideDonutTooltip();
+      }
+
+      /* Tooltip das roscas fora do canvas, para não ser cortado pelo tamanho fixo do gráfico */
+      let donutTooltipEl;
+      function getDonutTooltipEl() {
+        if (!donutTooltipEl) {
+          donutTooltipEl = document.createElement('div');
+          donutTooltipEl.className = 'overview-tooltip';
+          document.body.appendChild(donutTooltipEl);
+        }
+        return donutTooltipEl;
+      }
+
+      function hideDonutTooltip() {
+        if (donutTooltipEl) donutTooltipEl.style.opacity = '0';
+      }
+
+      function externalDonutTooltip(context) {
+        const { chart, tooltip } = context;
+        const el = getDonutTooltipEl();
+        if (!tooltip || tooltip.opacity === 0) {
+          el.style.opacity = '0';
+          return;
+        }
+        const lines = (tooltip.body || []).flatMap((b) => b.lines);
+        const colors = tooltip.labelColors || [];
+        el.innerHTML = lines.map((line, i) => {
+          const color = (colors[i] && (colors[i].backgroundColor || colors[i].borderColor)) || '';
+          return `<span class="overview-tooltip__row"><span class="overview-tooltip__dot" style="background:${color}"></span>${line}</span>`;
+        }).join('');
+        const rect = chart.canvas.getBoundingClientRect();
+        el.style.opacity = '1';
+        el.style.left = `${rect.left + tooltip.caretX}px`;
+        el.style.top = `${rect.top + tooltip.caretY}px`;
+      }
+
+      /* Tabela-legenda ao lado das roscas: cor + rótulo + valor + participação.
+         Com `dimension`, cada linha vira clicável (cruza o filtro, igual clicar na fatia). */
+      function renderLegend(hostId, items, dimension) {
+        const host = document.getElementById(hostId);
+        if (!host) return;
+        const total = items.reduce((sum, item) => sum + item.value, 0);
+        const selected = dimension ? state[dimension] : '';
+        host.dataset.dim = dimension || '';
+        host.classList.toggle('overview-legend--interactive', Boolean(dimension));
+        host.innerHTML = `
+          <table class="overview-legend__table">
+            <tbody>
+              ${items.map((item) => {
+                const pct = total ? Math.round((item.value / total) * 100) : 0;
+                const raw = String(item.raw != null ? item.raw : item.label);
+                const isSelected = selected && selected === raw;
+                const isDimmed = selected && selected !== raw;
+                return `
+                  <tr data-value="${raw.replace(/"/g, '&quot;')}"
+                    class="${isSelected ? 'is-selected' : ''}${isDimmed ? ' is-dimmed' : ''}"
+                    ${dimension ? 'role="button" tabindex="0"' : ''}>
+                    <td class="overview-legend__name">
+                      <span class="overview-legend__dot" style="background:${item.color}"></span>
+                      <span title="${item.label}">${item.label}</span>
+                    </td>
+                    <td class="overview-legend__value">${item.formatted}</td>
+                    <td class="overview-legend__pct">${pct}%</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      /* Rótulo de dados no fim de cada barra horizontal, por fora da barra */
+      const barValueLabels = {
+        id: 'barValueLabels',
+        afterDatasetsDraw(chart, args, opts) {
+          if (chart.options.indexAxis !== 'y') return;
+          const meta = chart.getDatasetMeta(0);
+          const dataset = chart.data && chart.data.datasets && chart.data.datasets[0];
+          if (!meta || !meta.data || !dataset) return;
+          const { ctx } = chart;
+          ctx.save();
+          ctx.font = '700 11px Nunito, sans-serif';
+          ctx.fillStyle = opts.color || '#65758b';
+          ctx.textBaseline = 'middle';
+          ctx.textAlign = 'left';
+          meta.data.forEach((bar, index) => {
+            const value = dataset.data[index];
+            if (value == null) return;
+            const text = opts.formatter ? opts.formatter(value) : String(value);
+            ctx.fillText(text, bar.x + 6, bar.y);
+          });
+          ctx.restore();
+        }
+      };
+
+      function renderCharts() {
+        if (typeof Chart === 'undefined') {
+          document.querySelectorAll('.overview-chart__canvas').forEach((el) => {
+            el.classList.remove('is-loading', 'skeleton-shimmer');
+            el.innerHTML = '<p class="overview-chart__error">Não foi possível carregar a biblioteca de gráficos (Chart.js). Verifique a conexão e recarregue.</p>';
+          });
+          return;
+        }
+        const t = readTokens();
+        const palette = categoricalPalette(t);
+        Chart.defaults.font.family = 'Nunito, sans-serif';
+        Chart.defaults.color = t.text;
+
+        /* Cada gráfico agrega a partir dos dados SEM o próprio filtro — assim ele mantém
+           todas as categorias e só destaca a selecionada, enquanto os outros já filtram. */
+        const aggCache = {};
+        const aggFor = (dim) => (aggCache[dim] || (aggCache[dim] = buildAggregations(getFilteredRows(dim))));
+
+        /* onHover/onClick comuns: cursor de "clicável" + toggle da seleção da dimensão. */
+        const crossInteractions = (dimension, valueAt) => ({
+          onHover: (event, elements) => {
+            const node = event.native && event.native.target;
+            if (node) node.style.cursor = elements.length ? 'pointer' : '';
+          },
+          onClick: (event, elements) => {
+            if (elements.length) toggleSelection(dimension, valueAt(elements[0].index));
+          }
+        });
+
+        destroyCharts();
+
+        /* Evolução de ações pagas — barras (valor pago) + linha (nº de ações pagas). Clique = filtra o mês.
+           Sempre restrito ao status "pago", então ignora o filtro de status no cruzamento.
+           O eixo de meses vem de todas as ações do período (qualquer status) para a linha do
+           tempo não ter buracos: meses sem pagamento aparecem zerados. */
+        const timelineRows = getFilteredRows('month', 'status');
+        const paidByMonth = new Map();
+        timelineRows.forEach((item) => {
+          const key = monthKey(parseBRDate(item.includedAt));
+          if (!paidByMonth.has(key)) paidByMonth.set(key, { value: 0, count: 0 });
+          if (item.statusGroup === 'paid') {
+            const entry = paidByMonth.get(key);
+            entry.value += parseBRL(item.value);
+            entry.count += 1;
+          }
+        });
+        const paidMonths = [...paidByMonth.keys()].sort()
+          .map((key) => ({ key, label: monthLabel(key), ...paidByMonth.get(key) }));
+        charts.timeline = new Chart(document.getElementById('chartTimeline'), {
+          type: 'bar',
+          data: {
+            labels: paidMonths.map((m) => m.label),
+            datasets: [
+              {
+                type: 'bar',
+                label: 'Valor pago',
+                data: paidMonths.map((m) => m.value),
+                backgroundColor: highlightColors(`rgba(${t.brandRgb}, .55)`, paidMonths.map((m) => m.key), state.month),
+                hoverBackgroundColor: `rgba(${t.brandRgb}, .8)`,
+                borderRadius: 6,
+                yAxisID: 'y'
+              },
+              {
+                type: 'line',
+                label: 'Nº de ações pagas',
+                data: paidMonths.map((m) => m.count),
+                borderColor: '#2563eb',
+                backgroundColor: '#2563eb',
+                tension: 0.35,
+                borderWidth: 2,
+                pointRadius: paidMonths.map((m) => (m.key === state.month ? 6 : 3)),
+                yAxisID: 'y1'
+              }
+            ]
+          },
+          options: {
+            ...baseChartOptions(t),
+            ...crossInteractions('month', (i) => paidMonths[i].key),
+            scales: {
+              x: { grid: { display: false }, ticks: { color: t.muted } },
+              y: {
+                position: 'left',
+                grid: { color: t.line },
+                ticks: { color: t.muted, callback: (v) => formatCompactBRL(v) }
+              },
+              y1: {
+                position: 'right',
+                grid: { drawOnChartArea: false },
+                ticks: { color: t.muted, precision: 0 }
+              }
+            },
+            plugins: {
+              ...baseChartOptions(t).plugins,
+              legend: {
+                ...baseChartOptions(t).plugins.legend,
+                position: 'bottom',
+                labels: {
+                  ...baseChartOptions(t).plugins.legend.labels,
+                  padding: 18
+                }
+              },
+              tooltip: {
+                ...baseChartOptions(t).plugins.tooltip,
+                callbacks: {
+                  label: (ctx) => (ctx.dataset.yAxisID === 'y'
+                    ? ` ${ctx.dataset.label}: ${brl2.format(ctx.parsed.y)}`
+                    : ` ${ctx.dataset.label}: ${int0.format(ctx.parsed.y)}`)
+                }
+              }
+            }
+          }
+        });
+
+        const donutOptions = (extraTooltip, interactions) => ({
+          ...baseChartOptions(t),
+          ...(interactions || {}),
+          cutout: '62%',
+          plugins: {
+            ...baseChartOptions(t).plugins,
+            legend: { display: false },
+            tooltip: {
+              enabled: false,
+              external: externalDonutTooltip,
+              callbacks: { title: () => '', ...extraTooltip }
+            }
+          }
+        });
+
+        /* percentTotal (opcional): quando informado, mostra a participação percentual de cada
+           barra sobre esse total — usado para "concentração" no Top 10 de participantes. */
+        const horizontalBarConfig = ({ entries, baseColor, hoverColor, dataLabelFormatter, percentTotal, dimension }) => ({
+          type: 'bar',
+          data: {
+            labels: entries.map(([label]) => truncate(label, 26)),
+            datasets: [{
+              label: 'Valor',
+              data: entries.map(([, value]) => value),
+              backgroundColor: highlightColors(baseColor, entries.map(([label]) => label), state[dimension]),
+              hoverBackgroundColor: hoverColor,
+              borderRadius: 6
+            }]
+          },
+          plugins: [barValueLabels],
+          options: {
+            ...baseChartOptions(t),
+            ...crossInteractions(dimension, (i) => entries[i][0]),
+            indexAxis: 'y',
+            layout: { padding: { right: percentTotal ? 106 : 74 } },
+            plugins: {
+              ...baseChartOptions(t).plugins,
+              legend: { display: false },
+              barValueLabels: {
+                color: t.muted,
+                formatter: (value) => (percentTotal
+                  ? `${dataLabelFormatter(value)} · ${Math.round((value / percentTotal) * 100)}%`
+                  : dataLabelFormatter(value))
+              },
+              tooltip: {
+                ...baseChartOptions(t).plugins.tooltip,
+                callbacks: {
+                  title: (ctx) => entries[ctx[0].dataIndex][0],
+                  label: (ctx) => (percentTotal
+                    ? ` ${brl2.format(ctx.parsed.x)} (${Math.round((ctx.parsed.x / percentTotal) * 100)}% do total)`
+                    : ` ${brl2.format(ctx.parsed.x)}`)
+                }
+              }
+            },
+            scales: {
+              x: { grid: { color: t.line }, ticks: { display: false } },
+              y: { grid: { display: false }, ticks: { color: t.text } }
+            }
+          }
+        });
+
+        /* Distribuição por status — doughnut + tabela-legenda. Clique = filtra o status. */
+        const sAgg = aggFor('status');
+        const statusKeys = ['processing', 'paid', 'canceled'];
+        const statusColors = {
+          processing: getComputedStyle(document.documentElement).getPropertyValue('--warning').trim() || '#f59e0b',
+          paid: getComputedStyle(document.documentElement).getPropertyValue('--success').trim() || '#10b981',
+          canceled: getComputedStyle(document.documentElement).getPropertyValue('--danger').trim() || '#ef4444'
+        };
+        const statusIsValue = state.statusMetric === 'value';
+        charts.status = new Chart(document.getElementById('chartStatus'), {
+          type: 'doughnut',
+          data: {
+            labels: statusKeys.map((k) => STATUS_META[k].label),
+            datasets: [{
+              data: statusKeys.map((k) => sAgg.byStatus[k][state.statusMetric]),
+              backgroundColor: highlightColors(statusKeys.map((k) => statusColors[k]), statusKeys, state.status),
+              borderColor: t.surface,
+              borderWidth: 2
+            }]
+          },
+          options: donutOptions({
+            label: (ctx) => (statusIsValue
+              ? ` ${ctx.label}: ${brl2.format(ctx.parsed)}`
+              : ` ${ctx.label}: ${int0.format(ctx.parsed)} ações`)
+          }, crossInteractions('status', (i) => statusKeys[i]))
+        });
+        renderLegend('legendStatus', statusKeys.map((k) => ({
+          raw: k,
+          label: STATUS_META[k].label,
+          color: statusColors[k],
+          value: sAgg.byStatus[k][state.statusMetric],
+          formatted: statusIsValue
+            ? formatCompactBRL(sAgg.byStatus[k].value)
+            : `${int0.format(sAgg.byStatus[k].count)} ações`
+        })), 'status');
+
+        /* Valor por tipo de conta — doughnut + tabela-legenda */
+        const aAgg = aggFor('account');
+        charts.accounts = new Chart(document.getElementById('chartAccounts'), {
+          type: 'doughnut',
+          data: {
+            labels: aAgg.accounts.map(([label]) => label),
+            datasets: [{
+              data: aAgg.accounts.map(([, value]) => value),
+              backgroundColor: highlightColors(palette, aAgg.accounts.map(([label]) => label), state.account),
+              borderColor: t.surface,
+              borderWidth: 2
+            }]
+          },
+          options: donutOptions(
+            { label: (ctx) => ` ${ctx.label}: ${brl2.format(ctx.parsed)}` },
+            crossInteractions('account', (i) => aAgg.accounts[i][0])
+          )
+        });
+        renderLegend('legendAccounts', aAgg.accounts.map(([label, value], index) => ({
+          raw: label, label, color: palette[index % palette.length], value, formatted: formatCompactBRL(value)
+        })), 'account');
+
+        /* Top participantes — barras horizontais */
+        const pAgg = aggFor('participant');
+        charts.participants = new Chart(document.getElementById('chartParticipants'), horizontalBarConfig({
+          entries: pAgg.participants,
+          baseColor: `rgba(${t.brandRgb}, .78)`,
+          hoverColor: t.brand,
+          dataLabelFormatter: formatCompactBRL,
+          percentTotal: pAgg.totalValue,
+          dimension: 'participant'
+        }));
+
+        /* Valor por campanha — barras horizontais */
+        const cAgg = aggFor('campaign');
+        charts.campaigns = new Chart(document.getElementById('chartCampaigns'), horizontalBarConfig({
+          entries: cAgg.campaigns,
+          baseColor: '#00a7b5',
+          hoverColor: '#0891a0',
+          dataLabelFormatter: formatCompactBRL,
+          dimension: 'campaign'
+        }));
+
+        /* Tipo de pagamento — doughnut + tabela-legenda. Clique = filtra o tipo. */
+        const ptAgg = aggFor('paymentType');
+        const paymentTypeColors = ['#7c3aed', '#2563eb', '#94a3b8', '#db2777', t.warning];
+        charts.paymentType = new Chart(document.getElementById('chartPaymentType'), {
+          type: 'doughnut',
+          data: {
+            labels: ptAgg.paymentTypes.map(([label]) => label),
+            datasets: [{
+              data: ptAgg.paymentTypes.map(([, count]) => count),
+              backgroundColor: highlightColors(paymentTypeColors, ptAgg.paymentTypes.map(([label]) => label), state.paymentType),
+              borderColor: t.surface,
+              borderWidth: 2
+            }]
+          },
+          options: donutOptions(
+            { label: (ctx) => ` ${ctx.label}: ${int0.format(ctx.parsed)} ações` },
+            crossInteractions('paymentType', (i) => ptAgg.paymentTypes[i][0])
+          )
+        });
+        renderLegend('legendPaymentType', ptAgg.paymentTypes.map(([label, count], index) => ({
+          raw: label, label, color: paymentTypeColors[index % paymentTypeColors.length], value: count,
+          formatted: `${int0.format(count)} ${count === 1 ? 'ação' : 'ações'}`
+        })), 'paymentType');
+      }
+
+      function renderChartsSkeleton() {
+        document.querySelectorAll('.overview-chart__canvas').forEach((canvas) => {
+          canvas.classList.add('is-loading', 'skeleton-shimmer');
+        });
+        document.querySelectorAll('.overview-legend').forEach((legend) => {
+          legend.innerHTML = Array.from({ length: 3 }, () => (
+            '<span class="skeleton-shimmer" style="display:block;height:12px;border-radius:999px;margin:9px 0"></span>'
+          )).join('');
+        });
+      }
+
+      function clearChartsSkeleton() {
+        document.querySelectorAll('.overview-chart__canvas').forEach((canvas) => {
+          canvas.classList.remove('is-loading', 'skeleton-shimmer');
+        });
+      }
+
+      /* ---------- Ciclo de render ---------- */
+      function updateHeroMeta(data) {
+        document.getElementById('overviewPeriodLabel').textContent = PERIOD_LABELS[state.period];
+        const rangeEl = document.getElementById('overviewRangeLabel');
+        const fmt = (d) => d.toLocaleDateString('pt-BR');
+
+        // Período personalizado: mostra sempre a janela escolhida (não o range dos dados).
+        if (state.period === 'custom') {
+          const range = periodRange() || {};
+          const start = range.start ? fmt(range.start) : '';
+          const end = range.end ? fmt(range.end) : '';
+          if (start && end) rangeEl.textContent = `${start} — ${end}`;
+          else if (start) rangeEl.textContent = `A partir de ${start}`;
+          else if (end) rangeEl.textContent = `Até ${end}`;
+          else rangeEl.textContent = 'Selecione as datas';
+          return;
+        }
+
+        if (!data.length) {
+          rangeEl.textContent = 'Sem ações no período';
+          return;
+        }
+        const dates = data.map((item) => parseBRDate(item.includedAt)).sort((a, b) => a - b);
+        rangeEl.textContent = `${fmt(dates[0])} — ${fmt(dates[dates.length - 1])}`;
+      }
+
+      function hasActiveFilters() {
+        return Boolean(state.status || state.campaign || state.participant || state.account
+          || state.paymentType || state.month || state.period !== '12' || state.customStart || state.customEnd);
+      }
+
+      function syncClearButton() {
+        const active = hasActiveFilters();
+        const btn = document.getElementById('ovClearFilters');
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-pressed', String(active));
+        // botão do empty state segue o mesmo visual do de cima
+        document.getElementById('overviewEmptyClear').classList.toggle('is-active', active);
+      }
+
+      /* ---------- Cross-filter (clique nos gráficos) ---------- */
+      /* Liga/desliga uma seleção de dimensão. Mesmo valor de novo => limpa. */
+      function toggleSelection(dimension, value) {
+        if (value == null || value === '') return;
+        state[dimension] = state[dimension] === value ? '' : value;
+        renderWithSkeleton();
+      }
+
+      /* Popover de período personalizado: visível só quando period === 'custom' E o
+         usuário não fechou (clique fora / Esc / botão). É estado só de UI. */
+      const customPeriodEl = document.getElementById('overviewCustomPeriod');
+      const customPeriodBtn = document.querySelector('[data-period="custom"]');
+      let customPeriodOpen = false;
+
+      function syncCustomPeriodVisibility() {
+        const open = state.period === 'custom' && customPeriodOpen;
+        customPeriodEl.setAttribute('aria-hidden', String(!open));
+        customPeriodBtn.setAttribute('aria-expanded', String(open));
+        if (!open) window.BipperCustomDate?.closeAll?.();
+      }
+
+      function closeCustomPeriod() {
+        if (!customPeriodOpen) return;
+        customPeriodOpen = false;
+        syncCustomPeriodVisibility();
+      }
+
+      /* Espelha o state nos <select> nativos e nos botões de período.
+         O custom-select lê o .value do <select> ao abrir, então basta setar o valor. */
+      function syncFilterControls() {
+        const setSelect = (id, value) => {
+          const el = document.getElementById(id);
+          if (el && el.value !== value) el.value = value;
+        };
+        setSelect('ovStatusFilter', state.status);
+        setSelect('ovCampaignFilter', state.campaign);
+        setSelect('ovParticipantFilter', state.participant);
+        setSelect('ovAccountFilter', state.account);
+        document.querySelectorAll('[data-period]').forEach((btn) => {
+          btn.classList.toggle('is-active', btn.dataset.period === state.period);
+        });
+        syncCustomPeriodVisibility();
+        document.getElementById('ovCustomStart').value = state.customStart;
+        document.getElementById('ovCustomEnd').value = state.customEnd;
+      }
+
+      document.addEventListener('mousedown', (event) => {
+        if (!customPeriodOpen) return;
+        if (event.target.closest('#overviewCustomPeriod')) return;
+        if (event.target.closest('[data-period="custom"]')) return;
+        if (event.target.closest('.cd-panel')) return; // clicar no calendário não fecha
+        closeCustomPeriod();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeCustomPeriod();
+      });
+
+      const activeFiltersHost = document.getElementById('overviewActiveFilters');
+
+      function renderActiveFilters() {
+        const chips = Object.keys(CROSS_DIMENSIONS)
+          .filter((dim) => state[dim])
+          .map((dim) => {
+            const meta = CROSS_DIMENSIONS[dim];
+            return `
+              <button type="button" class="overview-filter-chip" data-clear-dim="${dim}"
+                aria-label="Remover filtro ${meta.label}">
+                <span class="overview-filter-chip__label">${meta.label}:</span>
+                <span class="overview-filter-chip__value">${truncate(meta.display(state[dim]), 34)}</span>
+                <span class="overview-filter-chip__x" aria-hidden="true">&times;</span>
+              </button>
+            `;
+          });
+
+        if (!chips.length) {
+          activeFiltersHost.classList.remove('has-filters');
+          activeFiltersHost.innerHTML = '';
+          return;
+        }
+        activeFiltersHost.classList.add('has-filters');
+        activeFiltersHost.innerHTML = chips.join('')
+          + '<button type="button" class="overview-filter-chip overview-filter-chip--clear" '
+          + 'data-clear-dim="__all">Limpar tudo</button>';
+      }
+
+      activeFiltersHost.addEventListener('click', (event) => {
+        const btn = event.target.closest('[data-clear-dim]');
+        if (!btn) return;
+        const dim = btn.dataset.clearDim;
+        if (dim === '__all') {
+          document.getElementById('ovClearFilters').click();
+          return;
+        }
+        state[dim] = '';
+        renderWithSkeleton();
+      });
+
+      function render() {
+        const data = getFilteredRows();
+        syncClearButton();
+        syncFilterControls();
+        renderActiveFilters();
+        updateHeroMeta(data);
+
+        const isEmpty = data.length === 0;
+        emptyHost.hidden = !isEmpty;
+        kpiHost.hidden = isEmpty;
+        chartsSection.hidden = isEmpty;
+        listsSection.hidden = isEmpty;
+        clearChartsSkeleton();
+
+        if (isEmpty) {
+          destroyCharts();
+          return;
+        }
+
+        const agg = buildAggregations(data);
+        const previousRows = getPreviousPeriodRows();
+        const previousAgg = previousRows ? buildAggregations(previousRows) : null;
+        renderKpis(agg, previousAgg);
+        renderTopValues(data);
+        renderRecent(data);
+        try {
+          renderCharts();
+        } catch (error) {
+          console.error('Falha ao renderizar os gráficos da Visão geral:', error);
+        } finally {
+          clearChartsSkeleton();
+        }
+      }
+
+      function renderWithSkeleton() {
+        window.clearTimeout(renderTimer);
+        // durante o skeleton, mostra as seções (com placeholders) e esconde o empty state
+        emptyHost.hidden = true;
+        kpiHost.hidden = false;
+        chartsSection.hidden = false;
+        listsSection.hidden = false;
+        renderKpiSkeleton();
+        renderChartsSkeleton();
+        tableSkeleton(topValuesHost, 4, 6);
+        tableSkeleton(recentHost, 5, 6);
+        syncClearButton();
+        syncFilterControls();
+        renderActiveFilters();
+        renderTimer = window.setTimeout(render, 180);
+      }
+
+      /* ---------- Bindings ---------- */
+      function fillSelect(id, values) {
+        const select = document.getElementById(id);
+        values.forEach((value) => {
+          const option = document.createElement('option');
+          option.value = value;
+          option.textContent = value;
+          select.appendChild(option);
+        });
+      }
+
+      fillSelect('ovCampaignFilter', uniqueSorted('campaign'));
+      fillSelect('ovParticipantFilter', uniqueSorted('participant'));
+      fillSelect('ovAccountFilter', uniqueSorted('accountType'));
+      window.BipperCustomSelect?.enhanceAll(document.querySelector('.overview-filters'));
+      window.BipperCustomDate?.enhanceAll(document.querySelector('.overview-filters'));
+
+      document.querySelectorAll('[data-period]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const period = button.dataset.period;
+          if (period === 'custom' && state.period === 'custom') {
+            // já é o período ativo: o botão só abre/fecha o popover
+            customPeriodOpen = !customPeriodOpen;
+            syncCustomPeriodVisibility();
+            return;
+          }
+          document.querySelectorAll('[data-period]').forEach((item) => item.classList.remove('is-active'));
+          button.classList.add('is-active');
+          state.period = period;
+          customPeriodOpen = period === 'custom';
+          if (period !== 'custom') {
+            state.customStart = '';
+            state.customEnd = '';
+          }
+          renderWithSkeleton();
+        });
+      });
+
+      function syncCustomPeriod() {
+        const startInput = document.getElementById('ovCustomStart');
+        const endInput = document.getElementById('ovCustomEnd');
+        state.period = 'custom';
+        customPeriodOpen = true;
+        state.customStart = startInput.value;
+        state.customEnd = endInput.value;
+        endInput.min = state.customStart;
+        startInput.max = state.customEnd;
+        renderWithSkeleton();
+      }
+
+      document.getElementById('ovCustomStart').addEventListener('change', syncCustomPeriod);
+      document.getElementById('ovCustomEnd').addEventListener('change', syncCustomPeriod);
+
+      const bindSelect = (id, key) => {
+        document.getElementById(id).addEventListener('change', (event) => {
+          state[key] = event.target.value;
+          renderWithSkeleton();
+        });
+      };
+      bindSelect('ovStatusFilter', 'status');
+      bindSelect('ovCampaignFilter', 'campaign');
+      bindSelect('ovParticipantFilter', 'participant');
+      bindSelect('ovAccountFilter', 'account');
+
+      /* Clique / Enter numa linha da tabela-legenda das roscas cruza o mesmo filtro. */
+      ['legendStatus', 'legendAccounts', 'legendPaymentType'].forEach((id) => {
+        const host = document.getElementById(id);
+        if (!host) return;
+        const pick = (target) => {
+          const tr = target.closest('tr[data-value]');
+          if (tr && host.dataset.dim) toggleSelection(host.dataset.dim, tr.dataset.value);
+        };
+        host.addEventListener('click', (event) => pick(event.target));
+        host.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            pick(event.target);
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-status-metric]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (button.classList.contains('is-active')) return;
+          document.querySelectorAll('[data-status-metric]').forEach((item) => item.classList.remove('is-active'));
+          button.classList.add('is-active');
+          state.statusMetric = button.dataset.statusMetric;
+          renderWithSkeleton();
+        });
+      });
+
+      document.getElementById('ovClearFilters').addEventListener('click', () => {
+        state.period = '12';
+        customPeriodOpen = false;
+        state.customStart = '';
+        state.customEnd = '';
+        state.status = '';
+        state.campaign = '';
+        state.participant = '';
+        state.account = '';
+        state.paymentType = '';
+        state.month = '';
+        document.querySelectorAll('[data-period]').forEach((item) => {
+          item.classList.toggle('is-active', item.dataset.period === '12');
+        });
+        ['ovStatusFilter', 'ovCampaignFilter', 'ovParticipantFilter', 'ovAccountFilter'].forEach((id) => {
+          document.getElementById(id).value = '';
+        });
+        renderWithSkeleton();
+      });
+
+      document.getElementById('overviewEmptyClear').addEventListener('click', () => {
+        document.getElementById('ovClearFilters').click();
+      });
+
+      function refreshCharts() {
+        if (!Object.keys(charts).length) return;
+        try {
+          renderCharts();
+        } catch (error) {
+          console.error('Falha ao redesenhar os gráficos:', error);
+        }
+      }
+
+      document.addEventListener('app-shell:theme-change', refreshCharts);
+      document.addEventListener('app-shell:brand-change', () => {
+        const previousRows = getPreviousPeriodRows();
+        renderKpis(buildAggregations(getFilteredRows()), previousRows ? buildAggregations(previousRows) : null);
+        refreshCharts();
+      });
+
+      function openRowDetail(event) {
+        const row = event.target.closest('[data-row-index]');
+        if (!row) return;
+        detailPanel.open(rows[Number(row.dataset.rowIndex)]);
+      }
+      topValuesHost.addEventListener('click', openRowDetail);
+      recentHost.addEventListener('click', openRowDetail);
+
+      renderWithSkeleton();
+    })();
+  </script>
+</body>
+
+</html>

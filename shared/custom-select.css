@@ -1,0 +1,108 @@
+/* Popup customizado para <select> nativos (ver custom-select.js). O <select>
+   original continua sendo o gatilho visível (mesma aparência fechada de sempre,
+   herdada das classes que já tem); só a lista de opções aberta é substituída
+   por este painel, usando as mesmas cores/radius do design system nos dois temas. */
+
+.cs-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+}
+
+.cs-select:has(> select[style*="width:auto"]),
+.cs-select:has(> select.comment-filter),
+.workflow-approval__sort .cs-select,
+.queue-toolbar .cs-select,
+.drawer-actions .cs-select,
+.payment-records-sort .cs-select {
+    width: auto;
+}
+
+.cs-select > select {
+    background-image: none !important;
+    min-height: var(--control-height);
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 42px;
+    line-height: calc(var(--control-height) - 2px);
+}
+
+.cs-select::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    color: var(--ink);
+    pointer-events: none;
+    transform: translateY(-60%) rotate(45deg);
+    transform-origin: 60% 60%;
+    transition: transform .18s ease;
+}
+
+.cs-select.is-open::after {
+    transform: translateY(-35%) rotate(225deg);
+}
+
+:root[data-theme="dark"] .cs-select::after {
+    color: #f1f5f9;
+}
+
+.cs-select:has(> select:disabled)::after {
+    opacity: .45;
+}
+
+.cs-panel {
+    position: fixed;
+    z-index: 4000;
+    min-width: 160px;
+    max-height: 280px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity .16s ease, transform .16s ease;
+}
+
+.cs-panel.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.cs-panel__option {
+    padding: 9px 12px;
+    border-radius: 10px;
+    color: var(--text);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cs-panel__option:hover,
+.cs-panel__option.is-focused {
+    background: var(--surface-3);
+}
+
+.cs-panel__option.is-selected {
+    background: var(--surface-3);
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.cs-panel__option[aria-disabled="true"] {
+    color: var(--muted);
+    cursor: not-allowed;
+}

@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap");
+
+/* Base visual global. Contém as variáveis CSS oficiais (:root), cores, fontes, radius, sombras, medidas principais, reset leve e estrutura base como .app-shell, .content e .section-title. */
+
+:root {
+    --zoetis-orange: #ff6b00;
+    --zoetis-orange-600: #e85900;
+    --zoetis-teal: #00a7b5;
+    --brand-primary: #ff6b00;
+    --brand-secondary: #e85900;
+    --brand-soft: #fff1e8;
+    --brand-primary-rgb: 255, 107, 0;
+    --btn-primary-bg: #0e1014;
+    --btn-primary-bg-rgb: 14, 16, 20;
+    --ink: #0f172a;
+    --text: #263447;
+    --muted: #65758b;
+    --line: #e5eaf0;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --surface-3: #eef4f8;
+    --success: #10b981;
+    --success-soft: #d1fae5;
+    --warning: #f59e0b;
+    --warning-soft: #fef3c7;
+    --danger: #ef4444;
+    --danger-soft: #fee2e2;
+    --warning-strong: #b45309;
+    --danger-strong: #dc2626;
+    --success-strong: #047857;
+    --surface-rgb: 255, 255, 255;
+    --line-rgb: 229, 234, 240;
+    --radius-xl: 28px;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --control-height: 36px;
+    --shadow-sm: 0 8px 22px rgba(15, 23, 42, .06);
+    --shadow-md: 0 18px 60px rgba(15, 23, 42, .11);
+    --sidebar: 280px;
+    --sidebar-collapsed: 92px;
+    --header: 78px;
+    --max: 1680px;
+    --fs-2xs: 10px;
+    --fs-xs: 11px;
+    --fs-sm: 12px;
+    --fs-md: 13px;
+    --fs-base: 14px;
+    --fs-lg: 15px;
+    --fs-xl: 16px;
+    --fs-2xl: 18px;
+    --fs-3xl: 22px;
+    --fs-4xl: 24px;
+    --fs-5xl: 34px;
+    --fs-hero: clamp(30px, 3vw, 36px);
+    --font-family-base: "Nunito", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --lh-none: 1;
+    --lh-tight: 1.04;
+    --lh-snug: 1.2;
+    --lh-normal: 1.35;
+    --lh-comfortable: 1.38;
+    --lh-base: 1.5;
+    --lh-relaxed: 1.45;
+    --lh-loose: 1.55;
+}
+
+:root[data-theme="dark"] {
+    --brand-soft: rgba(var(--brand-primary-rgb), .16);
+    --btn-primary-bg: #1e1e1e;
+    --btn-primary-bg-rgb: 30, 30, 30;
+    --ink: #f1f5f9;
+    --text: #cbd5e1;
+    --muted: #94a3b8;
+    --line: #1c1d1f;
+    --line-rgb: 28, 29, 31;
+    --surface: #000000;
+    --surface-2: #101010;
+    --surface-3: #1E1E1E;
+    --surface-rgb: 0, 0, 0;
+    --success-soft: rgba(16, 185, 129, .18);
+    --warning-soft: rgba(245, 158, 11, .18);
+    --danger-soft: rgba(239, 68, 68, .18);
+    --warning-strong: var(--warning);
+    --danger-strong: var(--danger);
+    --success-strong: var(--success);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* O atributo hidden sempre esconde, mesmo em elementos com display: grid/flex no CSS. */
+[hidden] {
+    display: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--fs-xl);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+[data-theme="dark"] body {
+    background: var(--surface);
+}
+
+body.sidebar-open,
+body.modal-open {
+    overflow: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.app-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: var(--sidebar) minmax(0, 1fr);
+}
+
+.main {
+    min-width: 0;
+}
+
+.content {
+    width: min(100% - 64px, var(--max));
+    margin: 0 auto;
+    padding: 42px 0 28px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.section-title h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: var(--fs-4xl);
+    letter-spacing: -.03em;
+}
+
+.section-title p {
+    margin: 6px 0 0;
+    color: var(--muted);
+}
+
+.hide {
+    display: none !important;
+}
+
+@media (max-width: 980px) {
+    :root {
+        --sidebar: 0px;
+        --header: 72px;
+    }
+
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .content {
+        width: min(100% - 32px, var(--max));
+        padding-top: 22px;
+    }
+}

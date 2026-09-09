@@ -1,0 +1,200 @@
+/* Painel de calendário para <input type="date"> (ver custom-date.js). O input nativo
+   continua sendo o gatilho visível; só o popup do navegador é trocado por este painel,
+   com as mesmas cores/radius do design system nos dois temas. Par do custom-select.css. */
+
+.cd-field {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Esconde o ícone/spinner nativos — usamos o nosso ::after */
+.cd-field input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    display: none;
+}
+
+.cd-field input::-webkit-inner-spin-button,
+.cd-field input::-webkit-clear-button {
+    display: none;
+}
+
+.cd-field input {
+    padding-right: 38px;
+    cursor: pointer;
+}
+
+.cd-field::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    background: var(--muted);
+    pointer-events: none;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.cd-field.is-open::after {
+    background: var(--brand-primary);
+}
+
+.cd-field.is-open input {
+    border-color: rgba(var(--brand-primary-rgb), .45);
+    box-shadow: 0 0 0 3px rgba(var(--brand-primary-rgb), .1);
+}
+
+.cd-panel {
+    position: fixed;
+    z-index: 4000;
+    width: 272px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity .16s ease, transform .16s ease;
+}
+
+.cd-panel.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.cd-panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.cd-panel__title {
+    color: var(--ink);
+    font-size: var(--fs-md);
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.cd-nav {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+
+.cd-nav:hover {
+    background: var(--surface-3);
+    color: var(--ink);
+}
+
+/* o clique tem que cair no <button>, nunca no <svg>/<path> de dentro */
+.cd-panel button svg,
+.cd-panel button svg * {
+    pointer-events: none;
+}
+
+.cd-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 4px;
+}
+
+.cd-week span {
+    padding: 4px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+}
+
+.cd-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.cd-day {
+    aspect-ratio: 1 / 1;
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .12s ease;
+}
+
+.cd-day.is-empty {
+    visibility: hidden;
+    cursor: default;
+}
+
+.cd-day:hover:not(:disabled):not(.is-selected) {
+    background: var(--surface-3);
+}
+
+.cd-day.is-today {
+    color: var(--brand-primary);
+    font-weight: 800;
+    box-shadow: inset 0 0 0 1px rgba(var(--brand-primary-rgb), .45);
+}
+
+.cd-day.is-selected {
+    background: var(--brand-primary);
+    color: #fff;
+    font-weight: 800;
+    box-shadow: none;
+}
+
+.cd-day:disabled {
+    color: var(--muted);
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.cd-panel__foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+}
+
+.cd-link {
+    padding: 4px 6px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--brand-primary);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s ease;
+}
+
+.cd-link:hover {
+    background: var(--surface-3);
+}

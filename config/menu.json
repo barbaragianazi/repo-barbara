@@ -1,0 +1,36 @@
+{
+  "sections": [
+    {
+      "title": "",
+      "ariaLabel": "Navegacao principal",
+      "items": [
+        {
+          "key": "inicio",
+          "label": "Projetos",
+          "icon": "home",
+          "href": "/index.html",
+          "children": [
+            {
+              "key": "redesign-pagamentos",
+              "label": "Redesign Pagamentos",
+              "icon": "card",
+              "href": "/redesign-pagamentos/analise/index.html",
+              "children": [
+                {
+                  "key": "redesign-pagamentos-visao-geral",
+                  "label": "Análises",
+                  "href": "/redesign-pagamentos/analise/index.html"
+                },
+                {
+                  "key": "redesign-pagamentos-pagamento-acoes",
+                  "label": "Pagamento de ações",
+                  "href": "/redesign-pagamentos/pagamento-acoes/index.html"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

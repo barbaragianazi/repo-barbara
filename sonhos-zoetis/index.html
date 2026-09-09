@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sonhos Zoetis - Repo Barbara</title>
+  <link rel="icon" type="image/png" href="../shared/assets/logos/fav-icon.png">
+  <link rel="stylesheet" href="../shared/design-tokens.css">
+  <link rel="stylesheet" href="../shared/base-components.css">
+  <link rel="stylesheet" href="../shared/app-shell.css">
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+      <div class="brand" data-brands-url="../shared/data/brands.json">
+        <div class="brand__area" aria-label="Marca ativa">
+          <button class="brand__logo-btn" type="button" aria-label="Selecionar marca" aria-haspopup="true" aria-expanded="false">
+            <img src="../shared/assets/logos/zoetis-dark.svg" alt="Zoetis" class="brand__logo" data-logo="dark">
+          </button>
+          <div class="brand-dropdown" role="menu" aria-label="Selecionar marca"></div>
+        </div>
+        <button class="brand__toggle" id="sidebarToggle" type="button" aria-label="Recolher menu" aria-expanded="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div data-shell-menu data-menu-url="../config/menu.json"></div>
+
+      <div class="theme-toggle" role="group" aria-label="Tema do portal">
+        <button type="button" class="theme-toggle__btn" data-theme-choice="light" data-tooltip="Alternar para tema light" aria-label="Tema claro" aria-pressed="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+        </button>
+        <button type="button" class="theme-toggle__btn" data-theme-choice="dark" data-tooltip="Alternar para tema dark" aria-label="Tema escuro" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div data-shell-profile></div>
+    </aside>
+
+    <button class="sidebar-overlay" id="sidebarOverlay" type="button" aria-label="Fechar menu"></button>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="openMenu" type="button" aria-label="Abrir menu" aria-expanded="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4 6h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 18h16"></path>
+          </svg>
+        </button>
+      </header>
+
+      <section class="content">
+        <div class="campaign-page">
+          <div class="campaign-header">
+            <div>
+              <span class="eyebrow-label">Sonhos Zoetis</span>
+              <h1>Configurar campanha - Leve 10, Pague 8</h1>
+              <p>Preencha os parametros abertos. Regras, textos legais e modelos ja estao aprovados pela Zoetis.</p>
+            </div>
+            <span class="campaign-status">Template aprovado</span>
+          </div>
+
+          <div class="campaign-layout">
+            <form class="campaign-form summary-card" id="campaignForm">
+              <div class="form-row">
+                <label for="campaignName">Campanha</label>
+                <input id="campaignName" name="campaignName" value="Leve 10, Pague 8">
+              </div>
+
+              <div class="form-grid">
+                <div class="form-row">
+                  <label for="startDate">Inicio</label>
+                  <input id="startDate" name="startDate" type="date" value="2026-09-01">
+                </div>
+                <div class="form-row">
+                  <label for="endDate">Fim</label>
+                  <input id="endDate" name="endDate" type="date" value="2026-09-30">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label for="stores">Lojas participantes</label>
+                <select id="stores" name="stores">
+                  <option>4 de 6 selecionadas</option>
+                  <option>Todas as lojas</option>
+                  <option>Canal Agro Sul</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label for="products">Produtos participantes</label>
+                <select id="products" name="products">
+                  <option>Linha antiparasitario bovinos (7 SKUs)</option>
+                  <option>Linha pets selecionada (5 SKUs)</option>
+                  <option>Portfolio Zoetis completo</option>
+                </select>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-row">
+                  <label for="beneficiaries">Limite de beneficiados</label>
+                  <input id="beneficiaries" name="beneficiaries" value="300 clientes">
+                </div>
+                <div class="form-row">
+                  <label for="budget">Verba PNZ alocada</label>
+                  <input id="budget" name="budget" value="R$ 62.000,00">
+                </div>
+              </div>
+
+              <div class="switch-list" aria-label="Parametros adicionais">
+                <label class="switch-row">
+                  <input type="checkbox" name="requiresCpf" checked>
+                  <span></span>
+                  Exigir ativacao do cliente final (CPF)
+                </label>
+                <label class="switch-row">
+                  <input type="checkbox" name="sellerIncentive" checked>
+                  <span></span>
+                  Vincular campanha de incentivo aos vendedores
+                </label>
+                <label class="switch-row">
+                  <input type="checkbox" name="vetCoupon">
+                  <span></span>
+                  Habilitar cupom para veterinarios parceiros
+                </label>
+              </div>
+
+              <button class="btn btn-primary-acent campaign-submit" type="submit">Gerar enxoval</button>
+            </form>
+
+            <aside class="kit-panel summary-card" aria-label="Enxoval gerado automaticamente">
+              <div class="section-title">
+                <div>
+                  <h2>Enxoval gerado automaticamente</h2>
+                  <p>Pecas preenchidas com dados, link e QR da campanha.</p>
+                </div>
+                <span class="kit-count" id="kitCount">6 pecas</span>
+              </div>
+
+              <div class="asset-grid" id="assetGrid"></div>
+
+              <div class="tracking-box">
+                <span class="eyebrow-label">Rastreamento</span>
+                <ul id="trackingList">
+                  <li>Mecanica, verba alocada e SKUs participantes</li>
+                  <li>Lojas e vendedores que publicaram a acao</li>
+                  <li>Clientes finais ativados por CPF e por vendedor</li>
+                  <li>Sell-out atribuido a campanha e ROI da verba PNZ</li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    window.BipperShellConfig = {
+      app: 'sonhos-zoetis',
+      active: 'sonhos-zoetis',
+      assetPathPrefix: '../',
+      publicPage: true
+    };
+  </script>
+  <script src="../shared/app-shell.js"></script>
+  <script>
+    const assetTypes = [
+      { title: 'Cartaz PDV', format: 'A3 - PDF', shape: 'poster' },
+      { title: 'Post feed', format: '1080x1080', shape: 'square' },
+      { title: 'Story', format: '1080x1920', shape: 'story' },
+      { title: 'WhatsApp', format: 'Texto + arte', shape: 'message' },
+      { title: 'E-mail vendas', format: 'HTML', shape: 'email' },
+      { title: 'Etiqueta gondola', format: 'PDF', shape: 'tag' }
+    ];
+
+    const form = document.getElementById('campaignForm');
+    const assetGrid = document.getElementById('assetGrid');
+    let kitSkeletonTimer;
+
+    function formatDate(value) {
+      const [year, month, day] = value.split('-');
+      return `${day}/${month}/${year}`;
+    }
+
+    function getCampaignData() {
+      const data = new FormData(form);
+      return {
+        name: data.get('campaignName'),
+        start: formatDate(data.get('startDate')),
+        end: formatDate(data.get('endDate')),
+        stores: data.get('stores'),
+        products: data.get('products'),
+        beneficiaries: data.get('beneficiaries'),
+        budget: data.get('budget'),
+        requiresCpf: data.get('requiresCpf') === 'on',
+        sellerIncentive: data.get('sellerIncentive') === 'on',
+        vetCoupon: data.get('vetCoupon') === 'on'
+      };
+    }
+
+    function renderQr(label) {
+      return `<span class="mock-qr" aria-label="QR Code ${label}"><i></i><i></i><i></i><i></i></span>`;
+    }
+
+    function renderAsset(asset, data, index) {
+      const trackingCode = `SZ-${String(index + 1).padStart(2, '0')}`;
+      return `
+        <article class="asset-card asset-card--${asset.shape}">
+          <div class="asset-preview">
+            <div class="asset-preview__brand">ZOETIS</div>
+            <strong>${data.name}</strong>
+            <small>${data.start} - ${data.end}</small>
+            ${renderQr(asset.title)}
+          </div>
+          <div class="asset-meta">
+            <div>
+              <strong>${asset.title}</strong>
+              <small>${asset.format}</small>
+            </div>
+            <span>${trackingCode}</span>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderKitSkeleton() {
+      assetGrid.classList.add('is-loading');
+      assetGrid.innerHTML = assetTypes.map((asset) => `
+        <article class="asset-skeleton asset-skeleton--${asset.shape}">
+          <div class="asset-skeleton__preview skeleton-shimmer"></div>
+          <div class="asset-skeleton__meta">
+            <div class="asset-skeleton__lines">
+              <span class="asset-skeleton__line skeleton-shimmer"></span>
+              <span class="asset-skeleton__line skeleton-shimmer"></span>
+            </div>
+            <span class="asset-skeleton__code skeleton-shimmer"></span>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderKit() {
+      const data = getCampaignData();
+      assetGrid.innerHTML = assetTypes.map((asset, index) => renderAsset(asset, data, index)).join('');
+      assetGrid.classList.remove('is-loading');
+    }
+
+    function renderKitWithSkeleton() {
+      window.clearTimeout(kitSkeletonTimer);
+      renderKitSkeleton();
+      kitSkeletonTimer = window.setTimeout(() => {
+        renderKit();
+        assetGrid.classList.remove('is-refreshed');
+        window.requestAnimationFrame(() => assetGrid.classList.add('is-refreshed'));
+      }, 180);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      renderKitWithSkeleton();
+    });
+
+    form.addEventListener('input', renderKitWithSkeleton);
+    renderKit();
+  </script>
+</body>
+</html>
