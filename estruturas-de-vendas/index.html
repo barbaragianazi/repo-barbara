@@ -1,0 +1,2306 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estrutura de Venda - Repo Barbara</title>
+  <link rel="icon" type="image/png" href="../shared/assets/logos/fav-icon.png">
+  <link rel="stylesheet" href="../shared/design-tokens.css">
+  <link rel="stylesheet" href="../shared/base-components.css">
+  <link rel="stylesheet" href="../shared/app-shell.css">
+  <link rel="stylesheet" href="../shared/custom-select.css">
+  <link rel="stylesheet" href="../shared/custom-date.css">
+  <link rel="stylesheet" href="../shared/grid-column-filters.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="tree-view.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+      <div class="brand" data-brands-url="../shared/data/brands.json">
+        <div class="brand__area" aria-label="Marca ativa">
+          <button class="brand__logo-btn" type="button" aria-label="Selecionar marca" aria-haspopup="true" aria-expanded="false">
+            <img src="../shared/assets/logos/zoetis-dark.svg" alt="Zoetis" class="brand__logo" data-logo="dark">
+          </button>
+          <div class="brand-dropdown" role="menu" aria-label="Selecionar marca"></div>
+        </div>
+        <button class="brand__toggle" id="sidebarToggle" type="button" aria-label="Recolher menu" aria-expanded="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div data-shell-menu data-menu-url="../config/menu.json"></div>
+
+      <div class="theme-toggle" role="group" aria-label="Tema do portal">
+        <button type="button" class="theme-toggle__btn" data-theme-choice="light" data-tooltip="Alternar para tema light" aria-label="Tema claro" aria-pressed="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+        </button>
+        <button type="button" class="theme-toggle__btn" data-theme-choice="dark" data-tooltip="Alternar para tema dark" aria-label="Tema escuro" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div data-shell-profile></div>
+    </aside>
+
+    <button class="sidebar-overlay" id="sidebarOverlay" type="button" aria-label="Fechar menu"></button>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="openMenu" type="button" aria-label="Abrir menu" aria-expanded="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4 6h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 18h16"></path>
+          </svg>
+        </button>
+      </header>
+
+      <section class="content structure-page">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html">Início</a>
+          <span>Estruturas</span>
+          <strong id="structureBreadcrumbCurrent">Estrutura de Venda</strong>
+        </nav>
+
+        <div class="structure-hero-row">
+          <section class="structure-hero summary-card">
+            <div>
+              <!-- <span class="eyebrow-label" id="structurePageEyebrow">Estruturas de Vendas</span> -->
+              <h1 id="structurePageTitle">Estrutura de Venda</h1>
+              <p>Hierarquia de níveis, subníveis e responsáveis. Dados de exemplo para validar o novo layout.</p>
+            </div>
+          </section>
+
+          <aside class="structure-registry-card summary-card" aria-label="Visualização e cadastro">
+            <div class="structure-registry">
+              <span class="structure-new-features__title">Visualização e cadastro</span>
+              <div class="structure-registry__controls">
+                <button type="button" class="btn btn-secondary" data-registry-open="responsaveis">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <span>Responsável</span>
+                </button>
+                <button type="button" class="btn btn-secondary" data-registry-open="linhasNegocio">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12.6 2.6a2 2 0 0 0-2.8 0l-7.2 7.2a2 2 0 0 0 0 2.8l7.6 7.6a2 2 0 0 0 2.8 0l7.2-7.2a2 2 0 0 0 0-2.8Z"></path>
+                    <circle cx="8.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"></circle>
+                  </svg>
+                  <span>Linha de negócio</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+
+          <aside class="structure-features-card summary-card" aria-label="Novidades do módulo">
+            <div class="structure-new-features">
+              <span class="structure-new-features__title">Novos modos de visualização</span>
+              <div class="structure-new-features__controls">
+                <div class="view-mode-toggle view-mode-toggle--active-label" role="group" aria-label="Densidade das colunas" data-structure-density-toggle>
+                  <button type="button" class="is-active" data-structure-density="full" aria-label="Ver colunas completas" data-tooltip="Completo · mostra todas as colunas da estrutura">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M3 6h18"></path>
+                      <path d="M3 12h18"></path>
+                      <path d="M3 18h18"></path>
+                    </svg>
+                    <span>Completo</span>
+                  </button>
+                  <button type="button" data-structure-density="compact" aria-label="Ver colunas compactas" data-tooltip="Compacto · mostra só as colunas essenciais">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+                      <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
+                      <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
+                      <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+                    </svg>
+                    <span>Compacto</span>
+                  </button>
+                </div>
+                <div class="view-mode-toggle view-mode-toggle--active-label" role="group" aria-label="Modo de exibição" data-structure-view-toggle>
+                  <button type="button" class="is-active" data-structure-view="table" aria-label="Ver como tabela" data-tooltip="Tabela · lista compacta em linhas">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                      <path d="M3 10h18"></path>
+                      <path d="M9 10v10"></path>
+                    </svg>
+                    <span>Tabela</span>
+                  </button>
+                  <button type="button" data-structure-view="tree" aria-label="Ver como árvore" data-tooltip="Árvore · cards conectados por hierarquia">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="6" cy="4" r="2"></circle>
+                      <circle cx="6" cy="20" r="2"></circle>
+                      <circle cx="18" cy="12" r="2"></circle>
+                      <path d="M6 6v12"></path>
+                      <path d="M6 12h8"></path>
+                    </svg>
+                    <span>Árvore</span>
+                  </button>
+                </div>
+                <button class="btn btn-secondary" id="structureFocusToggle" type="button" data-tooltip="Oculta o cabeçalho para priorizar a estrutura. Pressione Esc para sair.">
+                  <svg id="structureFocusIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 8V5a2 2 0 0 1 2-2h3"></path>
+                    <path d="M16 3h3a2 2 0 0 1 2 2v3"></path>
+                    <path d="M21 16v3a2 2 0 0 1-2 2h-3"></path>
+                    <path d="M8 21H5a2 2 0 0 1-2-2v-3"></path>
+                  </svg>
+                  <span>Modo foco</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="compact-tour compact-tour--inline" id="structureTour" role="status">
+          <strong id="structureTourTitle">Modo compacto ativo</strong>
+          <span id="structureTourText"></span>
+          <label class="compact-tour__dismiss">
+            <input type="checkbox" id="structureTourDismissForever">
+            Não exibir novamente
+          </label>
+          <button id="structureTourDismiss" type="button" aria-label="Fechar dica">Entendi</button>
+        </div>
+
+        <div class="structure-table-card summary-card">
+          <div class="structure-table-toolbar">
+            <div class="structure-area-tabs" role="tablist" aria-label="Área da estrutura">
+              <button type="button" class="is-active" role="tab" aria-selected="true" data-area="vendas">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M23 6 13.5 15.5l-5-5L1 18"></path>
+                  <path d="M17 6h6v6"></path>
+                </svg>
+                <span>Vendas</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-area="tecnica">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"></path>
+                </svg>
+                <span>Técnica</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-area="marketing">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m3 11 18-5v12L3 14v-3z"></path>
+                  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                </svg>
+                <span>Marketing</span>
+              </button>
+            </div>
+            <label class="structure-search-field">
+              <input id="structureSearchInput" type="search" placeholder="Pesquisar estruturas">
+            </label>
+            <div class="structure-level-filter" data-tree-only hidden>
+              <select id="structureLevelFilter" aria-label="Filtrar por nível"></select>
+            </div>
+            <div class="structure-table-toolbar__actions">
+              <label class="structure-inactive-toggle" id="structureInactiveToggle">
+                <input type="checkbox" id="structureShowInactive" checked>
+                <span>Mostrar inativos</span>
+              </label>
+              <div class="view-mode-toggle view-mode-toggle--active-label structure-tree-mode-toggle" role="group" aria-label="Tipo de árvore" data-tree-only hidden>
+                <button type="button" data-tree-mode="flow-h" aria-label="Flow horizontal" aria-pressed="false" data-tooltip="Flow horizontal">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="2" y="9" width="6" height="6" rx="1"></rect>
+                    <rect x="16" y="3" width="6" height="6" rx="1"></rect>
+                    <rect x="16" y="15" width="6" height="6" rx="1"></rect>
+                    <path d="M8 12h4"></path>
+                    <path d="M12 6v12"></path>
+                    <path d="M12 6h4"></path>
+                    <path d="M12 18h4"></path>
+                  </svg>
+                  <span>Flow horizontal</span>
+                </button>
+                <button type="button" data-tree-mode="flow-v" aria-label="Flow vertical" aria-pressed="false" data-tooltip="Flow vertical">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="16" y="16" width="6" height="6" rx="1"></rect>
+                    <rect x="2" y="16" width="6" height="6" rx="1"></rect>
+                    <rect x="9" y="2" width="6" height="6" rx="1"></rect>
+                    <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path>
+                    <path d="M12 12V8"></path>
+                  </svg>
+                  <span>Flow vertical</span>
+                </button>
+                <button type="button" class="is-active" data-tree-mode="lines" aria-label="Árvore em linhas" aria-pressed="true" data-tooltip="Árvore hierárquica em linhas">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12h-8"></path>
+                    <path d="M21 6H8"></path>
+                    <path d="M21 18h-8"></path>
+                    <path d="M3 6v4c0 1.1.9 2 2 2h3"></path>
+                    <path d="M3 10v6c0 1.1.9 2 2 2h3"></path>
+                  </svg>
+                  <span>Árvore em linhas</span>
+                </button>
+              </div>
+              <button type="button" class="btn btn-primary-acent" id="structureNewButton">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 5v14"></path>
+                  <path d="M5 12h14"></path>
+                </svg>
+                <span>Nova estrutura</span>
+              </button>
+              <button type="button" class="structure-tree-tool" id="structureExpandAll" aria-label="Expandir tudo" data-tooltip="Expandir tudo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 6 5 5 5-5"></path><path d="m7 13 5 5 5-5"></path></svg>
+              </button>
+              <button type="button" class="structure-tree-tool" id="structureCollapseAll" aria-label="Recolher tudo" data-tooltip="Recolher tudo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 18 5-5 5 5"></path><path d="m7 11 5-5 5 5"></path></svg>
+              </button>
+              <div class="structure-focus-controls" id="structureFocusControls" hidden>
+                <button class="btn btn-secondary" id="structureFocusExit" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
+                  <span>Sair do modo foco (Esc)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="structure-tree-tools" role="toolbar" aria-label="Ferramentas da árvore" data-tree-only hidden>
+            <div class="structure-tree-toolbar-hint" data-tree-hint>
+              <div class="structure-tree-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 12h-8"></path>
+                  <path d="M21 6H8"></path>
+                  <path d="M21 18h-8"></path>
+                  <path d="M3 6v4c0 1.1.9 2 2 2h3"></path>
+                  <path d="M3 10v6c0 1.1.9 2 2 2h3"></path>
+                </svg>
+                <span>Visualização hierárquica · Clique no nome  para abrir o painel de detalhes · Clique no card para expandir os níveis</span>
+              </div>
+            </div>
+            <button type="button" class="structure-tree-tool" data-tree-action="expand-all" aria-label="Expandir toda a ramificação" data-tooltip="Expandir toda a ramificação">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m7 6 5 5 5-5"></path>
+                <path d="m7 13 5 5 5-5"></path>
+              </svg>
+            </button>
+            <button type="button" class="structure-tree-tool" data-tree-action="collapse-all" aria-label="Recolher todos os níveis" data-tooltip="Recolher todos os níveis">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m7 18 5-5 5 5"></path>
+                <path d="m7 11 5-5 5 5"></path>
+              </svg>
+            </button>
+            <button type="button" class="structure-tree-tool structure-tree-tool--accent" data-tree-action="restore" aria-label="Limpar filtros e restaurar a visualização" data-tooltip="Limpar filtros e restaurar a visualização">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+            </button>
+            <span class="structure-tree-tools__sep" aria-hidden="true"></span>
+            <button type="button" class="structure-tree-tool" data-tree-action="fit" aria-label="Ajustar para caber tudo" data-tooltip="Ajustar para caber tudo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>
+            </button>
+            <button type="button" class="structure-tree-tool" data-tree-action="fit-width" aria-label="Ajustar à largura" data-tooltip="Ajustar à largura">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18"></path><path d="m7 8-4 4 4 4"></path><path d="m17 8 4 4-4 4"></path></svg>
+            </button>
+            <div class="structure-tree-popwrap">
+              <button type="button" class="structure-tree-tool" data-tree-action="zoom" aria-haspopup="true" aria-expanded="false" aria-label="Controle de zoom da área de desenho" data-tooltip="Controle de zoom da área de desenho">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+              </button>
+              <div class="structure-zoom-pop" data-tree-pop="zoom" role="group" aria-label="Zoom" hidden>
+                <button type="button" data-zoom-step="-1" aria-label="Diminuir zoom">−</button>
+                <output data-zoom-value>100%</output>
+                <button type="button" data-zoom-step="1" aria-label="Aumentar zoom">+</button>
+                <button type="button" class="structure-zoom-pop__reset" data-zoom-reset>Redefinir</button>
+              </div>
+            </div>
+            <span class="structure-tree-tools__sep" aria-hidden="true"></span>
+            <button type="button" class="structure-tree-tool" data-tree-action="download-pdf" aria-label="Baixar PDF" data-tooltip="Baixar PDF">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+            </button>
+            <span class="structure-tree-tools__sep" aria-hidden="true"></span>
+            <div class="structure-tree-popwrap">
+              <button type="button" class="structure-tree-tool" data-tree-action="more" aria-haspopup="menu" aria-expanded="false" aria-label="Mais opções" data-tooltip="Mais opções">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+              </button>
+              <div class="structure-tree-menu" data-tree-pop="more" role="menu" aria-label="Mais opções" hidden>
+                <button type="button" role="menuitem" data-tree-menu="upload">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"></path><path d="m7 8 5-5 5 5"></path><path d="M5 21h14"></path></svg>
+                  <span>Upload de dados</span>
+                </button>
+                <button type="button" role="menuitem" data-tree-menu="download">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+                  <span>Download de dados</span>
+                </button>
+                <hr>
+                <button type="button" role="menuitem" data-tree-menu="colors">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                  <span>Atualizar Cores</span>
+                </button>
+                <hr>
+                <button type="button" role="menuitem" data-tree-menu="coords-all">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.7 7-11.5A7 7 0 0 0 5 9.5C5 14.3 12 21 12 21Z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+                  <span>Atualizar coordenadas de todos os registros</span>
+                </button>
+                <button type="button" role="menuitem" data-tree-menu="coords-visible">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.7 7-11.5A7 7 0 0 0 5 9.5C5 14.3 12 21 12 21Z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+                  <span>Atualizar coordenadas dos registros exibidos</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="column-filters-active" id="structureColumnFiltersActive" aria-live="polite"></div>
+          <div class="structure-table-wrap payments-table-wrap" data-structure-panel="table">
+            <table class="structure-table payments-table">
+              <thead><tr id="structureTableHead"></tr></thead>
+              <tbody id="structureBody"></tbody>
+            </table>
+          </div>
+          <div class="structure-tree" id="structureTree" data-structure-panel="tree" hidden></div>
+          <div class="structure-empty-state-wrap" id="structureEmptyState" aria-live="polite"></div>
+          <div class="structure-pagination-bar" aria-label="Paginação das estruturas">
+            <span id="structurePaginationSummary">Página 1 de 1</span>
+            <div class="structure-pagination-actions">
+              <button class="btn btn-secondary btn-sm" id="structurePrevPage" type="button">Anterior</button>
+              <div class="structure-page-buttons" id="structurePageButtons"></div>
+              <button class="btn btn-secondary btn-sm" id="structureNextPage" type="button">Próxima</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="favorite-modal is-positive" id="structureEditModal" role="dialog" aria-modal="true" aria-label="Editar estrutura">
+    <button class="favorite-modal__backdrop" type="button" aria-label="Fechar" data-structure-edit-close></button>
+    <div class="favorite-modal__dialog">
+      <button class="favorite-modal__close" type="button" aria-label="Fechar" data-structure-edit-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+      <h2 class="favorite-modal__title">Editar estrutura</h2>
+      <form id="structureEditForm">
+        <div class="structure-edit-row structure-edit-row--main">
+          <div class="structure-field">
+            <label for="editDescription">Descrição</label>
+            <input type="text" id="editDescription" required>
+          </div>
+          <div class="structure-field">
+            <div class="structure-flag-toggle" role="group" aria-label="Status" id="editAtivoToggle">
+              <button type="button" data-flag="true">Ativo</button>
+              <button type="button" data-flag="false">Inativo</button>
+            </div>
+          </div>
+        </div>
+        <div class="structure-field">
+          <label for="editResponsavel">Responsável</label>
+          <div class="structure-select-row">
+            <select id="editResponsavel"></select>
+            <button type="button" class="icon-btn structure-select-add" data-registry-quick-add="responsaveis" aria-label="Cadastrar novo responsável" data-tooltip="Cadastrar novo responsável">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 5v14"></path>
+                <path d="M5 12h14"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="structure-field">
+          <label for="editLinha">Linha de negócio</label>
+          <div class="structure-select-row">
+            <select id="editLinha"></select>
+            <button type="button" class="icon-btn structure-select-add" data-registry-quick-add="linhasNegocio" aria-label="Cadastrar nova linha de negócio" data-tooltip="Cadastrar nova linha de negócio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 5v14"></path>
+                <path d="M5 12h14"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="structure-edit-row">
+          <div class="structure-field">
+            <label for="editTipo">Tipo de posição</label>
+            <input type="text" id="editTipo">
+          </div>
+          <div class="structure-field">
+            <label for="editPais">País</label>
+            <select id="editPais"></select>
+          </div>
+        </div>
+        <div class="favorite-modal__actions">
+          <button type="button" class="favorite-modal__btn" data-structure-edit-close>Cancelar</button>
+          <button type="submit" class="favorite-modal__btn favorite-modal__btn--primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="favorite-modal is-negative" id="structureDeleteModal" role="dialog" aria-modal="true" aria-label="Excluir estrutura">
+    <button class="favorite-modal__backdrop" type="button" aria-label="Fechar" data-structure-delete-close></button>
+    <div class="favorite-modal__dialog">
+      <button class="favorite-modal__close" type="button" aria-label="Fechar" data-structure-delete-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+      <h2 class="favorite-modal__title">Excluir estrutura</h2>
+      <p class="favorite-modal__description" id="structureDeleteMessage"></p>
+      <div class="favorite-modal__actions">
+        <button type="button" class="favorite-modal__btn" data-structure-delete-close>Cancelar</button>
+        <button type="button" class="favorite-modal__btn favorite-modal__btn--primary" id="structureDeleteConfirm">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="favorite-modal is-positive" id="structureRegistryFormModal" role="dialog" aria-modal="true" aria-label="Cadastro">
+    <button class="favorite-modal__backdrop" type="button" aria-label="Fechar" data-structure-registry-form-close></button>
+    <div class="favorite-modal__dialog">
+      <button class="favorite-modal__close" type="button" aria-label="Fechar" data-structure-registry-form-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+      <h2 class="favorite-modal__title" id="structureRegistryFormTitle">Cadastrar responsável</h2>
+      <form id="structureRegistryForm">
+        <div class="structure-field">
+          <label for="structureRegistryFormName" id="structureRegistryFormLabel">Nome</label>
+          <input type="text" id="structureRegistryFormName" required>
+        </div>
+        <div class="structure-field-row" id="structureRegistryFormDates" hidden>
+          <div class="structure-field">
+            <label for="structureRegistryFormStart">Data de início</label>
+            <input type="date" id="structureRegistryFormStart" required>
+          </div>
+          <div class="structure-field">
+            <label for="structureRegistryFormEnd">Data de fim</label>
+            <input type="date" id="structureRegistryFormEnd" required>
+          </div>
+        </div>
+        <div class="favorite-modal__actions">
+          <button type="button" class="favorite-modal__btn" data-structure-registry-form-close>Cancelar</button>
+          <button type="submit" class="favorite-modal__btn favorite-modal__btn--primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="favorite-modal is-positive" id="structureRegistryViewModal" role="dialog" aria-modal="true" aria-label="Visualizar cadastros">
+    <button class="favorite-modal__backdrop" type="button" aria-label="Fechar" data-structure-registry-view-close></button>
+    <div class="favorite-modal__dialog">
+      <button class="favorite-modal__close" type="button" aria-label="Fechar" data-structure-registry-view-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+      <h2 class="favorite-modal__title" id="structureRegistryViewTitle">Responsáveis cadastrados</h2>
+      <div class="structure-registry-view__toolbar">
+        <label class="structure-registry-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.5-3.5"></path>
+          </svg>
+          <input type="search" id="structureRegistrySearch" placeholder="Pesquisar…">
+        </label>
+        <button type="button" class="btn btn-primary-acent" id="structureRegistryViewCreate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 5v14"></path>
+            <path d="M5 12h14"></path>
+          </svg>
+          <span>Cadastrar</span>
+        </button>
+      </div>
+      <div class="structure-registry-sort" id="structureRegistrySort" hidden>
+        <div class="view-mode-toggle" role="group" aria-label="Ordenar responsáveis">
+          <button type="button" class="is-active" data-registry-sort="nome" aria-pressed="true">Nome (A–Z)</button>
+          <button type="button" data-registry-sort="vencer" aria-pressed="false">Prestes a vencer</button>
+          <button type="button" data-registry-sort="vencidos" aria-pressed="false">Vencidos recentemente</button>
+        </div>
+        <span class="structure-registry-sort__summary" id="structureRegistrySummary"></span>
+      </div>
+
+      <div class="structure-registry-inline" id="structureRegistryInline" hidden>
+        <form id="structureRegistryInlineForm">
+          <div class="structure-field">
+            <label for="registryInlineName" id="registryInlineNameLabel">Nome</label>
+            <input type="text" id="registryInlineName" required>
+          </div>
+          <div class="structure-field-row" id="registryInlineDates" hidden>
+            <div class="structure-field">
+              <label for="registryInlineStart">Data de início</label>
+              <input type="date" id="registryInlineStart" required>
+            </div>
+            <div class="structure-field">
+              <label for="registryInlineEnd">Data de fim</label>
+              <input type="date" id="registryInlineEnd" required>
+            </div>
+          </div>
+          <div class="favorite-modal__actions">
+            <button type="button" class="favorite-modal__btn" id="registryInlineCancel">Cancelar</button>
+            <button type="submit" class="favorite-modal__btn favorite-modal__btn--primary">Confirmar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="structure-registry-list" id="structureRegistryList"></div>
+      <div class="structure-pagination-bar structure-registry-pagination" aria-label="Paginação dos cadastros">
+        <span id="structureRegistryPaginationSummary">Página 1 de 1</span>
+        <div class="structure-pagination-actions">
+          <button class="btn btn-secondary btn-sm" id="structureRegistryPrevPage" type="button">Anterior</button>
+          <div class="structure-page-buttons" id="structureRegistryPageButtons"></div>
+          <button class="btn btn-secondary btn-sm" id="structureRegistryNextPage" type="button">Próxima</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="structure-toast-stack" id="structureToastStack" aria-live="polite"></div>
+
+  <script src="data/registries.js"></script>
+  <script src="data/vendas.js"></script>
+  <script src="data/tecnica.js"></script>
+  <script src="data/marketing.js"></script>
+  <script src="data/details-mock.js"></script>
+  <script>
+    window.BipperShellConfig = {
+      app: 'estruturas-de-vendas',
+      active: 'estruturas-de-vendas-visualizar-estrutura',
+      assetPathPrefix: '../',
+      publicPage: true
+    };
+  </script>
+  <script src="../shared/app-shell.js"></script>
+  <script src="../shared/custom-select.js"></script>
+  <script src="../shared/custom-date.js"></script>
+  <script src="../shared/grid-column-filters.js"></script>
+  <script src="tree-view.js"></script>
+  <script>
+    (function () {
+      var DEFAULT_AREA = 'vendas';
+      // Mesma lista do cadastro (nova-estrutura.html).
+      var PAISES = ['Brasil', 'Argentina', 'México', 'Colômbia', 'Chile', 'Peru', 'Equador', 'Paraguai', 'Uruguai'];
+
+      function organicSapCode(seed) {
+        var hash = 2166136261;
+        for (var i = 0; i < seed.length; i++) {
+          hash ^= seed.charCodeAt(i);
+          hash = Math.imul(hash, 16777619);
+        }
+
+        function next(limit) {
+          hash = (Math.imul(hash, 1664525) + 1013904223) >>> 0;
+          return hash % limit;
+        }
+
+        var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var digits = '0123456789';
+        var chars = [
+          letters[next(letters.length)],
+          letters[next(letters.length)],
+          letters[next(letters.length)],
+          digits[next(digits.length)],
+          digits[next(digits.length)]
+        ];
+        for (var position = chars.length - 1; position > 0; position--) {
+          var swapWith = next(position + 1);
+          var current = chars[position];
+          chars[position] = chars[swapWith];
+          chars[swapWith] = current;
+        }
+        return chars.join('');
+      }
+
+      function populateSapCodes() {
+        var areas = (window.BipperSalesStructure && window.BipperSalesStructure.areas) || {};
+        var usedCodes = new Set();
+        Object.keys(areas).forEach(function (area) {
+          (function walk(nodes) {
+            (nodes || []).forEach(function (node) {
+              var salt = 0;
+              var code;
+              do {
+                code = organicSapCode(area + ':' + node.id + ':' + salt);
+                salt += 1;
+              } while (usedCodes.has(code));
+              usedCodes.add(code);
+              node.sap = code;
+              if (node.children && node.children.length) walk(node.children);
+            });
+          })(areas[area] && areas[area].tree);
+        });
+      }
+
+      populateSapCodes();
+
+      function treeFor(area) {
+        var areas = window.BipperSalesStructure && window.BipperSalesStructure.areas;
+        return (areas && areas[area] && areas[area].tree) || [];
+      }
+
+      function allTrees() {
+        var areas = (window.BipperSalesStructure && window.BipperSalesStructure.areas) || {};
+        return Object.keys(areas).map(function (key) { return areas[key].tree; }).filter(Boolean);
+      }
+
+      var data = treeFor(DEFAULT_AREA);
+      var registries = {
+        responsaveis: (window.BipperSalesStructure && window.BipperSalesStructure.responsaveis) || [],
+        linhasNegocio: (window.BipperSalesStructure && window.BipperSalesStructure.linhasNegocio) || []
+      };
+      var REGISTRY_META = {
+        responsaveis: { field: 'responsavel', label: 'Responsável', labelPlural: 'responsáveis', fieldLabel: 'Nome do responsável' },
+        linhasNegocio: { field: 'linhaNegocio', label: 'Linha de negócio', labelPlural: 'linhas de negócio', fieldLabel: 'Nome da linha de negócio' }
+      };
+      var AREA_LABELS = {
+        vendas: { title: 'Estrutura de Venda', eyebrow: 'Estruturas de Vendas' },
+        tecnica: { title: 'Estrutura Técnica', eyebrow: 'Estruturas Técnicas' },
+        marketing: { title: 'Estrutura de Marketing', eyebrow: 'Estruturas de Marketing' }
+      };
+      var AREA_COLUMNS = {
+        vendas: [
+          { field: 'description', label: 'Descrição', type: 'text', main: true },
+          { field: 'id', label: 'Código interno', type: 'text' },
+          { field: 'sap', label: 'Código SAP', type: 'text' },
+          { field: 'responsavel', label: 'Responsável', type: 'list', person: true },
+          { field: 'cidade', label: 'Cidade', type: 'list', compact: true },
+          { field: 'franquia', label: 'Franquia', type: 'list', boolean: true },
+          { field: 'corDestaque', label: 'Cor destaque', type: 'list', color: true },
+          { field: 'tipoPosicao', label: 'Tipo(s) posição', type: 'list', chip: true, compact: true },
+          { field: 'tipoAcessoList', label: 'Tipo(s) acesso', type: 'list', list: true },
+          { field: 'ativo', label: 'Ativo?', type: 'list', status: true }
+        ],
+        tecnica: [
+          { field: 'description', label: 'Descrição', type: 'text', main: true },
+          { field: 'id', label: 'Código interno', type: 'text' },
+          { field: 'sap', label: 'Código SAP', type: 'text' },
+          { field: 'responsavel', label: 'Responsável', type: 'list', person: true },
+          { field: 'cidade', label: 'Cidade', type: 'list', compact: true },
+          { field: 'franquia', label: 'Franquia', type: 'list', boolean: true },
+          { field: 'corDestaque', label: 'Cor destaque', type: 'list', color: true },
+          { field: 'ativo', label: 'Ativo?', type: 'list', status: true }
+        ],
+        marketing: [
+          { field: 'description', label: 'Descrição', type: 'text', main: true },
+          { field: 'id', label: 'Cód. interno', type: 'text' },
+          { field: 'sap', label: 'Código SAP', type: 'text' },
+          { field: 'responsavel', label: 'Responsável', type: 'list', person: true },
+          { field: 'linhaNegocio', label: 'Linha negócio', type: 'list', compact: true },
+          { field: 'tipoPosicao', label: 'Tipo(s) posição', type: 'list', chip: true, compact: true },
+          { field: 'pais', label: 'País', type: 'list', compact: true },
+          { field: 'ativo', label: 'Ativo?', type: 'list', status: true }
+        ]
+      };
+      var tableCard = document.querySelector('.structure-table-card');
+      var structureTable = document.querySelector('.structure-table');
+      var structureTableHead = document.getElementById('structureTableHead');
+      var tbody = document.getElementById('structureBody');
+      var treeEl = document.getElementById('structureTree');
+      var emptyState = document.getElementById('structureEmptyState');
+      if (!data || !tbody || !treeEl) return;
+
+      var paginationSummary = document.getElementById('structurePaginationSummary');
+      var pageButtons = document.getElementById('structurePageButtons');
+      var prevPageBtn = document.getElementById('structurePrevPage');
+      var nextPageBtn = document.getElementById('structureNextPage');
+      var areaTabs = document.querySelector('.structure-area-tabs');
+      var breadcrumbCurrent = document.getElementById('structureBreadcrumbCurrent');
+      var pageEyebrow = document.getElementById('structurePageEyebrow');
+      var pageTitle = document.getElementById('structurePageTitle');
+      var searchField = document.querySelector('.structure-search-field');
+      var showInactiveToggle = document.getElementById('structureInactiveToggle');
+      var showInactiveInput = document.getElementById('structureShowInactive');
+      var searchInput = document.getElementById('structureSearchInput');
+      var columnFiltersActive = document.getElementById('structureColumnFiltersActive');
+
+      var densityToggle = document.querySelector('[data-structure-density-toggle]');
+      var viewToggle = document.querySelector('[data-structure-view-toggle]');
+      var tableWrap = document.querySelector('[data-structure-panel="table"]');
+
+      var focusToggle = document.getElementById('structureFocusToggle');
+      var focusIcon = document.getElementById('structureFocusIcon');
+      var focusControls = document.getElementById('structureFocusControls');
+      var focusExit = document.getElementById('structureFocusExit');
+      var tour = document.getElementById('structureTour');
+      var tourTitle = document.getElementById('structureTourTitle');
+      var tourText = document.getElementById('structureTourText');
+      var tourDismissForever = document.getElementById('structureTourDismissForever');
+      var tourOffsetParent = document.querySelector('.structure-page');
+
+      var editModal = document.getElementById('structureEditModal');
+      var editForm = document.getElementById('structureEditForm');
+      var editDescription = document.getElementById('editDescription');
+      var editResponsavel = document.getElementById('editResponsavel');
+      var editLinha = document.getElementById('editLinha');
+      var editTipo = document.getElementById('editTipo');
+      var editPais = document.getElementById('editPais');
+      var editAtivoToggle = document.getElementById('editAtivoToggle');
+      var editAtivoValue = true;
+
+      var deleteModal = document.getElementById('structureDeleteModal');
+      var deleteMessage = document.getElementById('structureDeleteMessage');
+      var deleteConfirm = document.getElementById('structureDeleteConfirm');
+      var pendingDelete = null;
+
+      var registryFormModal = document.getElementById('structureRegistryFormModal');
+      var registryForm = document.getElementById('structureRegistryForm');
+      var registryFormTitle = document.getElementById('structureRegistryFormTitle');
+      var registryFormLabel = document.getElementById('structureRegistryFormLabel');
+      var registryFormName = document.getElementById('structureRegistryFormName');
+      var registryFormDates = document.getElementById('structureRegistryFormDates');
+      var registryFormStart = document.getElementById('structureRegistryFormStart');
+      var registryFormEnd = document.getElementById('structureRegistryFormEnd');
+
+      var registryViewModal = document.getElementById('structureRegistryViewModal');
+      var registryViewTitle = document.getElementById('structureRegistryViewTitle');
+      var registryViewCreate = document.getElementById('structureRegistryViewCreate');
+      var registrySearch = document.getElementById('structureRegistrySearch');
+      var registrySortBar = document.getElementById('structureRegistrySort');
+      var registrySummary = document.getElementById('structureRegistrySummary');
+      var registryList = document.getElementById('structureRegistryList');
+      var registryPaginationSummary = document.getElementById('structureRegistryPaginationSummary');
+      var registryPageButtons = document.getElementById('structureRegistryPageButtons');
+      var registryPrevPage = document.getElementById('structureRegistryPrevPage');
+      var registryNextPage = document.getElementById('structureRegistryNextPage');
+
+      var registryInline = document.getElementById('structureRegistryInline');
+      var registryInlineForm = document.getElementById('structureRegistryInlineForm');
+      var registryInlineNameLabel = document.getElementById('registryInlineNameLabel');
+      var registryInlineName = document.getElementById('registryInlineName');
+      var registryInlineDates = document.getElementById('registryInlineDates');
+      var registryInlineStart = document.getElementById('registryInlineStart');
+      var registryInlineEnd = document.getElementById('registryInlineEnd');
+      var registryInlineCancel = document.getElementById('registryInlineCancel');
+
+      var toastStack = document.getElementById('structureToastStack');
+
+      var registryType = null;
+      var registryEditingId = null;
+      var registryContext = null;
+      var viewModalType = null;
+      var inlineEditingId = null;
+      var registryPage = 1;
+      var registryPageSize = 10;
+      var registrySort = 'nome';
+      var REGISTRY_EXPIRY_WINDOW = 30; // dias: dentro dessa janela o cadastro entra em "vence em breve"
+
+      var state = { view: 'table', density: 'full', collapsed: new Set(), page: 1, pageSize: 4, area: DEFAULT_AREA, search: '', showInactive: true };
+      var nodesById = {};
+      var parentById = {};
+
+      // Tooltip flutuante para controles da página e dos modais. Como ele é
+      // filho do body, não sofre clipping dos cards e contêineres com overflow.
+      var floatingTooltip = document.createElement('div');
+      floatingTooltip.className = 'structure-floating-tooltip';
+      floatingTooltip.setAttribute('role', 'tooltip');
+      document.body.appendChild(floatingTooltip);
+
+      function floatingTooltipTarget(event) {
+        var target = event.target.closest && event.target.closest('.structure-page [data-tooltip], .favorite-modal [data-tooltip]');
+        return target || null;
+      }
+
+      function hideFloatingTooltip() {
+        floatingTooltip.classList.remove('is-visible');
+      }
+
+      function showFloatingTooltip(target) {
+        var text = target.getAttribute('data-tooltip');
+        if (!text) { hideFloatingTooltip(); return; }
+        floatingTooltip.textContent = text;
+        floatingTooltip.style.left = '0px';
+        floatingTooltip.style.top = '0px';
+        floatingTooltip.classList.add('is-visible');
+
+        var rect = target.getBoundingClientRect();
+        var width = floatingTooltip.offsetWidth;
+        var height = floatingTooltip.offsetHeight;
+        var center = Math.min(Math.max(rect.left + rect.width / 2, width / 2 + 8), window.innerWidth - width / 2 - 8);
+        var below = rect.bottom + 8 + height <= window.innerHeight - 8;
+        floatingTooltip.style.left = (center - width / 2) + 'px';
+        floatingTooltip.style.top = (below ? rect.bottom + 8 : rect.top - height - 8) + 'px';
+      }
+
+      document.addEventListener('mouseover', function (event) {
+        var target = floatingTooltipTarget(event);
+        if (target && !target.contains(event.relatedTarget)) showFloatingTooltip(target);
+      });
+      document.addEventListener('mouseout', function (event) {
+        var target = floatingTooltipTarget(event);
+        if (target && !target.contains(event.relatedTarget)) hideFloatingTooltip();
+      });
+      document.addEventListener('focusin', function (event) {
+        var target = floatingTooltipTarget(event);
+        if (target) showFloatingTooltip(target);
+      });
+      document.addEventListener('focusout', function (event) {
+        if (floatingTooltipTarget(event)) hideFloatingTooltip();
+      });
+      window.addEventListener('scroll', hideFloatingTooltip, true);
+      window.addEventListener('resize', hideFloatingTooltip);
+
+      function syncAreaLabels(area) {
+        var labels = AREA_LABELS[area] || AREA_LABELS.vendas;
+        breadcrumbCurrent.textContent = labels.title;
+        if (pageEyebrow) pageEyebrow.textContent = labels.eyebrow;
+        pageTitle.textContent = labels.title;
+        document.title = labels.title + ' - Repo Barbara';
+
+        var menuLink = document.querySelector('[data-nav-key="estruturas-de-vendas-visualizar-estrutura"]');
+        if (menuLink) {
+          var menuLabel = menuLink.querySelector('.nav-submenu__label');
+          if (menuLabel) menuLabel.textContent = labels.title;
+          menuLink.dataset.tooltip = labels.title;
+          menuLink.setAttribute('aria-label', labels.title);
+        }
+      }
+
+      document.addEventListener('app-shell:menu-ready', function () {
+        syncAreaLabels(state.area);
+      });
+
+      // Inativar uma estrutura inativa toda a subárvore (1º, 2º, 3º nível...):
+      // um filho nunca fica ativo debaixo de um pai inativo. Como toda mudança
+      // de dados passa por aqui (carga, troca de área, edição, cadastro), a
+      // regra vale em qualquer caminho. Reativar o pai não reativa os filhos.
+      function indexNodes(nodes, parentId) {
+        nodes.forEach(function (node) {
+          if (parentId && !nodesById[parentId].ativo) node.ativo = false;
+          nodesById[node.id] = node;
+          parentById[node.id] = parentId || null;
+          if (node.children && node.children.length) indexNodes(node.children, node.id);
+        });
+      }
+      indexNodes(data);
+
+      function rebuildIndex() {
+        nodesById = {};
+        parentById = {};
+        indexNodes(data);
+      }
+
+      function initials(name) {
+        return name.split(' ').filter(Boolean).slice(0, 2).map(function (word) {
+          return word[0].toUpperCase();
+        }).join('');
+      }
+
+      function displayInternalCode(value) {
+        return String(value == null ? '' : value).replace(/\D/g, '');
+      }
+
+      function toggleButton(node, expanded, hasChildren) {
+        if (hasChildren === undefined) hasChildren = !!(node.children && node.children.length);
+        if (!hasChildren) {
+          return '<span class="structure-toggle structure-toggle--leaf" aria-hidden="true"></span>';
+        }
+        var label = (expanded ? 'Recolher ' : 'Expandir ') + node.description;
+        return '<button type="button" class="structure-toggle" data-toggle="' + node.id + '" aria-expanded="' + expanded + '" aria-label="' + label + '">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>';
+      }
+
+      var ICON_EDIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>';
+      var ICON_DELETE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"></path><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>';
+
+      function rowActionsMarkup(node) {
+        return (
+          '<button type="button" class="structure-row-action" data-edit="' + node.id + '" aria-label="Editar ' + node.description + '">' + ICON_EDIT + '</button>' +
+          '<button type="button" class="structure-row-action structure-row-action--danger" data-delete="' + node.id + '" aria-label="Excluir ' + node.description + '">' + ICON_DELETE + '</button>'
+        );
+      }
+
+      function personMarkup(node) {
+        return node.responsavel
+          ? '<span class="structure-person"><span class="structure-avatar">' + initials(node.responsavel) + '</span><span>' + node.responsavel + '</span></span>'
+          : '<span class="structure-person structure-person--empty">—</span>';
+      }
+
+      function directChildrenCount(node) {
+        return (node.children || []).length;
+      }
+
+      function subordinateCountMarkup(node) {
+        var count = directChildrenCount(node);
+        if (!count) return '';
+        var label = count + (count === 1 ? ' subordinado' : ' subordinados');
+        return '<span class="structure-subordinate-count" aria-label="' + label + '">(' + count + ')</span>';
+      }
+
+      // Tabela
+
+      // Mesma paleta usada nos badges da visão Árvore — reaproveitada aqui nas
+      // guias de indentação pra dar uma cor consistente por nível de profundidade,
+      // já que só o espaçamento (padding-left) não deixava os níveis óbvios.
+      var LEVEL_COLORS = ['#2563eb', '#00a7b5', 'var(--brand-primary)', '#7c3aed'];
+
+      function levelGuidesHtml(level) {
+        if (!level) return '';
+        var rails = '';
+        for (var i = 0; i < level; i++) {
+          rails += '<span class="structure-row-guide" aria-hidden="true" style="--guide-color:' + LEVEL_COLORS[i % LEVEL_COLORS.length] + '"></span>';
+        }
+        return '<span class="structure-row-guides" aria-hidden="true">' + rails + '</span>';
+      }
+
+      function tableRowHtml(node, level, hasChildren) {
+        var expanded = !state.collapsed.has(node.id);
+        var typeLevel = Math.min(level, 3);
+        var cells = AREA_COLUMNS[state.area].map(function (column) {
+          var value = node[column.field];
+          var cellClass = (!column.main && !column.person && !column.status && !column.compact) ? ' class="structure-column--compact-hidden"' : '';
+          if (column.main) {
+            return '<td class="structure-cell--main"><span class="structure-row-label">' + levelGuidesHtml(level) + toggleButton(node, expanded, hasChildren) +
+              '<button type="button" class="structure-description" data-level="' + typeLevel + '" data-detail="' + node.id + '">' + node.description + '</button>' + subordinateCountMarkup(node) + '</span></td>';
+          }
+          if (column.person) return '<td>' + personMarkup(node) + '</td>';
+          if (column.status) {
+            var statusClass = 'structure-status' + (node.ativo ? '' : ' structure-status--inactive');
+            return '<td><span class="' + statusClass + '"><span class="structure-status__dot"></span>' + (node.ativo ? 'Sim' : 'Não') + '</span></td>';
+          }
+          if (column.boolean) return '<td' + cellClass + '>' + (value ? 'Sim' : 'Não') + '</td>';
+          if (column.color) return '<td' + cellClass + '><span class="structure-color-value"><i style="background:' + (value || '#d1d5db') + '"></i>' + (value || '—') + '</span></td>';
+          if (column.list) value = (value || []).map(function (item) { return item.label || item; }).join(', ');
+          if (column.field === 'id') value = displayInternalCode(value);
+          if (column.chip) return '<td' + cellClass + '><span class="structure-chip">' + (value || '—') + '</span></td>';
+          return '<td' + cellClass + '>' + (value || '—') + '</td>';
+        }).join('');
+
+        return (
+          '<tr data-id="' + node.id + '" data-level="' + level + '" data-has-children="' + hasChildren + '">' +
+          '<td class="structure-cell--actions"><span class="structure-actions-inline">' + rowActionsMarkup(node) + '</span></td>' +
+          cells +
+          '</tr>'
+        );
+      }
+
+      // Ordenacao por coluna (funil do cabecalho): reordena os IRMAOS de cada
+      // nivel, sem achatar a arvore — assim pai e filhos continuam juntos.
+      function compareByField(field, a, b) {
+        var av = field === 'ativo' ? (a.ativo ? 'Ativo' : 'Inativo') : (a[field] || '');
+        var bv = field === 'ativo' ? (b.ativo ? 'Ativo' : 'Inativo') : (b[field] || '');
+        if (field === 'id') {
+          av = displayInternalCode(av);
+          bv = displayInternalCode(bv);
+        }
+        return String(av).localeCompare(String(bv), 'pt-BR', { numeric: true });
+      }
+
+      function sortSiblings(nodes) {
+        var sort = structureFilters.state.sort;
+        if (!sort.field) return nodes;
+        var mult = sort.dir === 'desc' ? -1 : 1;
+        return nodes.slice().sort(function (a, b) { return mult * compareByField(sort.field, a, b); });
+      }
+
+      // visibleIds = null -> sem filtro/busca ativos, mostra tudo normalmente.
+      // Com filtro ativo, so entram os nos que combinam + a cadeia de pais ate
+      // a raiz (preserva a hierarquia em vez de achatar a lista, como pedido).
+      function renderTableRows(nodes, level, visibleIds) {
+        var list = visibleIds ? nodes.filter(function (node) { return visibleIds.has(node.id); }) : nodes;
+        list = sortSiblings(list);
+        return list.map(function (node) {
+          var children = node.children || [];
+          var visibleChildren = visibleIds ? children.filter(function (c) { return visibleIds.has(c.id); }) : children;
+          var hasChildren = visibleChildren.length > 0;
+          var expanded = !state.collapsed.has(node.id);
+          var html = tableRowHtml(node, level, hasChildren);
+          var childrenHtml = (hasChildren && expanded) ? renderTableRows(visibleChildren, level + 1, visibleIds) : '';
+          return html + childrenHtml;
+        }).join('');
+      }
+
+      function renderTable(nodes, visibleIds) {
+        tbody.innerHTML = renderTableRows(nodes, 0, visibleIds);
+      }
+
+      // Árvore: toda a renderização (cartões, drawer, filtro de nível)
+      // vive em tree-view.js. Aqui só entregamos dados e callbacks. A busca e o
+      // "Mostrar inativos" são os mesmos da Tabela (state.search/showInactive);
+      // o estado de expansão da Árvore é próprio, independente do da Tabela.
+      var tree = window.BipperStructureTree.create({
+        host: treeEl,
+        getRoots: function () { return data; },
+        getNode: function (id) { return nodesById[id]; },
+        getParentId: function (id) { return parentById[id]; },
+        matches: matchesSearch,
+        hasSearch: function () { return Boolean(state.search); },
+        getSearch: function () { return state.search; },
+        onEdit: openEditModal,
+        formatCode: displayInternalCode,
+        toast: showToast,
+        rerender: function () {
+          window.clearTimeout(renderTimer);
+          renderContent();
+        },
+        onFilterChange: function () { render(); },
+        resetSharedFilters: function () {
+          state.search = '';
+          searchInput.value = '';
+          state.showInactive = true;
+          showInactiveInput.checked = true;
+        }
+      });
+
+      // Mensagens de sucesso/erro
+
+      var TOAST_ICONS = {
+        success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12.5 2.5 2.5 5-5"></path></svg>',
+        error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16h.01"></path></svg>'
+      };
+
+      function showToast(type, message) {
+        var el = document.createElement('div');
+        el.className = 'structure-toast structure-toast--' + type;
+        el.innerHTML = '<span class="structure-toast__icon">' + TOAST_ICONS[type] + '</span><span>' + message + '</span>';
+        toastStack.appendChild(el);
+        window.setTimeout(function () {
+          el.classList.add('is-leaving');
+          window.setTimeout(function () { el.remove(); }, 200);
+        }, 3200);
+      }
+
+      // Cadastros (Responsável / Linha de negócio)
+
+      function registryArray(type) {
+        return registries[type];
+      }
+
+      function findRegistryItem(type, id) {
+        return registryArray(type).find(function (item) { return item.id === id; });
+      }
+
+      function nextRegistryId(type) {
+        return type + '-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+      }
+
+      function isDuplicateName(type, name, ignoreId) {
+        var normalized = name.trim().toLowerCase();
+        return registryArray(type).some(function (item) {
+          return item.id !== ignoreId && item.nome.trim().toLowerCase() === normalized;
+        });
+      }
+
+      function countUsage(type, name) {
+        // Responsavel/Linha de negocio sao compartilhados entre as areas, entao
+        // o uso precisa ser checado em todas as arvores, nao so na aba aberta.
+        var field = REGISTRY_META[type].field;
+        var count = 0;
+        function walk(nodes) {
+          nodes.forEach(function (node) {
+            if (node[field] === name) count += 1;
+            if (node.children && node.children.length) walk(node.children);
+          });
+        }
+        allTrees().forEach(walk);
+        return count;
+      }
+
+      function renameInTree(type, oldName, newName) {
+        var field = REGISTRY_META[type].field;
+        function walk(nodes) {
+          nodes.forEach(function (node) {
+            if (node[field] === oldName) node[field] = newName;
+            if (node.children && node.children.length) walk(node.children);
+          });
+        }
+        allTrees().forEach(walk);
+      }
+
+      function populateRegistrySelect(select, type, currentValue) {
+        var options = ['<option value="">Selecione…</option>'].concat(
+          registryArray(type).map(function (item) {
+            return '<option value="' + item.nome + '"' + (item.nome === currentValue ? ' selected' : '') + '>' + item.nome + '</option>';
+          })
+        );
+        select.innerHTML = options.join('');
+        window.BipperCustomSelect && window.BipperCustomSelect.enhanceAll(select.closest('.structure-field'));
+      }
+
+      function populatePaisSelect(currentValue) {
+        // Se o nó tiver um país fora da lista, mantém como opção pra não perder o valor.
+        var paises = currentValue && PAISES.indexOf(currentValue) === -1 ? PAISES.concat(currentValue) : PAISES;
+        editPais.innerHTML = ['<option value="">Selecione um país…</option>'].concat(
+          paises.map(function (pais) {
+            return '<option value="' + pais + '"' + (pais === currentValue ? ' selected' : '') + '>' + pais + '</option>';
+          })
+        ).join('');
+        window.BipperCustomSelect && window.BipperCustomSelect.enhanceAll(editPais.closest('.structure-field'));
+      }
+
+      function refreshEditSelects() {
+        populateRegistrySelect(editResponsavel, 'responsaveis', editResponsavel.value);
+        populateRegistrySelect(editLinha, 'linhasNegocio', editLinha.value);
+      }
+
+      function openRegistryFormModal(type, context, editItem) {
+        registryType = type;
+        registryContext = context;
+        registryEditingId = editItem ? editItem.id : null;
+        registryFormTitle.textContent = (editItem ? 'Editar ' : 'Cadastrar ') + REGISTRY_META[type].label.toLowerCase();
+        registryFormLabel.textContent = REGISTRY_META[type].fieldLabel;
+        registryFormName.value = editItem ? editItem.nome : '';
+        var showDates = type === 'responsaveis';
+        registryFormDates.hidden = !showDates;
+        registryFormStart.required = showDates;
+        registryFormEnd.required = showDates;
+        registryFormStart.value = (editItem && editItem.dataInicio) || '';
+        registryFormEnd.value = (editItem && editItem.dataFim) || '';
+        registryFormModal.classList.add('is-visible');
+        window.BipperCustomDate && window.BipperCustomDate.enhanceAll(registryFormDates);
+        window.setTimeout(function () { registryFormName.focus(); }, 50);
+      }
+
+      function closeRegistryFormModal() {
+        registryFormModal.classList.remove('is-visible');
+        var context = registryContext;
+        registryContext = null;
+        registryEditingId = null;
+        if (context === 'quickAddResponsavel' || context === 'quickAddLinha') {
+          editModal.classList.add('is-visible');
+        }
+      }
+
+      registryForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var name = registryFormName.value.trim();
+        if (!name) { showToast('error', 'Informe um nome antes de salvar.'); return; }
+        if (isDuplicateName(registryType, name, registryEditingId)) {
+          showToast('error', 'Já existe um cadastro com esse nome.');
+          return;
+        }
+        if (registryType === 'responsaveis' && registryFormEnd.value < registryFormStart.value) {
+          showToast('error', 'A data de fim não pode ser antes da data de início.');
+          return;
+        }
+
+        var label = REGISTRY_META[registryType].label;
+        var savedName = name;
+        var context = registryContext;
+        var dataInicio = registryType === 'responsaveis' ? registryFormStart.value : '';
+        var dataFim = registryType === 'responsaveis' ? registryFormEnd.value : '';
+
+        if (registryEditingId) {
+          var existing = findRegistryItem(registryType, registryEditingId);
+          var oldName = existing.nome;
+          existing.nome = name;
+          existing.dataInicio = dataInicio;
+          existing.dataFim = dataFim;
+          if (oldName !== name) renameInTree(registryType, oldName, name);
+          showToast('success', label + ' atualizado com sucesso.');
+        } else {
+          registryArray(registryType).push({ id: nextRegistryId(registryType), nome: name, dataInicio: dataInicio, dataFim: dataFim });
+          showToast('success', label + ' cadastrado com sucesso.');
+        }
+
+        closeRegistryFormModal();
+        render();
+
+        if (context === 'quickAddResponsavel') {
+          populateRegistrySelect(editResponsavel, 'responsaveis', savedName);
+        } else if (context === 'quickAddLinha') {
+          populateRegistrySelect(editLinha, 'linhasNegocio', savedName);
+        }
+      });
+
+      registryFormModal.querySelectorAll('[data-structure-registry-form-close]').forEach(function (button) {
+        button.addEventListener('click', closeRegistryFormModal);
+      });
+
+      // Dias entre hoje e a data (yyyy-mm-dd); negativo = já passou. Só data, sem hora.
+      function daysUntil(iso) {
+        var end = iso.split('-');
+        var now = new Date();
+        var endUtc = Date.UTC(Number(end[0]), Number(end[1]) - 1, Number(end[2]));
+        var nowUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+        return Math.round((endUtc - nowUtc) / 86400000);
+      }
+
+      // Situação do período: 'expired' (fim já passou), 'soon' (vence em até
+      // REGISTRY_EXPIRY_WINDOW dias, inclusive hoje), 'ok', ou null sem datas.
+      function registryStatus(item) {
+        if (!item.dataFim) return null;
+        var days = daysUntil(item.dataFim);
+        if (days < 0) {
+          return { kind: 'expired', days: days, label: days === -1 ? 'Vencido ontem' : 'Vencido há ' + (-days) + ' dias' };
+        }
+        if (days <= REGISTRY_EXPIRY_WINDOW) {
+          return { kind: 'soon', days: days, label: days === 0 ? 'Vence hoje' : (days === 1 ? 'Vence amanhã' : 'Vence em ' + days + ' dias') };
+        }
+        return { kind: 'ok', days: days, label: '' };
+      }
+
+      // A linha do tempo se divide em "hoje": de um lado os que ainda vão vencer
+      // (mais próximo primeiro), do outro os que já venceram (mais recente
+      // primeiro). As duas ordenações por data só diferem em qual lado vem antes.
+      // Sem data ficam sempre no fim; empate desempata pelo nome.
+      function sortRegistryItems(items) {
+        function byName(a, b) { return a.nome.localeCompare(b.nome, 'pt-BR'); }
+        if (registrySort === 'nome') return items.slice().sort(byName);
+        var expiredFirst = registrySort === 'vencidos';
+        function rank(item) {
+          var status = registryStatus(item);
+          if (!status) return 2;
+          return (status.kind === 'expired') === expiredFirst ? 0 : 1;
+        }
+        return items.slice().sort(function (a, b) {
+          var ra = rank(a);
+          var rb = rank(b);
+          if (ra !== rb) return ra - rb;
+          var sa = registryStatus(a);
+          var sb = registryStatus(b);
+          if (sa && sb && sa.days !== sb.days) {
+            return sa.kind === 'expired' ? sb.days - sa.days : sa.days - sb.days;
+          }
+          return byName(a, b);
+        });
+      }
+
+      function renderRegistrySummary(type) {
+        var expired = 0;
+        var soon = 0;
+        if (type === 'responsaveis') {
+          registryArray(type).forEach(function (item) {
+            var status = registryStatus(item);
+            if (status && status.kind === 'expired') expired += 1;
+            else if (status && status.kind === 'soon') soon += 1;
+          });
+        }
+        registrySummary.innerHTML =
+          '<span class="is-expired"><i></i>' + expired + (expired === 1 ? ' vencido' : ' vencidos') + '</span>' +
+          '<span class="is-soon"><i></i>' + soon + ' vence' + (soon === 1 ? '' : 'm') + ' em até ' + REGISTRY_EXPIRY_WINDOW + ' dias</span>';
+      }
+
+      function syncRegistrySortButtons() {
+        registrySortBar.querySelectorAll('[data-registry-sort]').forEach(function (button) {
+          var active = button.getAttribute('data-registry-sort') === registrySort;
+          button.classList.toggle('is-active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+      }
+
+      function renderRegistryList(type) {
+        var items = registryArray(type);
+        var term = registrySearch.value.trim().toLowerCase();
+        var matched = term ? items.filter(function (item) { return item.nome.toLowerCase().indexOf(term) > -1; }) : items;
+        var filtered = sortRegistryItems(matched);
+        registrySortBar.hidden = type !== 'responsaveis';
+        if (type === 'responsaveis') renderRegistrySummary(type);
+        var totalPages = Math.max(1, Math.ceil(filtered.length / registryPageSize));
+        if (registryPage > totalPages) registryPage = totalPages;
+        var start = (registryPage - 1) * registryPageSize;
+        var pageItems = filtered.slice(start, start + registryPageSize);
+
+        registryPaginationSummary.textContent = filtered.length
+          ? 'Página ' + registryPage + ' de ' + totalPages + ' | ' + (start + 1) + '-' + (start + pageItems.length) + ' de ' + filtered.length + ' cadastros'
+          : 'Nenhum cadastro';
+        registryPrevPage.disabled = registryPage <= 1;
+        registryNextPage.disabled = registryPage >= totalPages;
+        registryPageButtons.innerHTML = Array.from({ length: totalPages }, function (_, index) {
+          var page = index + 1;
+          return '<button class="' + (page === registryPage ? 'is-active' : '') + '" type="button" data-registry-page="' + page + '">' + page + '</button>';
+        }).join('');
+
+        if (!items.length) {
+          registryList.innerHTML = '<p class="structure-registry-empty">Nenhum cadastro ainda.</p>';
+          return;
+        }
+        if (!filtered.length) {
+          registryList.innerHTML = '<p class="structure-registry-empty">Nenhum resultado para "' + registrySearch.value.trim() + '".</p>';
+          return;
+        }
+        registryList.innerHTML = pageItems.map(function (item) {
+          var period = type === 'responsaveis'
+            ? '<small>' + (item.dataInicio && item.dataFim ? formatRegistryDate(item.dataInicio) + ' a ' + formatRegistryDate(item.dataFim) : 'Período não informado') + '</small>'
+            : '';
+          var status = type === 'responsaveis' ? registryStatus(item) : null;
+          var badge = status && status.kind !== 'ok'
+            ? '<span class="structure-registry-badge structure-registry-badge--' + status.kind + '"><i></i>' + status.label + '</span>'
+            : '';
+          return (
+            '<div class="structure-registry-row">' +
+            '<span class="structure-registry-row__content"><strong>' + item.nome + '</strong>' + period + '</span>' +
+            '<span class="structure-registry-row__end">' + badge +
+            '<span class="structure-actions-inline">' +
+            '<button type="button" class="structure-row-action" data-registry-edit="' + item.id + '" aria-label="Editar ' + item.nome + '">' + ICON_EDIT + '</button>' +
+            '<button type="button" class="structure-row-action structure-row-action--danger" data-registry-delete="' + item.id + '" aria-label="Excluir ' + item.nome + '">' + ICON_DELETE + '</button>' +
+            '</span>' +
+            '</span>' +
+            '</div>'
+          );
+        }).join('');
+      }
+
+      function formatRegistryDate(value) {
+        return value.split('-').reverse().join('/');
+      }
+
+      function openRegistryViewModal(type) {
+        viewModalType = type;
+        registryViewTitle.textContent = REGISTRY_META[type].labelPlural.replace(/^./, function (c) { return c.toUpperCase(); }) + ' cadastrados';
+        registrySearch.value = '';
+        registryPage = 1;
+        registrySort = 'nome';
+        syncRegistrySortButtons();
+        closeRegistryInlineForm();
+        renderRegistryList(type);
+        registryViewModal.classList.add('is-visible');
+      }
+
+      registrySortBar.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-registry-sort]');
+        if (!button || !viewModalType) return;
+        registrySort = button.getAttribute('data-registry-sort');
+        registryPage = 1;
+        registryList.scrollTop = 0;
+        syncRegistrySortButtons();
+        renderRegistryList(viewModalType);
+      });
+
+      registrySearch.addEventListener('input', function () {
+        registryPage = 1;
+        if (viewModalType) renderRegistryList(viewModalType);
+      });
+
+      registryPageButtons.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-registry-page]');
+        if (!button || !viewModalType) return;
+        registryPage = Number(button.getAttribute('data-registry-page'));
+        registryList.scrollTop = 0;
+        renderRegistryList(viewModalType);
+      });
+
+      registryPrevPage.addEventListener('click', function () {
+        if (!viewModalType) return;
+        registryPage = Math.max(1, registryPage - 1);
+        registryList.scrollTop = 0;
+        renderRegistryList(viewModalType);
+      });
+
+      registryNextPage.addEventListener('click', function () {
+        if (!viewModalType) return;
+        registryPage += 1;
+        registryList.scrollTop = 0;
+        renderRegistryList(viewModalType);
+      });
+
+      function closeRegistryViewModal() {
+        registryViewModal.classList.remove('is-visible');
+        viewModalType = null;
+        closeRegistryInlineForm();
+      }
+
+      registryViewModal.querySelectorAll('[data-structure-registry-view-close]').forEach(function (button) {
+        button.addEventListener('click', closeRegistryViewModal);
+      });
+
+      // Cadastro inline dentro do modal Visualizar
+
+      function openRegistryInlineForm(editItem) {
+        var type = viewModalType;
+        inlineEditingId = editItem ? editItem.id : null;
+        registryInlineNameLabel.textContent = REGISTRY_META[type].fieldLabel;
+        registryInlineName.value = editItem ? editItem.nome : '';
+        var showDates = type === 'responsaveis';
+        registryInlineDates.hidden = !showDates;
+        registryInlineStart.required = showDates;
+        registryInlineEnd.required = showDates;
+        registryInlineStart.value = (editItem && editItem.dataInicio) || '';
+        registryInlineEnd.value = (editItem && editItem.dataFim) || '';
+        registryInline.hidden = false;
+        registryViewCreate.hidden = true;
+        window.setTimeout(function () { registryInlineName.focus(); }, 50);
+      }
+
+      function closeRegistryInlineForm() {
+        registryInline.hidden = true;
+        registryViewCreate.hidden = false;
+        inlineEditingId = null;
+      }
+
+      registryInlineCancel.addEventListener('click', closeRegistryInlineForm);
+
+      registryInlineForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var type = viewModalType;
+        var name = registryInlineName.value.trim();
+        if (!name) { showToast('error', 'Informe um nome antes de confirmar.'); return; }
+        if (isDuplicateName(type, name, inlineEditingId)) {
+          showToast('error', 'Já existe um cadastro com esse nome.');
+          return;
+        }
+        if (type === 'responsaveis' && registryInlineEnd.value < registryInlineStart.value) {
+          showToast('error', 'A data de fim não pode ser antes da data de início.');
+          return;
+        }
+
+        var label = REGISTRY_META[type].label;
+        var dataInicio = type === 'responsaveis' ? registryInlineStart.value : '';
+        var dataFim = type === 'responsaveis' ? registryInlineEnd.value : '';
+
+        if (inlineEditingId) {
+          var existing = findRegistryItem(type, inlineEditingId);
+          var oldName = existing.nome;
+          existing.nome = name;
+          existing.dataInicio = dataInicio;
+          existing.dataFim = dataFim;
+          if (oldName !== name) renameInTree(type, oldName, name);
+          showToast('success', label + ' atualizado com sucesso.');
+        } else {
+          registryArray(type).push({ id: nextRegistryId(type), nome: name, dataInicio: dataInicio, dataFim: dataFim });
+          showToast('success', label + ' cadastrado com sucesso.');
+        }
+
+        closeRegistryInlineForm();
+        render();
+        refreshEditSelects();
+        renderRegistryList(type);
+      });
+
+      registryViewCreate.addEventListener('click', function () {
+        openRegistryInlineForm();
+      });
+
+      registryList.addEventListener('click', function (event) {
+        var editBtn = event.target.closest('[data-registry-edit]');
+        if (editBtn) {
+          var item = findRegistryItem(viewModalType, editBtn.getAttribute('data-registry-edit'));
+          if (item) openRegistryInlineForm(item);
+          return;
+        }
+        var deleteBtn = event.target.closest('[data-registry-delete]');
+        if (deleteBtn) {
+          var target = findRegistryItem(viewModalType, deleteBtn.getAttribute('data-registry-delete'));
+          if (!target) return;
+          var usage = countUsage(viewModalType, target.nome);
+          if (usage > 0) {
+            showToast('error', 'Não é possível excluir "' + target.nome + '": em uso por ' + usage + (usage === 1 ? ' estrutura.' : ' estruturas.'));
+            return;
+          }
+          closeRegistryInlineForm();
+          registryViewModal.classList.remove('is-visible');
+          openDeleteModal({ kind: 'registry', registryType: viewModalType, id: target.id, label: target.nome, returnToView: true });
+        }
+      });
+
+      document.querySelectorAll('[data-registry-open]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          openRegistryViewModal(button.getAttribute('data-registry-open'));
+        });
+      });
+
+      // Editar
+
+      var editingId = null;
+
+      function setEditAtivo(value) {
+        editAtivoValue = value;
+        editAtivoToggle.querySelectorAll('[data-flag]').forEach(function (button) {
+          button.classList.toggle('is-active', (button.getAttribute('data-flag') === 'true') === value);
+        });
+      }
+
+      editAtivoToggle.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-flag]');
+        if (!button) return;
+        setEditAtivo(button.getAttribute('data-flag') === 'true');
+      });
+
+      editModal.querySelectorAll('[data-registry-quick-add]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var type = button.getAttribute('data-registry-quick-add');
+          editModal.classList.remove('is-visible');
+          openRegistryFormModal(type, type === 'responsaveis' ? 'quickAddResponsavel' : 'quickAddLinha');
+        });
+      });
+
+      function openEditModal(node) {
+        try {
+          sessionStorage.setItem('bipperEditStructureDraft', JSON.stringify({
+            area: state.area,
+            parentId: parentById[node.id] || null,
+            node: node
+          }));
+        } catch (e) { /* a tela de edição também consegue localizar o nó pelo id */ }
+        window.location.href = 'nova-estrutura.html?area=' + encodeURIComponent(state.area) + '&edit=' + encodeURIComponent(node.id);
+      }
+
+      function closeEditModal() {
+        editModal.classList.remove('is-visible');
+        editingId = null;
+      }
+
+      editForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var node = editingId && nodesById[editingId];
+        if (!node) return;
+        node.description = editDescription.value.trim() || node.description;
+        node.responsavel = editResponsavel.value;
+        node.linhaNegocio = editLinha.value;
+        node.tipoPosicao = editTipo.value.trim();
+        node.pais = editPais.value.trim();
+        node.ativo = editAtivoValue;
+        rebuildIndex();
+        closeEditModal();
+        render();
+        showToast('success', 'Estrutura atualizada com sucesso.');
+      });
+
+      editModal.querySelectorAll('[data-structure-edit-close]').forEach(function (button) {
+        button.addEventListener('click', closeEditModal);
+      });
+
+      // Excluir
+
+      function findContainer(id, nodes) {
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].id === id) return nodes;
+          if (nodes[i].children && nodes[i].children.length) {
+            var found = findContainer(id, nodes[i].children);
+            if (found) return found;
+          }
+        }
+        return null;
+      }
+
+      function countDescendants(node) {
+        if (!node.children || !node.children.length) return 0;
+        return node.children.reduce(function (sum, child) { return sum + 1 + countDescendants(child); }, 0);
+      }
+
+      function openDeleteModal(descriptor) {
+        pendingDelete = descriptor;
+        var message;
+        if (descriptor.kind === 'node') {
+          var node = nodesById[descriptor.id];
+          var extra = countDescendants(node);
+          message = 'Tem certeza que deseja excluir "' + node.description + '"?';
+          if (extra > 0) {
+            message += ' Isso também remove ' + extra + (extra === 1 ? ' subestrutura vinculada.' : ' subestruturas vinculadas.');
+          }
+        } else {
+          message = 'Tem certeza que deseja excluir "' + descriptor.label + '"?';
+        }
+        deleteMessage.textContent = message;
+        deleteModal.classList.add('is-visible');
+      }
+
+      function closeDeleteModal() {
+        deleteModal.classList.remove('is-visible');
+        var reopenView = pendingDelete && pendingDelete.kind === 'registry' && pendingDelete.returnToView;
+        pendingDelete = null;
+        if (reopenView && viewModalType) registryViewModal.classList.add('is-visible');
+      }
+
+      deleteConfirm.addEventListener('click', function () {
+        if (!pendingDelete) return;
+
+        if (pendingDelete.kind === 'node') {
+          var container = findContainer(pendingDelete.id, data);
+          if (container) {
+            var index = container.findIndex(function (n) { return n.id === pendingDelete.id; });
+            if (index > -1) container.splice(index, 1);
+          }
+          closeDeleteModal();
+          rebuildIndex();
+          render();
+          showToast('success', 'Estrutura excluída com sucesso.');
+        } else {
+          var list = registryArray(pendingDelete.registryType);
+          var itemIndex = list.findIndex(function (item) { return item.id === pendingDelete.id; });
+          if (itemIndex > -1) list.splice(itemIndex, 1);
+          var deletedType = pendingDelete.registryType;
+          if (viewModalType === deletedType) renderRegistryList(deletedType);
+          closeDeleteModal();
+          refreshEditSelects();
+          showToast('success', REGISTRY_META[deletedType].label + ' excluído com sucesso.');
+        }
+      });
+
+      deleteModal.querySelectorAll('[data-structure-delete-close]').forEach(function (button) {
+        button.addEventListener('click', closeDeleteModal);
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        if (registryFormModal.classList.contains('is-visible')) { closeRegistryFormModal(); return; }
+        if (registryViewModal.classList.contains('is-visible')) { closeRegistryViewModal(); return; }
+        if (editModal.classList.contains('is-visible')) closeEditModal();
+        if (deleteModal.classList.contains('is-visible')) closeDeleteModal();
+      });
+
+      // Dica contextual (tour)
+
+      function positionTour() {
+        if (!tour.classList.contains('is-visible')) return;
+        var focusMode = document.body.classList.contains('structure-focus-mode');
+        var anchor = focusMode ? focusExit : densityToggle;
+        if (!anchor || !tourOffsetParent) return;
+        var anchorRect = anchor.getBoundingClientRect();
+        var parentRect = tourOffsetParent.getBoundingClientRect();
+        tour.style.top = (anchorRect.bottom - parentRect.top + 10) + 'px';
+        tour.style.right = (parentRect.right - anchorRect.right) + 'px';
+        tour.style.left = 'auto';
+      }
+
+      function showTour(title, text) {
+        if (window.__bipperNavTipsOff || document.body.classList.contains('structure-focus-mode')) return;
+        tourTitle.textContent = title;
+        tourText.innerHTML = text;
+        if (tourDismissForever) tourDismissForever.checked = false;
+        tour.classList.add('is-visible');
+        positionTour();
+        requestAnimationFrame(positionTour);
+      }
+
+      function hideTour() {
+        if (tourDismissForever && tourDismissForever.checked) window.__bipperNavTipsOff = true;
+        tour.classList.remove('is-visible');
+      }
+
+      document.getElementById('structureTourDismiss').addEventListener('click', hideTour);
+      window.addEventListener('resize', positionTour);
+
+      // Altura fixa da tabela/árvore: sem isso, expandir/recolher níveis fazia o
+      // card crescer e encolher junto com a página. Medimos o espaço do topo do
+      // card até o fim da tela e fixamos essa altura, com respiro embaixo; quem
+      // rola é o conteúdo interno (thead sticky continua funcionando).
+      var TABLE_BOTTOM_GAP = 32;
+
+      function syncTableHeight() {
+        if (document.body.classList.contains('structure-focus-mode')) return;
+        var top = tableCard.getBoundingClientRect().top;
+        var available = window.innerHeight - top - TABLE_BOTTOM_GAP;
+        tableCard.style.height = Math.max(320, Math.round(available)) + 'px';
+      }
+
+      window.addEventListener('resize', syncTableHeight);
+
+      // Aviso de rolagem horizontal — reaproveita o toast de dicas do topo.
+      function showGridScrollTip() {
+        if (state.view !== 'table' || tableWrap.hidden) return;
+        if (tableWrap.scrollWidth - tableWrap.clientWidth <= 8) return;
+        showTour(
+          'Rolagem lateral do grid',
+          'Segure <kbd>Shift</kbd> e role o mouse — ou arraste com dois dedos no trackpad — para ver todas as colunas.'
+        );
+      }
+
+      // Modo foco
+
+      var ICON_MAXIMIZE = '<path d="M3 8V5a2 2 0 0 1 2-2h3"></path><path d="M16 3h3a2 2 0 0 1 2 2v3"></path><path d="M21 16v3a2 2 0 0 1-2 2h-3"></path><path d="M8 21H5a2 2 0 0 1-2-2v-3"></path>';
+      var ICON_MINIMIZE = '<path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>';
+
+      // No modo foco tudo fora do card some (menu, cabeçalho, faixa própria), e o
+      // card ocupa a tela inteira. Os controles que ainda precisam existir (trocar
+      // Tabela/Árvore, densidade e "Sair") passam para dentro da barra do card:
+      // movemos os mesmos botões (mesmos listeners) para lá, antes do "Sair".
+      // Ao sair, os toggles voltam para o lugar original.
+      var viewControlsHome = densityToggle.parentElement;
+      var viewControlsAnchor = focusToggle;
+
+      function placeViewControls(focusMode) {
+        if (focusMode) {
+          focusControls.insertBefore(densityToggle, focusExit);
+          focusControls.insertBefore(viewToggle, focusExit);
+        } else {
+          viewControlsHome.insertBefore(densityToggle, viewControlsAnchor);
+          viewControlsHome.insertBefore(viewToggle, viewControlsAnchor);
+        }
+      }
+
+      function setFocusMode(enabled) {
+        document.body.classList.toggle('structure-focus-mode', enabled);
+        focusToggle.querySelector('span').textContent = enabled ? 'Sair do foco' : 'Modo foco';
+        focusIcon.innerHTML = enabled ? ICON_MINIMIZE : ICON_MAXIMIZE;
+        focusControls.hidden = !enabled;
+        placeViewControls(enabled);
+        if (enabled) {
+          tableCard.style.height = '';
+          hideTour();
+        } else {
+          hideTour();
+          showGridScrollTip();
+          syncTableHeight();
+        }
+        requestAnimationFrame(positionTour);
+      }
+
+      focusToggle.addEventListener('click', function () {
+        setFocusMode(!document.body.classList.contains('structure-focus-mode'));
+      });
+      focusExit.addEventListener('click', function () { setFocusMode(false); });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && document.body.classList.contains('structure-focus-mode')) setFocusMode(false);
+      });
+
+      // Estado e eventos
+
+      // Skeleton de carregamento (ver shared/design.md "Estados De Carregamento"):
+      // toda troca de aba/pagina/modo de visualizacao passa por aqui antes do
+      // conteudo final, mesmo o dado ja estando em memoria — delay proposital
+      // de ~180ms so pra confirmar visualmente que a interacao foi registrada.
+      // Expandir/colapsar um nivel (toggleNode) e excecao de proposito: e uma
+      // acao local e frequente, entao pula o skeleton e renderiza na hora.
+      var STRUCTURE_COLUMNS = 9;
+      var renderTimer = null;
+
+      function tableSkeletonRows() {
+        return Array.from({ length: 6 }, function () {
+          return '<tr>' + Array.from({ length: STRUCTURE_COLUMNS }, function (_, index) {
+            var widthClass = index % 3 === 0 ? 'table-skeleton-cell--short' : 'table-skeleton-cell--medium';
+            return '<td><span class="table-skeleton-cell ' + widthClass + ' skeleton-shimmer"></span></td>';
+          }).join('') + '</tr>';
+        }).join('');
+      }
+
+      function treeSkeletonCards() {
+        return Array.from({ length: 3 }, function () {
+          return '<div class="structure-tree-card-skeleton skeleton-shimmer"></div>';
+        }).join('');
+      }
+
+      function showSkeleton() {
+        tableCard.classList.remove('is-empty');
+        emptyState.innerHTML = '';
+        tableCard.classList.add('is-loading');
+        tbody.innerHTML = tableSkeletonRows();
+        treeEl.innerHTML = treeSkeletonCards();
+      }
+
+      function syncStructureNameColumnWidth() {
+        var context = document.createElement('canvas').getContext('2d');
+        var tableStyle = window.getComputedStyle(structureTable);
+        context.font = '600 ' + tableStyle.fontSize + ' ' + tableStyle.fontFamily;
+
+        var actionsHeader = structureTable.tHead && structureTable.tHead.rows[0].cells[0];
+        if (actionsHeader) {
+          structureTable.style.setProperty('--structure-actions-column-width', Math.ceil(actionsHeader.getBoundingClientRect().width) + 'px');
+        }
+
+        var widest = context.measureText('Estrutura').width;
+        function measure(nodes, level) {
+          nodes.forEach(function (node) {
+            var directChildren = directChildrenCount(node);
+            var countSuffix = directChildren ? ' (' + directChildren + ')' : '';
+            var nameWidth = context.measureText((node.description || '') + countSuffix).width;
+            var contentWidth = nameWidth + (level * 20) + 22 + 6;
+            widest = Math.max(widest, contentWidth);
+            if (node.children && node.children.length) measure(node.children, level + 1);
+          });
+        }
+        measure(data, 0);
+
+        // Inclui os 28px de padding horizontal da célula e uma pequena folga
+        // para arredondamento de fonte, sem depender da página/expansão atual.
+        structureTable.style.setProperty('--structure-name-column-width', Math.ceil(widest + 36) + 'px');
+      }
+
+      function hasActiveStructureFilters() {
+        return Boolean(state.search || !state.showInactive || Object.keys(structureFilters.state.columnFilters).length);
+      }
+
+      function emptyStateMarkup(isFiltered) {
+        if (isFiltered) {
+          return (
+            '<div class="table-empty-state">' +
+            '<div class="table-empty-state__icon"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></div>' +
+            '<strong class="table-empty-state__title">Nenhum resultado encontrado</strong>' +
+            '<p class="table-empty-state__text">Não encontramos estruturas com os filtros aplicados. Ajuste a pesquisa ou limpe os filtros para ver outros resultados.</p>' +
+            '<button class="btn btn-secondary clear-filters is-active table-empty-state__action" type="button" data-structure-empty-clear>' +
+            '<svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"></path>' +
+            '<path d="m5.082 11.09 8.828 8.828"></path>' +
+            '</svg><span>Limpar filtros</span></button>' +
+            '</div>'
+          );
+        }
+        return (
+          '<div class="table-empty-state">' +
+          '<div class="table-empty-state__icon"><i class="fa-solid fa-inbox" aria-hidden="true"></i></div>' +
+          '<strong class="table-empty-state__title">Nenhuma estrutura por aqui</strong>' +
+          '<p class="table-empty-state__text">Ainda não há estruturas cadastradas nesta área.</p>' +
+          '</div>'
+        );
+      }
+
+      // Busca livre + filtros de coluna (só na visão Tabela — a Árvore depende
+      // da hierarquia pai/filho pros conectores visuais, então filtrar ali
+      // quebraria o layout dos cards; troque pra Tabela pra filtrar).
+      // Motor compartilhado com pagamento-ações/análise (shared/grid-column-
+      // filters.js): mesmo funil, popover e chips. "Ações" é a 1ª coluna aqui
+      // (lá é a última), por isso o índice 0 entra null — não é filtrável.
+      var structureFilters;
+
+      function syncTableSchema() {
+        var columns = AREA_COLUMNS[state.area];
+        structureTable.style.minWidth = (82 + columns.length * 145) + 'px';
+        structureTableHead.innerHTML = '<th class="structure-cell--actions">Ações</th>' + columns.map(function (column) {
+          var classes = [];
+          if (column.main) classes.push('structure-cell--main');
+          if (!column.main && !column.person && !column.status && !column.compact) classes.push('structure-column--compact-hidden');
+          return '<th class="' + classes.join(' ') + '">' + column.label + '</th>';
+        }).join('');
+
+        structureFilters = window.BipperGridColumnFilters.create({
+          table: structureTable,
+          chipsHost: columnFiltersActive,
+          columns: [null].concat(columns.map(function (column) {
+            var filter = { field: column.field, type: column.type };
+            if (column.boolean || column.status) filter.labelFn = function (value) { return value ? 'Sim' : 'Não'; };
+            return filter;
+          })),
+          getValue: function (node, field) {
+            var value = node[field];
+            if (field === 'id') return displayInternalCode(value);
+            if (Array.isArray(value)) return value.map(function (item) { return item.label || item; }).join(', ');
+            return value;
+          },
+          onChange: function () {
+            state.page = 1;
+            expandAncestorsOfMatches();
+            render();
+          }
+        });
+      }
+
+      syncTableSchema();
+
+      function flattenAllNodes() {
+        var flat = [];
+        (function walk(nodes) {
+          nodes.forEach(function (node) {
+            flat.push(node);
+            if (node.children && node.children.length) walk(node.children);
+          });
+        })(data);
+        return flat;
+      }
+
+      function matchesSearch(node) {
+        if (!state.showInactive && !node.ativo) return false;
+        if (!state.search) return true;
+        var haystack = [
+          node.description, displayInternalCode(node.id), node.sap, node.responsavel,
+          node.linhaNegocio, node.tipoPosicao, node.pais, node.cidade, node.corDestaque,
+          (node.tipoAcessoList || []).map(function (item) { return item.label || item; }).join(' '),
+          node.ativo ? 'Ativo' : 'Inativo'
+        ].join(' ').toLowerCase();
+        return haystack.indexOf(state.search.toLowerCase()) > -1;
+      }
+
+      // Combina busca + filtros de coluna e devolve os nós encontrados, mais o
+      // conjunto "visível" (encontrados + toda a cadeia de pais até a raiz) —
+      // é esse conjunto que preserva a árvore em vez de achatar a lista.
+      function computeVisible() {
+        var candidates = flattenAllNodes().filter(matchesSearch);
+        var matched = structureFilters.apply(candidates);
+        var matchedIds = new Set(matched.map(function (n) { return n.id; }));
+        var visibleIds = new Set();
+        matchedIds.forEach(function (id) {
+          var cur = id;
+          while (cur) {
+            visibleIds.add(cur);
+            cur = parentById[cur];
+          }
+        });
+        return { matchedIds: matchedIds, visibleIds: visibleIds };
+      }
+
+      // Abre automaticamente o caminho até cada resultado (sem isso o match
+      // ficaria escondido atrás de um pai recolhido); o usuário ainda pode
+      // recolher de novo manualmente depois.
+      function expandAncestorsOfMatches() {
+        if (state.view === 'tree') { tree.reveal(); return; }
+        if (state.view !== 'table') return;
+        var computed = computeVisible();
+        computed.visibleIds.forEach(function (id) {
+          if (!computed.matchedIds.has(id)) state.collapsed.delete(id);
+        });
+      }
+
+      // Paginação por estrutura raiz (cada "estrutura" é uma árvore completa de
+      // um país). Paginar por raiz — em vez de por linha — mantém pai e filhos
+      // sempre juntos na mesma página, preservando os conectores da Árvore.
+      // Com filtro ativo na Tabela, só entram na paginação os países que têm
+      // pelo menos um resultado.
+      function renderContent() {
+        syncPanels();
+        if (state.view === 'tree') { renderTreeView(); return; }
+        syncStructureNameColumnWidth();
+
+        var computed = computeVisible();
+        var visibleIds = computed.visibleIds;
+        var roots = data.filter(function (root) { return visibleIds.has(root.id); });
+
+        var totalPages = Math.max(1, Math.ceil(roots.length / state.pageSize));
+        if (state.page > totalPages) state.page = totalPages;
+        var start = (state.page - 1) * state.pageSize;
+        var pageRoots = roots.slice(start, start + state.pageSize);
+        var isEmpty = roots.length === 0;
+
+        tableCard.classList.toggle('is-empty', isEmpty);
+        emptyState.innerHTML = isEmpty ? emptyStateMarkup(hasActiveStructureFilters()) : '';
+
+        renderTable(pageRoots, visibleIds);
+        renderPagination(pageRoots.length, totalPages, start, roots.length);
+        syncExpandCollapseButtons();
+        tableCard.classList.remove('is-loading');
+      }
+
+      // A Árvore mostra todas as raízes no mesmo canvas (sem paginação).
+      function renderTreeView() {
+        var result = tree.render();
+        tableCard.classList.toggle('is-empty', result.empty);
+        emptyState.innerHTML = result.empty ? treeEmptyMarkup() : '';
+        tableCard.classList.remove('is-loading');
+      }
+
+      function escapeHtml(text) {
+        return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // Estado vazio da Árvore: diz o que foi buscado e quais filtros estão
+      // valendo (a mensagem genérica da Tabela não explica o "porquê"). Usa os
+      // mesmos componentes visuais e o mesmo botão "Limpar filtros".
+      function treeEmptyMarkup() {
+        var filters = [];
+        if (state.search) filters.push('Busca: “' + escapeHtml(state.search) + '”');
+        if (tree.getLevel()) filters.push('Até o nível ' + tree.getLevel());
+        if (!state.showInactive) filters.push('Inativas ocultas');
+        if (!filters.length) return emptyStateMarkup(false);
+
+        var title = state.search ? 'Nenhum resultado para “' + escapeHtml(state.search) + '”' : 'Nenhuma estrutura encontrada';
+        var text = 'Confira a grafia, tente um termo mais curto ou limpe os filtros aplicados.';
+        if (!state.showInactive) text += ' As estruturas inativas estão ocultas: marque “Mostrar inativos” para incluí-las.';
+        return (
+          '<div class="table-empty-state">' +
+          '<div class="table-empty-state__icon"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></div>' +
+          '<strong class="table-empty-state__title">' + title + '</strong>' +
+          '<p class="table-empty-state__text">' + text + '</p>' +
+          '<ul class="structure-empty-filters" aria-label="Filtros aplicados">' +
+          filters.map(function (label) { return '<li class="structure-chip">' + label + '</li>'; }).join('') +
+          '</ul>' +
+          '<button class="btn btn-secondary clear-filters is-active table-empty-state__action" type="button" data-structure-empty-clear>' +
+          '<svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"></path>' +
+          '<path d="m5.082 11.09 8.828 8.828"></path>' +
+          '</svg><span>Limpar filtros</span></button>' +
+          '</div>'
+        );
+      }
+
+      function render() {
+        window.clearTimeout(renderTimer);
+        showSkeleton();
+        renderTimer = window.setTimeout(renderContent, 180);
+      }
+
+      function renderPagination(count, totalPages, start, totalRoots) {
+        paginationSummary.textContent = totalRoots
+          ? 'Página ' + state.page + ' de ' + totalPages + ' | ' + (start + 1) + '-' + (start + count) + ' de ' + totalRoots + ' estruturas'
+          : 'Nenhuma estrutura';
+        prevPageBtn.disabled = state.page <= 1;
+        nextPageBtn.disabled = state.page >= totalPages;
+        pageButtons.innerHTML = Array.from({ length: totalPages }, function (_, index) {
+          var page = index + 1;
+          return '<button class="' + (page === state.page ? 'is-active' : '') + '" type="button" data-page="' + page + '">' + page + '</button>';
+        }).join('');
+      }
+
+      pageButtons.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-page]');
+        if (!button) return;
+        state.page = Number(button.getAttribute('data-page'));
+        render();
+      });
+
+      prevPageBtn.addEventListener('click', function () {
+        state.page = Math.max(1, state.page - 1);
+        render();
+      });
+
+      nextPageBtn.addEventListener('click', function () {
+        state.page += 1;
+        render();
+      });
+
+      function toggleNode(id) {
+        if (state.collapsed.has(id)) state.collapsed.delete(id);
+        else state.collapsed.add(id);
+        window.clearTimeout(renderTimer);
+        renderContent();
+      }
+
+      function allExpandableIds() {
+        var ids = [];
+        function walk(nodes) {
+          nodes.forEach(function (node) {
+            if (node.children && node.children.length) {
+              ids.push(node.id);
+              walk(node.children);
+            }
+          });
+        }
+        walk(data);
+        return ids;
+      }
+
+      // Bloqueia o clique quando já está no estado pedido (tudo expandido/tudo
+      // recolhido) — sem isso os botões ficavam clicáveis à toa.
+      function isAllExpanded() {
+        return allExpandableIds().every(function (id) { return !state.collapsed.has(id); });
+      }
+
+      function isAllCollapsed() {
+        var ids = allExpandableIds();
+        return ids.length > 0 && ids.every(function (id) { return state.collapsed.has(id); });
+      }
+
+      function syncExpandCollapseButtons() {
+        expandAllBtn.disabled = isAllExpanded();
+        collapseAllBtn.disabled = isAllCollapsed();
+      }
+
+      var expandAllBtn = document.getElementById('structureExpandAll');
+      var collapseAllBtn = document.getElementById('structureCollapseAll');
+
+      expandAllBtn.addEventListener('click', function () {
+        if (expandAllBtn.disabled) return;
+        state.collapsed.clear();
+        render();
+      });
+
+      collapseAllBtn.addEventListener('click', function () {
+        if (collapseAllBtn.disabled) return;
+        allExpandableIds().forEach(function (id) { state.collapsed.add(id); });
+        render();
+      });
+
+      function syncToggleGroup(group, attr, value) {
+        group.querySelectorAll('button').forEach(function (button) {
+          button.classList.toggle('is-active', button.getAttribute(attr) === value);
+        });
+      }
+
+      function syncPanels() {
+        var isTable = state.view === 'table';
+        tableWrap.hidden = !isTable;
+        treeEl.hidden = isTable;
+        tableCard.classList.toggle('is-tree-view', !isTable);
+        // Busca e "Mostrar inativos" valem nas duas visões. Já a densidade, os
+        // filtros por coluna (funil) e os botões de texto Expandir/Recolher são
+        // só da Tabela; a Árvore tem seus próprios controles (data-tree-only).
+        densityToggle.hidden = !isTable;
+        columnFiltersActive.hidden = !isTable;
+        expandAllBtn.hidden = !isTable;
+        collapseAllBtn.hidden = !isTable;
+        document.querySelectorAll('[data-tree-only]').forEach(function (element) {
+          element.hidden = isTable;
+        });
+      }
+
+      function handleRowActionClick(event) {
+        var editBtn = event.target.closest('[data-edit]');
+        if (editBtn) { var editNode = nodesById[editBtn.getAttribute('data-edit')]; if (editNode) openEditModal(editNode); return true; }
+        var deleteBtn = event.target.closest('[data-delete]');
+        if (deleteBtn) { var deleteNode = nodesById[deleteBtn.getAttribute('data-delete')]; if (deleteNode) openDeleteModal({ kind: 'node', id: deleteNode.id }); return true; }
+        return false;
+      }
+
+      tbody.addEventListener('click', function (event) {
+        var toggle = event.target.closest('[data-toggle]');
+        if (toggle) { toggleNode(toggle.getAttribute('data-toggle')); return; }
+        if (handleRowActionClick(event)) return;
+        // Clicar no nome abre o drawer de detalhes (o mesmo da Árvore); no resto da linha expande/recolhe.
+        var detail = event.target.closest('[data-detail]');
+        if (detail) {
+          var detailNode = nodesById[detail.getAttribute('data-detail')];
+          if (detailNode) tree.openDrawer(detailNode, detail);
+          return;
+        }
+        var row = event.target.closest('tr[data-id]');
+        if (row && row.getAttribute('data-has-children') === 'true') toggleNode(row.dataset.id);
+      });
+
+      densityToggle.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-structure-density]');
+        if (!button) return;
+        state.density = button.getAttribute('data-structure-density');
+        syncToggleGroup(densityToggle, 'data-structure-density', state.density);
+        tableCard.classList.toggle('is-density-compact', state.density === 'compact');
+        if (state.density === 'compact') {
+          showTour('Modo compacto ativo', 'São exibidas só as colunas essenciais. Clique no nome de uma estrutura para ver os detalhes completos ao lado.');
+        } else {
+          hideTour();
+          showGridScrollTip();
+        }
+      });
+
+      viewToggle.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-structure-view]');
+        if (!button || button.getAttribute('data-structure-view') === state.view) return;
+        state.view = button.getAttribute('data-structure-view');
+        syncToggleGroup(viewToggle, 'data-structure-view', state.view);
+        if (state.view === 'tree') {
+          hideTour();
+          tree.onEnter();
+        }
+        render();
+      });
+
+      // Cada área é uma árvore de estruturas totalmente separada (dataset
+      // próprio); só os cadastros de Responsável/Linha de negócio são
+      // compartilhados entre elas. Trocar de área reindexa e pagina do zero,
+      // mas preserva a preferência de visualização (completo/compacto,
+      // tabela/árvore) do usuário.
+      function setArea(area) {
+        if (area === state.area || !window.BipperSalesStructure.areas[area]) return;
+        state.area = area;
+        data = treeFor(area);
+        state.collapsed = new Set(allExpandableIds());
+        state.page = 1;
+        rebuildIndex();
+        tree.resetForNewData();
+        syncAreaLabels(area);
+        areaTabs.querySelectorAll('[data-area]').forEach(function (button) {
+          var isActive = button.getAttribute('data-area') === area;
+          button.classList.toggle('is-active', isActive);
+          button.setAttribute('aria-selected', String(isActive));
+        });
+        // Busca/filtros de coluna são específicos de cada árvore (valores de
+        // Responsável/País etc. mudam de área pra área), então resetam junto.
+        state.search = '';
+        searchInput.value = '';
+        structureFilters.clear();
+        syncTableSchema();
+        render();
+      }
+
+      areaTabs.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-area]');
+        if (!button) return;
+        setArea(button.getAttribute('data-area'));
+      });
+
+      document.getElementById('structureNewButton').addEventListener('click', function () {
+        window.location.href = 'nova-estrutura.html?area=' + state.area;
+      });
+
+      // Handoff de nova-estrutura.html: o nó criado lá vem via sessionStorage
+      // (consumo único — removido daqui pra não reaparecer num F5 depois).
+      // Sem isso, o cadastro feito na outra página nunca apareceria de volta
+      // aqui, já que cada página tem sua própria cópia em memória dos dados.
+      function findNodeInTree(nodes, id) {
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].id === id) return nodes[i];
+          if (nodes[i].children && nodes[i].children.length) {
+            var found = findNodeInTree(nodes[i].children, id);
+            if (found) return found;
+          }
+        }
+        return null;
+      }
+
+      function consumePendingNewStructure() {
+        var raw;
+        try { raw = sessionStorage.getItem('bipperNovaEstrutura'); } catch (e) { raw = null; }
+        var queryArea = new URLSearchParams(window.location.search).get('area');
+
+        if (raw) {
+          try { sessionStorage.removeItem('bipperNovaEstrutura'); } catch (e) { /* ignore */ }
+          var payload = null;
+          try { payload = JSON.parse(raw); } catch (e) { payload = null; }
+          if (payload && payload.area && payload.node && window.BipperSalesStructure.areas[payload.area]) {
+            var targetTree = treeFor(payload.area);
+            var isEdit = payload.mode === 'edit';
+            if (isEdit) {
+              var currentContainer = findContainer(payload.node.id, targetTree);
+              if (currentContainer) {
+                var currentIndex = currentContainer.findIndex(function (item) { return item.id === payload.node.id; });
+                if (currentIndex > -1) currentContainer.splice(currentIndex, 1);
+              }
+            }
+            var container = targetTree;
+            if (payload.node.parentId) {
+              var parentNode = findNodeInTree(targetTree, payload.node.parentId);
+              if (parentNode) {
+                parentNode.children = parentNode.children || [];
+                container = parentNode.children;
+              }
+            }
+            container.push(payload.node);
+            if (payload.area === state.area) {
+              rebuildIndex();
+              render();
+            } else {
+              setArea(payload.area);
+            }
+            showToast('success', 'Estrutura "' + payload.node.description + '" ' + (isEdit ? 'atualizada' : 'criada') + ' com sucesso.');
+            return true;
+          }
+        }
+
+        // Só troca de área se for outra: setArea() ignora a área já ativa e não
+        // renderiza, então "?area=vendas" (Vendas é a área inicial) deixava a
+        // tabela vazia até trocar de aba e voltar.
+        if (queryArea && queryArea !== state.area && window.BipperSalesStructure.areas[queryArea]) {
+          setArea(queryArea);
+          return true;
+        }
+        return false;
+      }
+
+      searchInput.addEventListener('input', function () {
+        state.search = searchInput.value.trim();
+        state.page = 1;
+        expandAncestorsOfMatches();
+        render();
+      });
+
+      showInactiveInput.addEventListener('change', function () {
+        state.showInactive = showInactiveInput.checked;
+        state.page = 1;
+        expandAncestorsOfMatches();
+        render();
+      });
+
+      // O botao "Limpar filtros" que aparece nos chips (montado pelo motor
+      // compartilhado) só zera os filtros de coluna — a busca livre é um
+      // estado nosso, então completamos o reset aqui e disparamos o render
+      // final (o clearTimeout do render() cobre a corrida com o do motor).
+      columnFiltersActive.addEventListener('click', function (event) {
+        if (!event.target.closest('[data-clear-field="__all"]')) return;
+        state.search = '';
+        searchInput.value = '';
+        render();
+      });
+
+      tableCard.addEventListener('click', function (event) {
+        if (!event.target.closest('[data-structure-empty-clear]')) return;
+        state.search = '';
+        state.showInactive = true;
+        showInactiveInput.checked = true;
+        state.page = 1;
+        searchInput.value = '';
+        tree.resetLevel();
+        structureFilters.clear();
+        render();
+      });
+
+      tableCard.classList.toggle('is-density-compact', state.density === 'compact');
+      state.collapsed = new Set(allExpandableIds());
+      syncAreaLabels(state.area);
+      syncPanels();
+      if (!consumePendingNewStructure()) render();
+      syncTableHeight();
+
+      // Mostra o aviso de rolagem ja na abertura da tela (tabela é o modo inicial).
+      window.setTimeout(showGridScrollTip, 800);
+    })();
+  </script>
+</body>
+</html>

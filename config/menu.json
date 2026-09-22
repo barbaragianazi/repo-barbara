@@ -27,6 +27,19 @@
                   "href": "/redesign-pagamentos/pagamento-acoes/index.html"
                 }
               ]
+            },
+            {
+              "key": "estruturas-de-vendas",
+              "label": "Estruturas",
+              "icon": "hierarchy",
+              "href": "/estruturas-de-vendas/index.html",
+              "children": [
+                {
+                  "key": "estruturas-de-vendas-visualizar-estrutura",
+                  "label": "Estrutura de Venda",
+                  "href": "/estruturas-de-vendas/index.html"
+                }
+              ]
             }
           ]
         }

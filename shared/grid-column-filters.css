@@ -1,7 +1,3 @@
-/* ===== Filtros e ordenacao por coluna do grid =========================
-   Reaproveitado por: redesign-pagamentos/pagamento-acoes e /analise.
-   Depende de um <table class="payments-table"> e do Font Awesome (funil).
-   Comportamento em shared/grid-column-filters.js. ===================== */
 .column-filters-active {
     display: none;
     flex-wrap: wrap;
@@ -14,8 +10,6 @@
     display: flex;
 }
 
-/* Modo foco: o grid da pagina vira 2 linhas fixas; a barra de chips sairia do
-   lugar. O funil aceso em cada coluna ja sinaliza o filtro ativo aqui. */
 body.payments-focus-mode .column-filters-active {
     display: none;
 }
@@ -59,13 +53,6 @@ body.payments-focus-mode .column-filters-active {
     color: var(--brand-primary);
 }
 
-/* O botao "Limpar tudo" da barra de chips nao usa mais estilo de chip: e o
-   mesmo .btn.btn-secondary.clear-filters da barra de ferramentas (montado em
-   grid-column-filters.js e estilizado no styles.css de cada tela). */
-
-/* Cabecalho filtravel: rotulo clicavel (ordena) + funil (abre popover).
-   Como a tabela e table-layout: fixed, o funil rouba espaco do texto do header
-   -> padding lateral menor, funil compacto e seta de ordenacao so no hover/ativo. */
 .payments-table th.is-filterable {
     padding: 6px 6px 6px 10px;
 }
@@ -105,12 +92,16 @@ body.payments-focus-mode .column-filters-active {
     margin-left: 4px;
     font-size: 10px;
     color: var(--brand-primary);
-    display: none;
+    display: inline-block;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .15s ease, color .15s ease;
 }
 
 .payments-table th.is-sorted .th-sort__caret,
 .payments-table th:hover .th-sort__caret {
-    display: inline-block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .payments-table th:hover .th-sort__caret {
@@ -153,7 +144,6 @@ body.payments-focus-mode .column-filters-active {
     background: rgba(var(--brand-primary-rgb), .14);
 }
 
-/* Popover de filtro (preso ao body, position: fixed) */
 .col-popover {
     position: fixed;
     z-index: 500;

@@ -1,29 +1,3 @@
-/* ============================================================================
-   Filtros e ordenacao por coluna do grid — motor reutilizavel.
-
-   Injeta em cada <th> de uma <table class="payments-table"> um rotulo clicavel
-   (ordena asc/desc/none) e um funil que abre um popover preso ao body
-   (position: fixed, escapa do overflow do grid). Combina os filtros em E.
-
-   Uso:
-     const engine = window.BipperGridColumnFilters.create({
-       table,                         // HTMLTableElement (precisa de <thead><tr><th>…)
-       columns: [                     // alinhado por indice aos <th>
-         { field: 'action', type: 'text' },
-         { field: 'participant', type: 'list' },
-         { field: 'value', type: 'range' },
-         { field: 'includedAt', type: 'date', scheduleModes: true, labelFn }
-       ],
-       parseBRL, parseBRDate,         // de window.BipperPayments
-       getValue: (row, field) => row[field],   // opcional
-       chipsHost: el,                 // opcional: <div class="column-filters-active">
-       onChange: () => repaint()      // chamado a cada mudanca de filtro/ordenacao
-     });
-     const visiveis = engine.apply(linhas);   // filtra + ordena
-
-   Sem persistencia e sem espelhamento de <select> do topo — quem precisa disso
-   (pagamento-acoes) mantem sua propria integracao.
-   ========================================================================== */
 (function () {
   'use strict';
 
@@ -37,11 +11,6 @@
     }[char]));
   }
 
-  /* "Limpar tudo" da barra de chips usa o MESMO botao da barra de ferramentas
-     das telas (.btn.btn-secondary.clear-filters + icone borracha + "Limpar
-     filtros"). Ja entra com .is-active porque a barra de chips so aparece
-     quando existe filtro. O estilo vem de base-components.css + o bloco
-     .clear-filters do styles.css de cada tela. */
   const CLEAR_FILTERS_BTN = '<button type="button" class="btn btn-secondary clear-filters is-active" data-clear-field="__all">'
     + '<svg class="clear-filters__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
     + '<path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"></path>'
@@ -72,13 +41,11 @@
     const parseBRDate = config.parseBRDate || ((v) => new Date(v));
     const getValue = config.getValue || ((row, field) => row[field]);
     const chipsHost = config.chipsHost || null;
-
     const COLUMN_FILTERS = config.columns || [];
-    const COLUMN_BY_FIELD = Object.fromEntries(COLUMN_FILTERS.map((cfg) => [cfg.field, cfg]));
+    const COLUMN_BY_FIELD = Object.fromEntries(COLUMN_FILTERS.filter(Boolean).map((cfg) => [cfg.field, cfg]));
     const COLUMN_LABELS = {};
     const state = { columnFilters: {}, sort: { field: null, dir: null }, lastRows: [] };
 
-    /* ---------- Opcoes das listas ---------- */
     function optionLabel(cfg, rawValue) {
       const base = cfg.labelFn ? cfg.labelFn(rawValue) : rawValue;
       return String(base == null || base === '' ? '—' : base);
@@ -89,7 +56,6 @@
       return [...set].sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true }));
     }
 
-    /* ---------- Predicado de filtro ---------- */
     function passesColumnFilters(item) {
       return Object.keys(state.columnFilters).every((field) => {
         const cfg = COLUMN_BY_FIELD[field];
@@ -160,7 +126,6 @@
       return Boolean(Object.keys(state.columnFilters).length || state.sort.field);
     }
 
-    /* ---------- Chips de filtro ativo ---------- */
     function renderChips() {
       if (!chipsHost) return;
       const fields = Object.keys(state.columnFilters);
@@ -212,7 +177,6 @@
       onChange();
     }
 
-    /* ---------- Ordenacao ---------- */
     function toggleSort(field) {
       if (state.sort.field !== field) state.sort = { field, dir: 'asc' };
       else if (state.sort.dir === 'asc') state.sort.dir = 'desc';
@@ -239,7 +203,6 @@
       return [...rows].sort((a, b) => mult * compareValues(cfg, getValue(a, field), getValue(b, field)));
     }
 
-    /* ---------- Popover ---------- */
     let colPopover;
     let colPopoverField = null;
 
@@ -426,12 +389,11 @@
       return null;
     }
 
-    /* ---------- Montagem do cabecalho ---------- */
     function initColumnFilters() {
       const ths = table.querySelectorAll('thead th');
       COLUMN_FILTERS.forEach((cfg, index) => {
         const th = ths[index];
-        if (!th) return;
+        if (!th || !cfg) return;
         const label = th.textContent.trim();
         COLUMN_LABELS[cfg.field] = label;
         th.dataset.colField = cfg.field;
@@ -458,7 +420,6 @@
       }
     }
 
-    /* ---------- API ---------- */
     function apply(rows) {
       const list = Array.isArray(rows) ? rows : [];
       state.lastRows = list.slice();

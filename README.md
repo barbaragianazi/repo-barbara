@@ -25,6 +25,8 @@ Este README e o ponto central da documentacao do projeto. Os demais arquivos Mar
 ├── redesign-pagamentos/
 │   ├── analise/
 │   └── pagamento-acoes/
+├── estruturas-de-vendas/
+│   └── index.html
 ├── sonhos-zoetis/
 │   └── index.html
 ├── scripts/
@@ -76,6 +78,7 @@ Depois valide:
 - `/sonhos-zoetis/`
 - `/redesign-pagamentos/analise/`
 - `/redesign-pagamentos/pagamento-acoes/`
+- `/estruturas-de-vendas/`
 - troca de marca pelo logo na sidebar
 - menu lateral recolhido no desktop
 - menu mobile com overlay
@@ -92,6 +95,7 @@ Depois valide:
 - `vercel.json`: define o passo de build da Vercel (`node scripts/gerar-datas-projetos.js`).
 - `sonhos-zoetis/index.html`: tela do projeto Sonhos Zoetis.
 - `redesign-pagamentos/`: telas de analise e pagamento de acoes.
+- `estruturas-de-vendas/index.html`: esqueleto do projeto Estruturas de Vendas (tela placeholder; conteudo em rodadas futuras).
 - `shared/design-tokens.css`: tokens globais de cor, tipografia, radius, sombra, medidas e estrutura base.
 - `shared/base-components.css`: botoes, inputs, chips, cards, listas, modais, skeletons e grids reutilizaveis.
 - `shared/app-shell.css`: sidebar, topbar, seletor de marca, perfil, notificacoes e estados responsivos.
