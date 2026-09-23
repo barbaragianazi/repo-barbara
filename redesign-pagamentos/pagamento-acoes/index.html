@@ -86,18 +86,25 @@
               <div class="payment-new-features">
                 <span class="payment-new-features__title">Novos modos de visualização</span>
                 <div class="payment-new-features__controls">
-                  <div class="feature-with-info"
-                    data-feature-tip="Alterne entre tabela completa e uma visão compacta para leitura rápida.">
-                    <div class="view-mode-toggle" role="group" aria-label="Modo de visualização" tabindex="0">
-                      <button class="is-active" type="button" data-view-mode="full">
-                        <i class="fa-solid fa-list" aria-hidden="true"></i>
-                        <span>Completo</span>
-                      </button>
-                      <button type="button" data-view-mode="compact">
-                        <i class="fa-solid fa-compress" aria-hidden="true"></i>
-                        <span>Compacto</span>
-                      </button>
-                    </div>
+                  <div class="view-mode-toggle view-mode-toggle--active-label" role="group" aria-label="Modo de visualização" tabindex="0">
+                    <button class="is-active" type="button" data-view-mode="full" aria-label="Ver tabela completa" data-tooltip-text="Completo · mostra todas as colunas">
+                      <i class="fa-solid fa-list" aria-hidden="true"></i>
+                      <span>Completo</span>
+                    </button>
+                    <button type="button" data-view-mode="compact" aria-label="Ver tabela compacta" data-tooltip-text="Compacto · mostra só as colunas essenciais">
+                      <i class="fa-solid fa-compress" aria-hidden="true"></i>
+                      <span>Compacto</span>
+                    </button>
+                  </div>
+                  <div class="view-type-toggle view-mode-toggle--active-label" role="group" aria-label="Tipo de visualização" tabindex="0">
+                    <button class="is-active" type="button" data-view-type="table" aria-label="Ver como tabela" data-tooltip-text="Tabela · grid detalhado com todas as colunas">
+                      <i class="fa-solid fa-table-list" aria-hidden="true"></i>
+                      <span>Tabela</span>
+                    </button>
+                    <button type="button" data-view-type="cards" aria-label="Ver como cards" data-tooltip-text="Cards · leitura rápida em cartões">
+                      <i class="fa-solid fa-grip" aria-hidden="true"></i>
+                      <span>Cards</span>
+                    </button>
                   </div>
                   <div class="feature-with-info"
                     data-feature-tip="Oculta filtros e navegação para priorizar o grid. Pressione Esc para sair.">
@@ -124,15 +131,6 @@
           <section class="payment-filters summary-card" aria-label="Filtros dos pagamentos">
             <div class="payment-filter-grid">
 
-              <div class="payment-tabs" role="tablist" aria-label="Status dos pagamentos">
-                <button class="is-active" type="button" data-status="processing">Em análise <span
-                    class="payment-tabs__count" data-tab-count></span></button>
-                <button type="button" data-status="paid">Pagos <span class="payment-tabs__count"
-                    data-tab-count></span></button>
-                <button type="button" data-status="canceled">Cancelados <span class="payment-tabs__count"
-                    data-tab-count></span></button>
-              </div>
-
               <label class="search-field">
                 <input id="searchInput" type="search" placeholder="Pesquisar ações">
               </label>
@@ -146,6 +144,15 @@
                   <option value="">Todas as campanhas</option>
                 </select>
               </label>
+
+              <div class="payment-tabs" role="tablist" aria-label="Status dos pagamentos">
+                <button class="is-active" type="button" data-status="processing">Em análise <span
+                    class="payment-tabs__count" data-tab-count></span></button>
+                <button type="button" data-status="paid">Pagos <span class="payment-tabs__count"
+                    data-tab-count></span></button>
+                <button type="button" data-status="canceled">Cancelados <span class="payment-tabs__count"
+                    data-tab-count></span></button>
+              </div>
 
               <button class="btn btn-secondary focus-exit-toggle" id="focusExitToggle" type="button">
                 <i class="fa-solid fa-down-left-and-up-right-to-center" aria-hidden="true"></i>
@@ -202,6 +209,7 @@
                 <tbody id="paymentsBody"></tbody>
               </table>
             </div>
+            <div class="payments-cards-grid" id="paymentsCardsGrid"></div>
             <div class="table-empty-state-wrap" id="paymentsEmptyState"></div>
             <div class="pagination-bar" aria-label="Paginação dos pagamentos">
               <span id="paginationSummary">Página 1 de 1</span>
@@ -235,9 +243,10 @@
     const { parseBRL, parseBRDate } = window.BipperPayments;
     const detailPanelInstance = window.BipperPaymentDetailPanel.create();
 
-    const DEFAULT_PAGE_SIZE = 8;
-    const state = { status: 'processing', search: '', page: 1, pageSize: DEFAULT_PAGE_SIZE, viewMode: 'full', columnFilters: {}, sort: { field: null, dir: null } };
+    const DEFAULT_PAGE_SIZE = 10;
+    const state = { status: 'processing', search: '', page: 1, pageSize: DEFAULT_PAGE_SIZE, viewType: 'table', viewMode: 'full', columnFilters: {}, sort: { field: null, dir: null } };
     const body = document.getElementById('paymentsBody');
+    const cardsGrid = document.getElementById('paymentsCardsGrid');
     const paymentsTableCard = document.querySelector('.payments-table-card');
     const paymentsEmptyState = document.getElementById('paymentsEmptyState');
     const paginationSummary = document.getElementById('paginationSummary');
@@ -336,6 +345,71 @@
 
     function participantCell(name) {
       return `<span class="participant-cell"><i class="fa-solid ${participantIcon(name)} participant-cell__icon" aria-hidden="true"></i>${cell(name)}</span>`;
+    }
+
+    /* ===== Cards =================================================
+       Visão pensada para leitura rápida: mostra só o essencial de
+       cada pagamento (identificação, participante, valor/status e um
+       resumo de campanha/pagamento/data). Detalhes completos —
+       incluindo solicitação — seguem disponíveis no painel lateral,
+       aberto ao clicar no card (mesmo comportamento da linha da tabela).
+       Textos que podem truncar usam cell-clamp (igual à tabela), pra
+       reaproveitar o mesmo tooltip customizado em vez do title nativo. */
+    function paymentCardMarkup(item) {
+      const idx = expandedPayments.indexOf(item);
+      const scheduled = Boolean(item.scheduledAt) && item.scheduledAt !== 'Não agendado';
+      const dateLabel = scheduled ? 'Agendamento' : 'Inclusão';
+      const dateValue = scheduled ? item.scheduledAt : item.includedAt;
+      return `
+        <article class="payment-card" data-row-index="${idx}" tabindex="0">
+          <div class="payment-card__top">
+            <span class="payment-card__code">#${escapeHtml(item.code)}</span>
+            <span class="stage-pill ${stageClass(item.stage)}">${escapeHtml(stageLabel(item.stage))}</span>
+          </div>
+          <h3 class="payment-card__title">${cell(item.action)}</h3>
+          <div class="payment-card__participant">
+            <i class="fa-solid ${participantIcon(item.participant)}" aria-hidden="true"></i>
+            ${cell(item.participant)}
+          </div>
+          <div class="payment-card__value-row">
+            <span class="payment-card__value">${escapeHtml(item.value)}</span>
+            <span class="payment-card__status">${escapeHtml(item.status)}</span>
+          </div>
+          <dl class="payment-card__meta">
+            <div>
+              <dt><i class="fa-solid fa-bullhorn" aria-hidden="true"></i>Campanha</dt>
+              <dd>${cell(item.campaign)}</dd>
+            </div>
+            <div>
+              <dt><i class="fa-solid fa-credit-card" aria-hidden="true"></i>Pagamento</dt>
+              <dd>${cell(item.paymentType)}</dd>
+            </div>
+            <div>
+              <dt><i class="fa-solid fa-wallet" aria-hidden="true"></i>Conta</dt>
+              <dd>${cell(item.accountType)}</dd>
+            </div>
+            <div>
+              <dt><i class="fa-solid fa-calendar-days" aria-hidden="true"></i>${dateLabel}</dt>
+              <dd>${escapeHtml(dateValue)}</dd>
+            </div>
+          </dl>
+          <button class="row-action ${item.statusGroup} payment-card__action" type="button" tabindex="-1">${escapeHtml(item.actionLabel)}</button>
+        </article>
+      `;
+    }
+
+    function paymentCardSkeletonMarkup() {
+      return `
+        <div class="payment-card payment-card--skeleton">
+          <div class="payment-card__top">
+            <span class="table-skeleton-cell table-skeleton-cell--short skeleton-shimmer"></span>
+            <span class="table-skeleton-cell table-skeleton-cell--short skeleton-shimmer"></span>
+          </div>
+          <span class="table-skeleton-cell table-skeleton-cell--medium skeleton-shimmer payment-card__skeleton-title"></span>
+          <span class="table-skeleton-cell table-skeleton-cell--short skeleton-shimmer"></span>
+          <span class="table-skeleton-cell table-skeleton-cell--medium skeleton-shimmer payment-card__skeleton-value"></span>
+        </div>
+      `;
     }
 
     /* ===== Filtros e ordenação por coluna ====================================
@@ -793,7 +867,7 @@
     }
 
     function updateGridTooltips() {
-      body.querySelectorAll('.cell-clamp[data-full-text]').forEach((item) => {
+      paymentsTableCard.querySelectorAll('.cell-clamp[data-full-text]').forEach((item) => {
         const isTruncated = item.scrollWidth - item.clientWidth > 1;
         item.classList.toggle('is-truncated', isTruncated);
         if (isTruncated) item.dataset.tooltipText = item.dataset.fullText;
@@ -803,13 +877,17 @@
 
     let tableSkeletonTimer;
 
-    function renderTableSkeleton() {
+    function renderSkeleton() {
       paymentsTableCard.classList.add('is-loading');
       paymentsTableCard.classList.remove('is-empty');
       paginationSummary.textContent = 'Atualizando dados';
       pageButtons.innerHTML = '';
       prevPage.disabled = true;
       nextPage.disabled = true;
+      if (state.viewType === 'cards') {
+        cardsGrid.innerHTML = Array.from({ length: state.pageSize }, paymentCardSkeletonMarkup).join('');
+        return;
+      }
       body.innerHTML = Array.from({ length: state.pageSize }, () => `
         <tr>
           ${Array.from({ length: 15 }, (_, index) => {
@@ -822,7 +900,7 @@
 
     function renderRowsWithSkeleton() {
       window.clearTimeout(tableSkeletonTimer);
-      renderTableSkeleton();
+      renderSkeleton();
       tableSkeletonTimer = window.setTimeout(() => {
         renderRows();
         paymentsTableCard.classList.remove('is-loading');
@@ -840,6 +918,7 @@
         nextPage.disabled = true;
         pageButtons.innerHTML = '';
         body.innerHTML = '';
+        cardsGrid.innerHTML = '';
         paymentsEmptyState.innerHTML = getEmptyStateMarkup();
         return;
       }
@@ -856,6 +935,12 @@
         const page = index + 1;
         return `<button class="${page === state.page ? 'is-active' : ''}" type="button" data-page="${page}">${page}</button>`;
       }).join('');
+
+      if (state.viewType === 'cards') {
+        cardsGrid.innerHTML = pageRows.map(paymentCardMarkup).join('');
+        requestAnimationFrame(updateGridTooltips);
+        return;
+      }
 
       body.innerHTML = pageRows.map((item) => `
         <tr data-row-index="${expandedPayments.indexOf(item)}">
@@ -989,25 +1074,73 @@
     const tableWrap = document.querySelector('.payments-table-wrap');
     const tableHead = document.querySelector('.payments-table thead');
 
-    // Seletor Completo/Compacto: no modo foco a hero some, entao movemos o mesmo
-    // elemento (mesmos botoes, mesmos listeners) para dentro da barra de filtros,
-    // logo antes do botao "Sair do modo foco". Ao sair, ele volta para o lugar
-    // original dentro da caixa "Novos modos de visualizacao".
-    const viewModeFeature = document.querySelector('.view-mode-toggle').closest('.feature-with-info');
-    const viewModeHome = viewModeFeature.parentElement;
-    const viewModeAnchor = viewModeFeature.nextElementSibling;
+    // Seletores Completo/Compacto e Tabela/Cards: no modo foco a hero some,
+    // entao movemos os mesmos elementos (mesmos botoes, mesmos listeners) para
+    // dentro da barra de filtros, logo antes do botao "Sair do modo foco". Ao
+    // sair, eles voltam para o lugar original dentro da caixa "Novos modos de
+    // visualizacao", na mesma ordem (Completo/Compacto, depois Tabela/Cards).
+    const viewModeToggleGroup = document.querySelector('.view-mode-toggle');
+    const viewTypeToggleGroup = document.querySelector('.view-type-toggle');
+    const viewModeHome = viewModeToggleGroup.parentElement;
+    const focusToggleFeature = focusToggle.closest('.feature-with-info');
     const filterGrid = document.querySelector('.payment-filter-grid');
 
     function placeViewModeToggle(focusMode) {
-      if (focusMode) filterGrid.insertBefore(viewModeFeature, focusExitToggle);
-      else viewModeHome.insertBefore(viewModeFeature, viewModeAnchor);
+      const host = focusMode ? filterGrid : viewModeHome;
+      const anchor = focusMode ? focusExitToggle : focusToggleFeature;
+      host.insertBefore(viewModeToggleGroup, anchor);
+      host.insertBefore(viewTypeToggleGroup, anchor);
     }
 
-    // No modo foco o grid ocupa a tela toda. Medimos a area visivel do grid e
-    // ampliamos o pageSize para preencher todo o espaco disponivel. Ao voltar a
-    // exibicao convencional, o pageSize retorna para DEFAULT_PAGE_SIZE e a
-    // paginacao volta ao comportamento normal (nenhuma dessas mudancas persiste).
+    // O seletor Completo/Compacto so faz sentido na visualizacao em tabela;
+    // em cards ele fica oculto (nao ha sub-modos para cards).
+    function syncViewModeToggleVisibility() {
+      viewModeToggleGroup.classList.toggle('is-hidden-in-cards', state.viewType === 'cards');
+    }
+
+    function setViewType(type) {
+      if (state.viewType === type) return;
+      state.viewType = type;
+      document.querySelectorAll('[data-view-type]').forEach((item) => {
+        item.classList.toggle('is-active', item.dataset.viewType === type);
+      });
+      document.body.classList.toggle('payments-cards-mode', type === 'cards');
+      syncViewModeToggleVisibility();
+      detailPanelInstance.close();
+      // Troca sempre re-renderiza (mesmo que o pageSize calculado nao mude),
+      // pois o grid alvo (tabela vs cards) muda de conteudo.
+      if (document.body.classList.contains('payments-focus-mode')) state.pageSize = focusRowsThatFit();
+      state.page = 1;
+      renderRowsWithSkeleton();
+      requestAnimationFrame(updateGridTooltips);
+    }
+
+    // No modo foco o grid ocupa a tela toda. Tabelas usam a altura disponivel;
+    // cards usam duas linhas completas conforme o numero real de colunas.
+    // Ao voltar, a paginacao retorna ao tamanho padrao.
     function focusRowsThatFit() {
+      if (state.viewType === 'cards') {
+        if (!cardsGrid) return DEFAULT_PAGE_SIZE;
+        const renderedCards = Array.from(cardsGrid.children);
+        if (renderedCards.length) {
+          const firstRowTop = renderedCards[0].offsetTop;
+          const columnCount = renderedCards.findIndex((card) => card.offsetTop !== firstRowTop);
+          if (columnCount > 0) return columnCount * 2;
+
+          const gridStyles = getComputedStyle(cardsGrid);
+          const horizontalPadding = parseFloat(gridStyles.paddingLeft) + parseFloat(gridStyles.paddingRight);
+          const columnGap = parseFloat(gridStyles.columnGap) || 0;
+          const availableWidth = cardsGrid.clientWidth - horizontalPadding;
+          const cardWidth = renderedCards[0].getBoundingClientRect().width;
+          const measuredColumns = Math.round((availableWidth + columnGap) / (cardWidth + columnGap));
+          return Math.max(1, measuredColumns) * 2;
+        }
+        const tracks = getComputedStyle(cardsGrid).gridTemplateColumns;
+        const columnCount = tracks && tracks !== 'none'
+          ? tracks.trim().split(/\s+/).length
+          : 0;
+        return columnCount > 0 ? columnCount * 2 : DEFAULT_PAGE_SIZE;
+      }
       if (!tableWrap) return DEFAULT_PAGE_SIZE;
       const headH = tableHead ? tableHead.getBoundingClientRect().height : 44;
       const sampleRow = body.querySelector('tr');
@@ -1026,6 +1159,23 @@
       renderRowsWithSkeleton();
     }
 
+    let focusPageSizeFrame = 0;
+    function scheduleFocusPageSizeSync() {
+      window.cancelAnimationFrame(focusPageSizeFrame);
+      focusPageSizeFrame = window.requestAnimationFrame(() => {
+        focusPageSizeFrame = window.requestAnimationFrame(syncFocusPageSize);
+      });
+    }
+
+    if ('ResizeObserver' in window) {
+      const cardsGridResizeObserver = new ResizeObserver(() => {
+        if (document.body.classList.contains('payments-focus-mode')) {
+          scheduleFocusPageSizeSync();
+        }
+      });
+      cardsGridResizeObserver.observe(cardsGrid);
+    }
+
     function setFocusMode(enabled) {
       document.body.classList.toggle('payments-focus-mode', enabled);
       placeViewModeToggle(enabled);
@@ -1035,8 +1185,7 @@
         : 'fa-solid fa-up-right-and-down-left-from-center';
       if (enabled) {
         showTour('Modo foco ativo', 'A tela está focada no grid. Clique em uma linha para ver detalhes e pressione Esc para sair.');
-        // espera o layout do modo foco assentar antes de medir a area do grid
-        requestAnimationFrame(() => requestAnimationFrame(syncFocusPageSize));
+        scheduleFocusPageSizeSync();
       } else {
         hideTour();
         syncFocusPageSize();
@@ -1064,6 +1213,10 @@
       });
     });
 
+    document.querySelectorAll('[data-view-type]').forEach((button) => {
+      button.addEventListener('click', () => setViewType(button.dataset.viewType));
+    });
+
     document.querySelectorAll('[data-view-mode]').forEach((button) => {
       button.addEventListener('click', () => {
         document.querySelectorAll('[data-view-mode]').forEach((item) => item.classList.remove('is-active'));
@@ -1084,6 +1237,20 @@
       const row = event.target.closest('[data-row-index]');
       if (!row) return;
       detailPanelInstance.open(expandedPayments[Number(row.dataset.rowIndex)]);
+    });
+
+    cardsGrid.addEventListener('click', (event) => {
+      const card = event.target.closest('[data-row-index]');
+      if (!card) return;
+      detailPanelInstance.open(expandedPayments[Number(card.dataset.rowIndex)]);
+    });
+
+    cardsGrid.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      const card = event.target.closest('[data-row-index]');
+      if (!card) return;
+      event.preventDefault();
+      detailPanelInstance.open(expandedPayments[Number(card.dataset.rowIndex)]);
     });
 
     paymentsEmptyState.addEventListener('click', (event) => {
@@ -1152,7 +1319,7 @@
 
     window.addEventListener('resize', () => {
       requestAnimationFrame(updateGridTooltips);
-      if (document.body.classList.contains('payments-focus-mode')) syncFocusPageSize();
+      if (document.body.classList.contains('payments-focus-mode')) scheduleFocusPageSizeSync();
     });
 
     document.addEventListener('keydown', (event) => {
