@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,12 +17,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 </head>
+
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="Menu principal">
       <div class="brand" data-brands-url="../shared/data/brands.json">
         <div class="brand__area" aria-label="Marca ativa">
-          <button class="brand__logo-btn" type="button" aria-label="Selecionar marca" aria-haspopup="true" aria-expanded="false">
+          <button class="brand__logo-btn" type="button" aria-label="Selecionar marca" aria-haspopup="true"
+            aria-expanded="false">
             <img src="../shared/assets/logos/zoetis-dark.svg" alt="Zoetis" class="brand__logo" data-logo="dark">
           </button>
           <div class="brand-dropdown" role="menu" aria-label="Selecionar marca"></div>
@@ -36,8 +39,10 @@
       <div data-shell-menu data-menu-url="../config/menu.json"></div>
 
       <div class="theme-toggle" role="group" aria-label="Tema do portal">
-        <button type="button" class="theme-toggle__btn" data-theme-choice="light" data-tooltip="Alternar para tema light" aria-label="Tema claro" aria-pressed="true">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <button type="button" class="theme-toggle__btn" data-theme-choice="light"
+          data-tooltip="Alternar para tema light" aria-label="Tema claro" aria-pressed="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"></circle>
             <path d="M12 2v2"></path>
             <path d="M12 20v2"></path>
@@ -49,8 +54,10 @@
             <path d="m19.07 4.93-1.41 1.41"></path>
           </svg>
         </button>
-        <button type="button" class="theme-toggle__btn" data-theme-choice="dark" data-tooltip="Alternar para tema dark" aria-label="Tema escuro" aria-pressed="false">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <button type="button" class="theme-toggle__btn" data-theme-choice="dark" data-tooltip="Alternar para tema dark"
+          aria-label="Tema escuro" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path>
           </svg>
         </button>
@@ -85,6 +92,10 @@
             <p class="structure-hero__subtitle" id="novaEstruturaSubtitle"></p>
           </div>
           <div class="structure-hero__controls">
+            <button type="button" class="structure-hero-btn" id="estruturaHistoricoOpen">
+              <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
+              <span>Histórico da estrutura</span>
+            </button>
             <div class="structure-flag-toggle" role="group" aria-label="Status" id="novaAtivoToggle">
               <button type="button" class="is-active" data-flag="true">Ativo</button>
               <button type="button" data-flag="false">Inativo</button>
@@ -96,199 +107,238 @@
           <form id="novaEstruturaForm" novalidate>
 
             <div class="structure-form-columns">
-            <div class="structure-form-column">
+              <div class="structure-form-column">
 
-            <section class="structure-form-section structure-form-section--first">
-              <h2 class="structure-form-section__title">Identificação</h2>
-              <div class="structure-form-grid">
+                <section class="structure-form-section structure-form-section--first">
+                  <h2 class="structure-form-section__title">Identificação</h2>
+                  <div class="structure-form-grid">
 
-                <div class="structure-field structure-field--full" data-field-for="vendas tecnica marketing">
-                  <label for="parentPickerInput">Estrutura Pai</label>
-                  <div class="structure-select-row structure-combobox" id="parentPickerCombobox">
-                    <input type="text" id="parentPickerInput" class="structure-parent-picker-trigger" placeholder="Selecione uma estrutura…" autocomplete="off" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="parentPickerListbox" aria-autocomplete="list" data-empty="true">
-                    <button type="button" class="structure-search-btn" id="parentPickerOpen" aria-label="Abrir lista de estruturas" tabindex="-1">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="11" cy="11" r="7"></circle>
-                        <path d="m20 20-3.5-3.5"></path>
-                      </svg>
-                    </button>
-                    <ul class="structure-combobox-panel" id="parentPickerListbox" role="listbox" aria-label="Estruturas"></ul>
-                  </div>
-                </div>
-
-                <div class="structure-field structure-field--span-8" data-field-for="vendas tecnica marketing">
-                  <label for="novaDescricao">Descrição <span class="structure-required-mark">*</span></label>
-                  <input type="text" id="novaDescricao" required aria-describedby="novaDescricaoError">
-                  <span class="structure-field__error" id="novaDescricaoError">Informe a descrição da estrutura.</span>
-                </div>
-
-                <div class="structure-field structure-field--span-4" data-field-for="vendas tecnica marketing">
-                  <label for="novaSap">Código SAP</label>
-                  <input type="text" id="novaSap">
-                </div>
-              </div>
-            </section>
-
-            <section class="structure-form-section">
-              <h2 class="structure-form-section__title">Endereço</h2>
-              <div class="structure-form-grid">
-
-                <div class="structure-field structure-field--span-5" data-field-for="vendas tecnica">
-                  <label for="novaCep">CEP <span class="structure-required-mark">*</span></label>
-                  <div class="structure-select-row">
-                    <input type="text" id="novaCep" placeholder="00000-000" inputmode="numeric" maxlength="9" required aria-describedby="novaCepError">
-                    <button type="button" class="structure-search-btn" id="novaCepBuscar" aria-label="Buscar CEP">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="11" cy="11" r="7"></circle>
-                        <path d="m20 20-3.5-3.5"></path>
-                      </svg>
-                    </button>
-                  </div>
-                  <span class="structure-field__error" id="novaCepError">Informe um CEP válido (00000-000).</span>
-                </div>
-
-                <div class="structure-field structure-field--span-4" data-field-for="vendas tecnica marketing">
-                  <label for="novaPais">País</label>
-                  <select id="novaPais"></select>
-                </div>
-                <div class="structure-field structure-field--span-3" data-field-for="vendas tecnica marketing">
-                  <label for="novaUf">UF</label>
-                  <select id="novaUf"></select>
-                </div>
-                <div class="structure-field structure-field--span-5" data-field-for="vendas tecnica marketing">
-                  <label for="novaCidade">Cidade</label>
-                  <select id="novaCidade"></select>
-                </div>
-
-                <div class="structure-field structure-field--span-7" data-field-for="vendas tecnica">
-                  <label for="novaEndereco">Endereço</label>
-                  <input type="text" id="novaEndereco">
-                </div>
-
-                <div class="structure-field structure-field--span-5" data-field-for="vendas tecnica">
-                  <label for="novaComplemento">Complemento</label>
-                  <input type="text" id="novaComplemento">
-                </div>
-                <div class="structure-field structure-field--span-7" data-field-for="vendas tecnica">
-                  <label for="novaBairro">Bairro</label>
-                  <input type="text" id="novaBairro">
-                </div>
-
-                <div class="structure-field structure-field--full" data-field-for="vendas tecnica">
-                  <label>Localização no mapa</label>
-                  <div class="structure-map" id="novaEstruturaMap"></div>
-                  <span class="structure-field__hint">O pino é posicionado automaticamente a partir do CEP. Arraste-o para ajustar o ponto exato.</span>
-                </div>
-              </div>
-            </section>
-
-            </div>
-            <div class="structure-form-column">
-
-            <section class="structure-form-section structure-form-section--first">
-              <h2 class="structure-form-section__title">Classificação</h2>
-              <div class="structure-form-grid">
-
-                <div class="structure-field" data-field-for="marketing">
-                  <label for="novaLinha">Linha de Negócio</label>
-                  <select id="novaLinha"></select>
-                </div>
-
-                <div class="structure-field" data-field-for="vendas marketing">
-                  <label for="novaTipoPosicao">Tipo de Posição</label>
-                  <select id="novaTipoPosicao"></select>
-                </div>
-
-                <div class="structure-field" data-field-for="vendas">
-                  <label for="novaTipoAcesso">Tipo de Acesso</label>
-                  <select id="novaTipoAcesso"></select>
-                </div>
-
-                <div class="structure-field structure-field--full" data-field-for="vendas">
-                  <label for="novaEstruturaTecnica">Estrutura Técnica</label>
-                  <select id="novaEstruturaTecnica"></select>
-                </div>
-
-                <div class="structure-field structure-field--full" data-field-for="tecnica">
-                  <label for="novaEstruturaVenda">Estrutura de Venda</label>
-                  <select id="novaEstruturaVenda"></select>
-                </div>
-
-                <div class="structure-field structure-field--span-7" data-field-for="vendas tecnica">
-                  <label id="novaCorDestaqueLabel">Cor Destaque</label>
-                  <div class="structure-color-picker" id="novaCorDestaquePicker">
-                    <button type="button" class="structure-color-picker__trigger" id="novaCorDestaqueTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="novaCorDestaqueLabel">
-                      <span class="structure-color-picker__swatch"></span>
-                      <span class="structure-color-picker__value"></span>
-                      <svg class="structure-color-picker__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
-                    </button>
-                    <div class="structure-color-picker__panel">
-                      <div class="structure-color-picker__grid" role="listbox" aria-label="Cores predefinidas"></div>
-                      <label class="structure-color-picker__custom">
-                        <span>Personalizar</span>
-                        <input type="color" id="novaCorDestaqueCustom" value="#2563eb">
-                      </label>
+                    <div class="structure-field structure-field--full" data-field-for="vendas tecnica marketing">
+                      <label for="parentPickerInput">Estrutura Pai</label>
+                      <div class="structure-select-row structure-combobox" id="parentPickerCombobox">
+                        <input type="text" id="parentPickerInput" class="structure-parent-picker-trigger"
+                          placeholder="Selecione uma estrutura…" autocomplete="off" role="combobox"
+                          aria-haspopup="listbox" aria-expanded="false" aria-controls="parentPickerListbox"
+                          aria-autocomplete="list" data-empty="true">
+                        <button type="button" class="structure-search-btn" id="parentPickerOpen"
+                          aria-label="Abrir lista de estruturas" tabindex="-1">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="m20 20-3.5-3.5"></path>
+                          </svg>
+                        </button>
+                        <ul class="structure-combobox-panel" id="parentPickerListbox" role="listbox"
+                          aria-label="Estruturas"></ul>
+                      </div>
                     </div>
-                    <input type="hidden" id="novaCorDestaque" value="#2563eb">
+
+                    <div class="structure-field structure-field--span-8" data-field-for="vendas tecnica marketing">
+                      <label for="novaDescricao">Descrição <span class="structure-required-mark">*</span></label>
+                      <input type="text" id="novaDescricao" required aria-describedby="novaDescricaoError">
+                      <span class="structure-field__error" id="novaDescricaoError">Informe a descrição da
+                        estrutura.</span>
+                    </div>
+
+                    <div class="structure-field structure-field--span-4" data-field-for="vendas tecnica marketing">
+                      <label for="novaSap">Código SAP</label>
+                      <input type="text" id="novaSap">
+                    </div>
+
+                    <div class="structure-field" data-field-for="vendas tecnica marketing">
+                      <label for="respPickerInput">Responsável atual</label>
+                      <div class="structure-select-row structure-combobox" id="respPickerCombobox">
+                        <input type="text" id="respPickerInput" class="structure-parent-picker-trigger"
+                          placeholder="Busque um responsável…" autocomplete="off" role="combobox"
+                          aria-haspopup="listbox" aria-expanded="false" aria-controls="respPickerListbox"
+                          aria-autocomplete="list" data-empty="true">
+                        <button type="button" class="structure-search-btn" id="respPickerOpen"
+                          aria-label="Abrir lista de responsáveis" tabindex="-1">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="m20 20-3.5-3.5"></path>
+                          </svg>
+                        </button>
+                        <ul class="structure-combobox-panel" id="respPickerListbox" role="listbox"
+                          aria-label="Responsáveis"></ul>
+                      </div>
+                    </div>
+
+                    <div class="structure-field structure-field--span-3" data-field-for="vendas tecnica marketing">
+                      <label for="novaRespInicio">Início da vigência</label>
+                      <input type="date" id="novaRespInicio" disabled>
+                    </div>
+
+                    <div class="structure-field structure-field--span-3" data-field-for="vendas tecnica marketing">
+                      <label for="novaRespFim">Fim da vigência</label>
+                      <input type="date" id="novaRespFim" disabled aria-describedby="novaRespFimError">
+                      <span class="structure-field__error" id="novaRespFimError">A data de fim não pode ser antes da
+                        data de início.</span>
+                    </div>
+
+
                   </div>
-                  <span class="structure-field__hint">Destaca a estrutura na visualização.</span>
-                </div>
+                </section>
 
-                <div class="structure-field structure-field--span-5" data-field-for="vendas tecnica">
-                  <label>Franquia</label>
-                  <div class="structure-flag-toggle" role="group" aria-label="Franquia" id="novaFranquiaToggle">
-                    <button type="button" data-flag="true">Sim</button>
-                    <button type="button" class="is-active" data-flag="false">Não</button>
+                <section class="structure-form-section">
+                  <h2 class="structure-form-section__title">Endereço</h2>
+                  <div class="structure-form-grid">
+
+                    <div class="structure-field structure-field--span-5" data-field-for="vendas tecnica">
+                      <label for="novaCep">CEP</label>
+                      <div class="structure-select-row">
+                        <input type="text" id="novaCep" placeholder="00000-000" inputmode="numeric" maxlength="9"
+                          aria-describedby="novaCepError">
+                        <button type="button" class="structure-search-btn" id="novaCepBuscar" aria-label="Buscar CEP">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="m20 20-3.5-3.5"></path>
+                          </svg>
+                        </button>
+                      </div>
+                      <span class="structure-field__error" id="novaCepError">Informe um CEP válido (00000-000).</span>
+                    </div>
+
+                    <div class="structure-field structure-field--span-4" data-field-for="vendas tecnica marketing">
+                      <label for="novaPais">País</label>
+                      <select id="novaPais"></select>
+                    </div>
+                    <div class="structure-field structure-field--span-3" data-field-for="vendas tecnica marketing">
+                      <label for="novaUf">UF</label>
+                      <select id="novaUf"></select>
+                    </div>
+                    <div class="structure-field structure-field--span-5" data-field-for="vendas tecnica marketing">
+                      <label for="novaCidade">Cidade</label>
+                      <select id="novaCidade"></select>
+                    </div>
+
+                    <div class="structure-field structure-field--span-7" data-field-for="vendas tecnica">
+                      <label for="novaEndereco">Endereço</label>
+                      <input type="text" id="novaEndereco">
+                    </div>
+
+                    <div class="structure-field structure-field--span-5" data-field-for="vendas tecnica">
+                      <label for="novaComplemento">Complemento</label>
+                      <input type="text" id="novaComplemento">
+                    </div>
+                    <div class="structure-field structure-field--span-7" data-field-for="vendas tecnica">
+                      <label for="novaBairro">Bairro</label>
+                      <input type="text" id="novaBairro">
+                    </div>
+
+                    <div class="structure-field structure-field--full" data-field-for="vendas tecnica">
+                      <label>Localização no mapa</label>
+                      <div class="structure-map" id="novaEstruturaMap"></div>
+                      <span class="structure-field__hint">O pino é posicionado automaticamente a partir do CEP.
+                        Arraste-o para ajustar o ponto exato.</span>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </section>
+                </section>
 
-            <section class="structure-form-section" data-field-for="vendas tecnica marketing" id="responsaveisPeriodoSection">
-              <h2 class="structure-form-section__title">Responsável</h2>
-              <div class="structure-field">
-                
-                <select id="novaResponsavel"></select>
               </div>
-              <div class="structure-responsaveis-periodo-list" id="responsaveisPeriodoList" hidden></div>
-              <div class="structure-responsaveis-periodo-actions" hidden>
-                <button type="button" class="btn btn-secondary btn-sm" id="responsaveisPeriodoAdd">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12 5v14"></path>
-                    <path d="M5 12h14"></path>
-                  </svg>
-                  <span>Adicionar responsável cadastrado</span>
-                </button>
-                <button type="button" class="btn btn-secondary btn-sm" id="responsaveisPeriodoNew">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                  <span>Cadastrar novo responsável</span>
-                </button>
-              </div>
-            </section>
+              <div class="structure-form-column">
 
-            <section class="structure-form-section" data-field-for="vendas" id="marcaSection">
-              <div class="structure-brand-heading">
-                <h2 class="structure-form-section__title">Marcas por ano</h2>
-                <span class="structure-brand-summary" id="marcaSummary" aria-live="polite">Nenhuma seleção</span>
-              </div>
-              <div class="structure-brand-toolbar">
-                <label class="structure-brand-search" for="marcaSearch">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-                  <input type="search" id="marcaSearch" placeholder="Buscar marca" autocomplete="off">
-                </label>
-              </div>
-              <div class="structure-brand-matrix" tabindex="0" aria-label="Matriz de marcas por ano">
-                <table class="structure-brand-table">
-                  <thead id="marcaTableHead"></thead>
-                  <tbody id="marcaTableBody"></tbody>
-                </table>
-              </div>
-            </section>
+                <section class="structure-form-section structure-form-section--first">
+                  <h2 class="structure-form-section__title">Classificação</h2>
+                  <div class="structure-form-grid">
 
-            </div>
+                    <div class="structure-field" data-field-for="marketing">
+                      <label for="novaLinha">Linha de Negócio</label>
+                      <select id="novaLinha"></select>
+                    </div>
+
+                    <div class="structure-field" data-field-for="vendas marketing">
+                      <label for="novaTipoPosicao">Tipo de Posição</label>
+                      <select id="novaTipoPosicao"></select>
+                    </div>
+
+                    <div class="structure-field" data-field-for="vendas">
+                      <label for="novaTipoAcesso">Tipo de Acesso</label>
+                      <select id="novaTipoAcesso"></select>
+                    </div>
+
+                    <div class="structure-field structure-field--full" data-field-for="vendas">
+                      <label for="novaEstruturaTecnica">Estrutura Técnica</label>
+                      <select id="novaEstruturaTecnica"></select>
+                    </div>
+
+                    <div class="structure-field structure-field--full" data-field-for="tecnica">
+                      <label for="novaEstruturaVenda">Estrutura de Venda</label>
+                      <select id="novaEstruturaVenda"></select>
+                    </div>
+
+                    <div class="structure-field structure-field--span-7" data-field-for="vendas tecnica">
+                      <label id="novaCorDestaqueLabel">Cor Destaque</label>
+                      <div class="structure-color-picker" id="novaCorDestaquePicker">
+                        <button type="button" class="structure-color-picker__trigger" id="novaCorDestaqueTrigger"
+                          aria-haspopup="listbox" aria-expanded="false" aria-labelledby="novaCorDestaqueLabel">
+                          <span class="structure-color-picker__swatch"></span>
+                          <span class="structure-color-picker__value"></span>
+                          <svg class="structure-color-picker__chevron" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="m6 9 6 6 6-6"></path>
+                          </svg>
+                        </button>
+                        <div class="structure-color-picker__panel">
+                          <div class="structure-color-picker__grid" role="listbox" aria-label="Cores predefinidas">
+                          </div>
+                          <label class="structure-color-picker__custom">
+                            <span>Personalizar</span>
+                            <input type="color" id="novaCorDestaqueCustom" value="#2563eb">
+                          </label>
+                        </div>
+                        <input type="hidden" id="novaCorDestaque" value="#2563eb">
+                      </div>
+                      <span class="structure-field__hint">Destaca a estrutura na visualização.</span>
+                    </div>
+
+                    <div class="structure-field structure-field--span-5" data-field-for="vendas tecnica">
+                      <label>Franquia</label>
+                      <div class="structure-flag-toggle" role="group" aria-label="Franquia" id="novaFranquiaToggle">
+                        <button type="button" data-flag="true">Sim</button>
+                        <button type="button" class="is-active" data-flag="false">Não</button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="structure-form-section" data-field-for="vendas tecnica marketing"
+                  id="responsaveisHistoricoSection">
+                  <div class="structure-form-section__head">
+                    <h2 class="structure-form-section__title">Histórico de responsáveis</h2>
+                    <button type="button" class="structure-link-btn" id="responsaveisHistoricoOpen" hidden>Ver histórico
+                      completo</button>
+                  </div>
+                  <div id="responsaveisHistorico"></div>
+                </section>
+
+                <section class="structure-form-section" data-field-for="vendas" id="marcaSection">
+                  <div class="structure-brand-heading">
+                    <h2 class="structure-form-section__title">Marcas por ano</h2>
+                    <span class="structure-brand-summary" id="marcaSummary" aria-live="polite">Nenhuma seleção</span>
+                  </div>
+                  <div class="structure-brand-toolbar">
+                    <label class="structure-brand-search" for="marcaSearch">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path d="m20 20-3.5-3.5"></path>
+                      </svg>
+                      <input type="search" id="marcaSearch" placeholder="Buscar marca" autocomplete="off">
+                    </label>
+                  </div>
+                  <div class="structure-brand-matrix" tabindex="0" aria-label="Matriz de marcas por ano">
+                    <table class="structure-brand-table">
+                      <thead id="marcaTableHead"></thead>
+                      <tbody id="marcaTableBody"></tbody>
+                    </table>
+                  </div>
+                </section>
+
+              </div>
             </div>
 
             <div class="structure-form-actions">
@@ -301,36 +351,23 @@
     </main>
   </div>
 
-  <div class="favorite-modal is-positive" id="structureRegistryFormModal" role="dialog" aria-modal="true" aria-label="Cadastro">
-    <button class="favorite-modal__backdrop" type="button" aria-label="Fechar" data-structure-registry-form-close></button>
-    <div class="favorite-modal__dialog">
-      <button class="favorite-modal__close" type="button" aria-label="Fechar" data-structure-registry-form-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <div class="favorite-modal" id="responsaveisHistoricoModal" role="dialog" aria-modal="true"
+    aria-labelledby="responsaveisHistoricoModalTitle">
+    <button class="favorite-modal__backdrop" type="button" aria-label="Fechar" data-historico-close></button>
+    <div class="favorite-modal__dialog favorite-modal__dialog--wide">
+      <button class="favorite-modal__close" type="button" aria-label="Fechar" data-historico-close>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
           <path d="M18 6 6 18"></path>
           <path d="m6 6 12 12"></path>
         </svg>
       </button>
-      <h2 class="favorite-modal__title" id="structureRegistryFormTitle">Cadastrar responsável</h2>
-      <form id="structureRegistryForm">
-        <div class="structure-field">
-          <label for="structureRegistryFormName" id="structureRegistryFormLabel">Nome</label>
-          <input type="text" id="structureRegistryFormName" required>
-        </div>
-        <div class="structure-field-row" id="structureRegistryFormDates" hidden>
-          <div class="structure-field">
-            <label for="structureRegistryFormStart">Data de início</label>
-            <input type="date" id="structureRegistryFormStart" required>
-          </div>
-          <div class="structure-field">
-            <label for="structureRegistryFormEnd">Data de fim</label>
-            <input type="date" id="structureRegistryFormEnd" required>
-          </div>
-        </div>
-        <div class="favorite-modal__actions">
-          <button type="button" class="favorite-modal__btn" data-structure-registry-form-close>Cancelar</button>
-          <button type="submit" class="favorite-modal__btn favorite-modal__btn--primary">Salvar</button>
-        </div>
-      </form>
+      <h2 class="favorite-modal__title" id="responsaveisHistoricoModalTitle">Histórico completo de responsáveis</h2>
+      <p class="favorite-modal__description" id="responsaveisHistoricoModalSubtitle"></p>
+      <div class="structure-historico-scroll" id="responsaveisHistoricoModalBody"></div>
+      <div class="favorite-modal__actions">
+        <button type="button" class="favorite-modal__btn" data-historico-close>Fechar</button>
+      </div>
     </div>
   </div>
 
@@ -351,6 +388,8 @@
   <script src="../shared/app-shell.js"></script>
   <script src="../shared/custom-select.js"></script>
   <script src="../shared/custom-date.js"></script>
+  <script src="../shared/grid-column-filters.js"></script>
+  <script src="historico-estrutura.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script>
     (function () {
@@ -385,11 +424,6 @@
         responsaveis: (window.BipperSalesStructure && window.BipperSalesStructure.responsaveis) || [],
         linhasNegocio: (window.BipperSalesStructure && window.BipperSalesStructure.linhasNegocio) || []
       };
-      var REGISTRY_META = {
-        responsaveis: { field: 'responsavel', label: 'Responsável', fieldLabel: 'Nome do responsável' },
-        linhasNegocio: { field: 'linhaNegocio', label: 'Linha de negócio', fieldLabel: 'Nome da linha de negócio' }
-      };
-
       function treeFor(area) {
         var areas = window.BipperSalesStructure && window.BipperSalesStructure.areas;
         return (areas && areas[area] && areas[area].tree) || [];
@@ -799,12 +833,6 @@
       // Cadastro rápido (Responsável / Linha de negócio) — mesmo fluxo de index.html
 
       function registryArray(type) { return registries[type]; }
-      function nextRegistryId(type) { return type + '-' + Date.now() + '-' + Math.floor(Math.random() * 1000); }
-      function isDuplicateName(type, name) {
-        var normalized = name.trim().toLowerCase();
-        return registryArray(type).some(function (item) { return item.nome.trim().toLowerCase() === normalized; });
-      }
-
       function populateRegistrySelect(select, type, currentValue) {
         var options = ['<option value="">Selecione…</option>'].concat(
           registryArray(type).map(function (item) {
@@ -817,9 +845,6 @@
 
       var novaLinha = document.getElementById('novaLinha');
       populateRegistrySelect(novaLinha, 'linhasNegocio', '');
-
-      var novaResponsavel = document.getElementById('novaResponsavel');
-      populateRegistrySelect(novaResponsavel, 'responsaveis', '');
 
       var novaTipoPosicao = document.getElementById('novaTipoPosicao');
       novaTipoPosicao.innerHTML = ['<option value="">Selecione…</option>'].concat(
@@ -852,75 +877,6 @@
         })
       ).join('');
       window.BipperCustomSelect && window.BipperCustomSelect.enhanceAll(novaEstruturaVenda.closest('.structure-field'));
-
-      function findResponsavel(name) {
-        return registryArray('responsaveis').find(function (item) { return item.nome === name; });
-      }
-
-      var registryFormModal = document.getElementById('structureRegistryFormModal');
-      var registryForm = document.getElementById('structureRegistryForm');
-      var registryFormTitle = document.getElementById('structureRegistryFormTitle');
-      var registryFormLabel = document.getElementById('structureRegistryFormLabel');
-      var registryFormName = document.getElementById('structureRegistryFormName');
-      var registryFormDates = document.getElementById('structureRegistryFormDates');
-      var registryFormStart = document.getElementById('structureRegistryFormStart');
-      var registryFormEnd = document.getElementById('structureRegistryFormEnd');
-      var registryType = null;
-
-      function openRegistryFormModal(type) {
-        registryType = type;
-        registryFormTitle.textContent = 'Cadastrar ' + REGISTRY_META[type].label.toLowerCase();
-        registryFormLabel.textContent = REGISTRY_META[type].fieldLabel;
-        registryFormName.value = '';
-        var showDates = type === 'responsaveis';
-        registryFormDates.hidden = !showDates;
-        registryFormStart.required = showDates;
-        registryFormEnd.required = showDates;
-        registryFormStart.value = '';
-        registryFormEnd.value = '';
-        registryFormModal.classList.add('is-visible');
-        window.BipperCustomDate && window.BipperCustomDate.enhanceAll(registryFormDates);
-        window.setTimeout(function () { registryFormName.focus(); }, 50);
-      }
-
-      function closeRegistryFormModal() {
-        registryFormModal.classList.remove('is-visible');
-        registryType = null;
-      }
-
-      document.querySelectorAll('[data-registry-quick-add]').forEach(function (button) {
-        button.addEventListener('click', function () {
-          openRegistryFormModal(button.getAttribute('data-registry-quick-add'));
-        });
-      });
-
-      registryForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        var name = registryFormName.value.trim();
-        if (!name) { showToast('error', 'Informe um nome antes de salvar.'); return; }
-        if (isDuplicateName(registryType, name)) { showToast('error', 'Já existe um cadastro com esse nome.'); return; }
-        if (registryType === 'responsaveis' && registryFormEnd.value < registryFormStart.value) {
-          showToast('error', 'A data de fim não pode ser antes da data de início.');
-          return;
-        }
-
-        var dataInicio = registryType === 'responsaveis' ? registryFormStart.value : '';
-        var dataFim = registryType === 'responsaveis' ? registryFormEnd.value : '';
-        registryArray(registryType).push({ id: nextRegistryId(registryType), nome: name, dataInicio: dataInicio, dataFim: dataFim });
-        showToast('success', REGISTRY_META[registryType].label + ' cadastrado com sucesso.');
-        var savedType = registryType;
-        closeRegistryFormModal();
-
-        if (savedType === 'responsaveis') {
-          addSavedResponsavel(name, dataInicio, dataFim);
-        } else if (savedType === 'linhasNegocio') {
-          populateRegistrySelect(novaLinha, 'linhasNegocio', name);
-        }
-      });
-
-      registryFormModal.querySelectorAll('[data-structure-registry-form-close]').forEach(function (button) {
-        button.addEventListener('click', closeRegistryFormModal);
-      });
 
       // Estrutura Pai — combobox acessível com as opções dinâmicas do tipo atual
       // (role="combobox" + listbox, filtra por texto, navega por teclado)
@@ -1051,11 +1007,6 @@
         closeCombobox();
       });
 
-      document.addEventListener('keydown', function (event) {
-        if (event.key !== 'Escape') return;
-        if (registryFormModal.classList.contains('is-visible')) closeRegistryFormModal();
-      });
-
       // Franquia / Ativo (toggles)
 
       function wireFlagToggle(container, defaultValue) {
@@ -1146,204 +1097,378 @@
         setColor(hidden.value);
       })();
 
-      // Responsáveis (lista com período de vigência)
-      //
-      // Cada linha tem dois estados: "em edição" (formulário com Cancelar/Salvar) e
-      // "salva" (cartão de leitura com período, status e editar/remover). Só linhas
-      // salvas contam para a estrutura.
+      // Responsável atual (combobox de busca + vigência) e histórico de responsáveis.
+      // O histórico vem de data/historico-responsaveis.json (mais recente primeiro);
+      // alterações feitas nesta sessão ficam em sessionStorage e entram na frente.
 
-      var responsaveisPeriodoList = document.getElementById('responsaveisPeriodoList');
-      var responsaveisPeriodoRows = []; // { id, responsavelId (nome), dataInicio, dataFim, editing, backup }
-      var responsaveisPeriodoSeq = 0;
-      var EXPIRY_WINDOW = 30; // dias: dentro dessa janela o período aparece como "vence em breve"
+      var HISTORICO_URL = 'data/historico-responsaveis.json';
+      var HISTORICO_EXTRAS_KEY = 'bipperHistoricoResponsaveisExtras';
+      var HISTORICO_PREVIEW = 3;
+      var CURRENT_USER = 'Bárbara Gianazi';
 
-      var ICON_EDIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>';
-      var ICON_DELETE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"></path><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>';
+      var respInput = document.getElementById('respPickerInput');
+      var respOpenBtn = document.getElementById('respPickerOpen');
+      var respCombobox = document.getElementById('respPickerCombobox');
+      var respListbox = document.getElementById('respPickerListbox');
+      var respInicio = document.getElementById('novaRespInicio');
+      var respFim = document.getElementById('novaRespFim');
+      var respFimWrap = respFim.closest('.structure-field');
+      var selectedResp = null; // { nome }
+      var respBaseline = { nome: '', inicio: '', fim: '' };
+      var respOptions = [];
+      var respActiveIndex = -1;
 
       function todayIso() {
         var now = new Date();
         return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
       }
 
-      function daysUntil(iso) {
-        var end = iso.split('-');
-        var now = new Date();
-        return Math.round((Date.UTC(Number(end[0]), Number(end[1]) - 1, Number(end[2])) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+      function dayBefore(iso) {
+        var p = iso.split('-');
+        var d = new Date(Date.UTC(Number(p[0]), Number(p[1]) - 1, Number(p[2]) - 1));
+        return d.toISOString().slice(0, 10);
       }
 
       function formatDate(iso) {
         return iso ? iso.split('-').reverse().join('/') : '';
       }
 
+      function formatDateTime(stamp) {
+        var parts = String(stamp || '').split('T');
+        return formatDate(parts[0]) + (parts[1] ? ' ' + parts[1].slice(0, 5) : '');
+      }
+
       function initials(name) {
         return String(name || '').split(' ').filter(Boolean).slice(0, 2).map(function (word) { return word[0].toUpperCase(); }).join('');
       }
 
-      // Situação do período de uma linha salva (mesmas cores do cadastro em index.html).
-      function periodoStatus(row) {
-        if (row.dataFim && row.dataFim < todayIso()) {
-          var past = daysUntil(row.dataFim);
-          return { kind: 'expired', label: past === -1 ? 'Vencido ontem' : 'Vencido há ' + (-past) + ' dias' };
-        }
-        if (row.dataInicio && row.dataInicio > todayIso()) return { kind: 'scheduled', label: 'Agendado' };
-        if (row.dataFim) {
-          var left = daysUntil(row.dataFim);
-          if (left <= EXPIRY_WINDOW) return { kind: 'soon', label: left === 0 ? 'Vence hoje' : (left === 1 ? 'Vence amanhã' : 'Vence em ' + left + ' dias') };
-        }
-        return { kind: 'ok', label: 'Vigente' };
+      function escapeHtml(text) {
+        return String(text).replace(/[&<>"']/g, function (ch) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+        });
       }
 
-      function editRowHtml(row) {
-        return (
-          '<div class="structure-responsaveis-periodo-row" data-row-id="' + row.id + '">' +
-          '<div class="structure-field"><label>Responsável</label><select data-row-field="responsavelId"></select></div>' +
-          '<div class="structure-field"><label>Data início</label><input type="date" data-row-field="dataInicio" value="' + row.dataInicio + '"></div>' +
-          '<div class="structure-field"><label>Data fim</label><input type="date" data-row-field="dataFim" value="' + row.dataFim + '"></div>' +
-          '<div class="structure-responsaveis-periodo-row__actions">' +
-          '<button type="button" class="btn btn-secondary btn-sm" data-row-cancel>Cancelar</button>' +
-          '<button type="button" class="btn btn-primary-acent btn-sm" data-row-save>Salvar</button>' +
-          '</div>' +
-          '</div>'
-        );
+      function normalizeText(text) {
+        return String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
       }
 
-      function savedRowHtml(row) {
-        var status = periodoStatus(row);
-        return (
-          '<div class="structure-responsavel-card" data-row-id="' + row.id + '">' +
-          '<span class="structure-avatar" aria-hidden="true">' + initials(row.responsavelId) + '</span>' +
-          '<span class="structure-responsavel-card__info"><strong>' + row.responsavelId + '</strong>' +
-          '<small>' + formatDate(row.dataInicio) + ' a ' + formatDate(row.dataFim) + '</small></span>' +
-          '<span class="structure-registry-badge structure-registry-badge--' + status.kind + '"><i></i>' + status.label + '</span>' +
-          '<span class="structure-actions-inline">' +
-          '<button type="button" class="structure-row-action" data-row-edit aria-label="Editar ' + row.responsavelId + '">' + ICON_EDIT + '</button>' +
-          '<button type="button" class="structure-row-action structure-row-action--danger" data-row-remove aria-label="Remover ' + row.responsavelId + '">' + ICON_DELETE + '</button>' +
-          '</span>' +
-          '</div>'
-        );
+      function setRespFimError(hasError) {
+        respFimWrap.classList.toggle('has-error', hasError);
+        if (hasError) respFim.setAttribute('aria-invalid', 'true');
+        else respFim.removeAttribute('aria-invalid');
       }
 
-      function renderResponsaveisPeriodo() {
-        syncResponsavelAddButtons();
-        if (!responsaveisPeriodoRows.length) {
-          responsaveisPeriodoList.innerHTML = '';
-          return;
-        }
-        responsaveisPeriodoList.innerHTML = responsaveisPeriodoRows.map(function (row) {
-          return row.editing ? editRowHtml(row) : savedRowHtml(row);
+      function respRangeInvalid() {
+        return !!(respInicio.value && respFim.value && respFim.value < respInicio.value);
+      }
+
+      function syncRespDates() {
+        var has = !!selectedResp;
+        respInicio.disabled = !has;
+        respFim.disabled = !has;
+        if (!has) { respInicio.value = ''; respFim.value = ''; }
+        respFim.min = respInicio.value || '';
+        setRespFimError(false);
+      }
+
+      function reconcileRespCombobox() {
+        respInput.value = selectedResp ? selectedResp.nome : '';
+        if (selectedResp) respInput.removeAttribute('data-empty');
+        else respInput.setAttribute('data-empty', 'true');
+      }
+
+      function respIsOpen() { return respCombobox.classList.contains('is-open'); }
+
+      function renderRespCombobox(term) {
+        var normalized = normalizeText(term).trim();
+        var list = registryArray('responsaveis').filter(function (item) {
+          return !normalized || normalizeText(item.nome).indexOf(normalized) > -1;
+        });
+        respOptions = [{ nome: '', label: 'Nenhum responsável' }].concat(list.map(function (item) {
+          return { nome: item.nome, label: item.nome };
+        }));
+        respActiveIndex = -1;
+        var current = selectedResp ? selectedResp.nome : '';
+        respListbox.innerHTML = respOptions.map(function (opt, index) {
+          var isSelected = current === opt.nome;
+          return '<li role="option" id="respPickerOpt-' + index + '" class="structure-parent-picker-row' + (isSelected ? ' is-active' : '') + '" data-index="' + index + '" aria-selected="' + isSelected + '">' +
+            '<span>' + escapeHtml(opt.label) + '</span></li>';
         }).join('');
-        responsaveisPeriodoRows.filter(function (row) { return row.editing; }).forEach(function (row) {
-          var rowEl = responsaveisPeriodoList.querySelector('[data-row-id="' + row.id + '"]');
-          populateRegistrySelect(rowEl.querySelector('[data-row-field="responsavelId"]'), 'responsaveis', row.responsavelId);
-        });
-        window.BipperCustomDate && window.BipperCustomDate.enhanceAll(responsaveisPeriodoList);
-      }
-
-      // Regra: cada estrutura tem um único responsável. Com um já incluído (salvo ou
-      // em edição), incluir outro só depois de editar ou excluir aquele.
-      var ONE_RESPONSAVEL_MESSAGE = 'Cada estrutura pode ter apenas um responsável. Edite ou exclua o atual para incluir outro.';
-      var responsavelAddButtons = [document.getElementById('responsaveisPeriodoAdd'), document.getElementById('responsaveisPeriodoNew')];
-
-      function canAddResponsavel() {
-        if (responsaveisPeriodoRows.length) {
-          showToast('error', ONE_RESPONSAVEL_MESSAGE);
-          return false;
+        if (!list.length) {
+          respListbox.insertAdjacentHTML('beforeend', '<li class="structure-combobox-empty" aria-live="polite">Nenhum responsável encontrado</li>');
         }
-        return true;
       }
 
-      function syncResponsavelAddButtons() {
-        var blocked = responsaveisPeriodoRows.length > 0;
-        responsavelAddButtons.forEach(function (button) {
-          button.setAttribute('aria-disabled', String(blocked));
+      function openRespCombobox() {
+        if (respIsOpen()) return;
+        renderRespCombobox(selectedResp && respInput.value === selectedResp.nome ? '' : respInput.value);
+        respCombobox.classList.add('is-open');
+        respInput.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeRespCombobox() {
+        if (!respIsOpen()) return;
+        respCombobox.classList.remove('is-open');
+        respInput.setAttribute('aria-expanded', 'false');
+        respInput.removeAttribute('aria-activedescendant');
+        respActiveIndex = -1;
+        reconcileRespCombobox();
+      }
+
+      // Trocar de responsável sugere início hoje e sem data fim (ambos editáveis).
+      function setSelectedResp(nome) {
+        var changed = (selectedResp ? selectedResp.nome : '') !== nome;
+        selectedResp = nome ? { nome: nome } : null;
+        if (changed) {
+          respInicio.value = selectedResp ? todayIso() : '';
+          respFim.value = '';
+        }
+        syncRespDates();
+        reconcileRespCombobox();
+      }
+
+      function selectRespOption(index) {
+        var opt = respOptions[index];
+        if (!opt) return;
+        setSelectedResp(opt.nome);
+        closeRespCombobox();
+      }
+
+      function moveRespActive(delta) {
+        if (!respOptions.length) return;
+        respActiveIndex = (respActiveIndex + delta + respOptions.length) % respOptions.length;
+        var items = respListbox.querySelectorAll('[role="option"]');
+        items.forEach(function (el, index) { el.classList.toggle('is-focused', index === respActiveIndex); });
+        var activeEl = items[respActiveIndex];
+        if (activeEl) {
+          respInput.setAttribute('aria-activedescendant', activeEl.id);
+          activeEl.scrollIntoView({ block: 'nearest' });
+        }
+      }
+
+      respInput.addEventListener('focus', openRespCombobox);
+      respInput.addEventListener('input', function () {
+        openRespCombobox();
+        renderRespCombobox(respInput.value);
+      });
+      respInput.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          if (!respIsOpen()) openRespCombobox();
+          moveRespActive(1);
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          if (!respIsOpen()) openRespCombobox();
+          moveRespActive(-1);
+        } else if (event.key === 'Enter') {
+          event.preventDefault();
+          if (respIsOpen() && respActiveIndex > -1) selectRespOption(respActiveIndex);
+          else openRespCombobox();
+        } else if (event.key === 'Escape') {
+          closeRespCombobox();
+        }
+      });
+      respOpenBtn.addEventListener('click', function () {
+        if (respIsOpen()) { closeRespCombobox(); } else { openRespCombobox(); respInput.focus(); }
+      });
+      respListbox.addEventListener('mousedown', function (event) {
+        event.preventDefault();
+        var option = event.target.closest('[role="option"]');
+        if (!option) return;
+        selectRespOption(Number(option.getAttribute('data-index')));
+      });
+      document.addEventListener('mousedown', function (event) {
+        if (respCombobox.contains(event.target)) return;
+        closeRespCombobox();
+      });
+      respInicio.addEventListener('change', function () {
+        respFim.min = respInicio.value || '';
+        setRespFimError(respRangeInvalid());
+      });
+      respFim.addEventListener('change', function () { setRespFimError(respRangeInvalid()); });
+
+      // Histórico de responsáveis
+
+      var historicoContainer = document.getElementById('responsaveisHistorico');
+      var historicoOpenBtn = document.getElementById('responsaveisHistoricoOpen');
+      var historicoModal = document.getElementById('responsaveisHistoricoModal');
+      var historicoModalBody = document.getElementById('responsaveisHistoricoModalBody');
+      var historicoModalSubtitle = document.getElementById('responsaveisHistoricoModalSubtitle');
+      var historicoRecords = [];
+
+      function readExtras() {
+        try { return JSON.parse(sessionStorage.getItem(HISTORICO_EXTRAS_KEY) || '{}') || {}; } catch (e) { return {}; }
+      }
+
+      // Registros novos entram na frente; o anterior mais recente é encerrado no dia
+      // anterior ao início da nova vigência.
+      function mergeHistorico(base, extras) {
+        if (!extras.length) return base;
+        var limite = dayBefore(extras[extras.length - 1].dataInicio);
+        var rest = base.map(function (rec, index) {
+          if (index !== 0) return rec;
+          if (rec.dataFim && rec.dataFim <= limite) return rec;
+          return Object.assign({}, rec, { dataFim: limite });
         });
+        return extras.concat(rest);
       }
 
-      function findRow(rowId) {
-        return responsaveisPeriodoRows.find(function (r) { return r.id === rowId; });
+      // Só o responsável atual da estrutura é vigente (e só no registro mais recente), independente das datas.
+      function historicoStatus(rec, index) {
+        var atual = editingNode ? (editingNode.responsavel || '') : '';
+        return index === 0 && atual && rec.responsavel === atual ? { kind: 'ok', label: 'Vigente' } : null;
       }
 
-      function newRow(props) {
-        responsaveisPeriodoSeq += 1;
-        var row = Object.assign({ id: 'periodo-' + responsaveisPeriodoSeq, responsavelId: '', dataInicio: '', dataFim: '', editing: false, backup: null }, props);
-        responsaveisPeriodoRows.push(row);
-        return row;
+      function historicoCellText(text) {
+        var safe = escapeHtml(text);
+        return '<span class="cell-clamp" data-full-text="' + safe + '">' + safe + '</span>';
       }
 
-      // Responsável recém-cadastrado (modal de cadastro): o próprio cadastro é o
-      // "salvar", então entra direto como linha salva, com o período informado lá.
-      function addSavedResponsavel(name, dataInicio, dataFim) {
-        newRow({ responsavelId: name, dataInicio: dataInicio, dataFim: dataFim });
-        renderResponsaveisPeriodo();
+      function historicoTableHtml(records) {
+        var rows = records.map(function (rec, index) {
+          var status = historicoStatus(rec, index);
+          var vigencia = rec.dataFim
+            ? formatDate(rec.dataInicio) + ' a ' + formatDate(rec.dataFim)
+            : 'Desde ' + formatDate(rec.dataInicio) + ' (sem data fim)';
+          return '<tr>' +
+            '<td><span class="structure-historico-person"><span class="structure-avatar" aria-hidden="true">' + escapeHtml(initials(rec.responsavel)) + '</span>' +
+            historicoCellText(rec.responsavel) +
+            (status ? '<span class="structure-registry-badge structure-registry-badge--' + status.kind + '"><i></i>' + status.label + '</span>' : '') +
+            '</span></td>' +
+            '<td>' + historicoCellText(vigencia) + '</td>' +
+            '<td>' + historicoCellText(formatDateTime(rec.alteradoEm)) + '</td>' +
+            '<td>' + historicoCellText(rec.alteradoPor) + '</td>' +
+            '</tr>';
+        }).join('');
+        return '<table class="structure-historico-table">' +
+          '<thead><tr><th scope="col">Responsável</th><th scope="col">Vigência</th><th scope="col">Alterado em</th><th scope="col">Alterado por</th></tr></thead>' +
+          '<tbody>' + rows + '</tbody></table>';
       }
 
-      document.getElementById('responsaveisPeriodoAdd').addEventListener('click', function () {
-        if (!canAddResponsavel()) return;
-        newRow({ editing: true });
-        renderResponsaveisPeriodo();
-      });
+      function historicoEmptyHtml() {
+        var text = editingNode
+          ? 'Esta estrutura ainda não teve alterações de responsável registradas.'
+          : 'As alterações de responsável passarão a ser registradas aqui depois que a estrutura for salva.';
+        return '<div class="structure-historico-empty">' +
+          '<span class="structure-historico-empty__icon"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></span>' +
+          '<strong>Nenhuma alteração de responsável registrada</strong>' +
+          '<p>' + text + '</p></div>';
+      }
 
-      document.getElementById('responsaveisPeriodoNew').addEventListener('click', function () {
-        if (!canAddResponsavel()) return;
-        openRegistryFormModal('responsaveis');
-      });
-
-      responsaveisPeriodoList.addEventListener('click', function (event) {
-        var rowEl = event.target.closest('[data-row-id]');
-        if (!rowEl) return;
-        var row = findRow(rowEl.getAttribute('data-row-id'));
-        if (!row) return;
-
-        if (event.target.closest('[data-row-save]')) {
-          if (!row.responsavelId) { showToast('error', 'Selecione o responsável.'); return; }
-          if (!row.dataInicio || !row.dataFim) { showToast('error', 'Informe as datas de início e fim.'); return; }
-          if (row.dataFim < row.dataInicio) { showToast('error', 'A data de fim não pode ser antes da data de início.'); return; }
-          row.editing = false;
-          row.backup = null;
-        } else if (event.target.closest('[data-row-cancel]')) {
-          if (row.backup) {
-            row.responsavelId = row.backup.responsavelId;
-            row.dataInicio = row.backup.dataInicio;
-            row.dataFim = row.backup.dataFim;
-            row.editing = false;
-            row.backup = null;
-          } else {
-            responsaveisPeriodoRows = responsaveisPeriodoRows.filter(function (r) { return r.id !== row.id; });
-          }
-        } else if (event.target.closest('[data-row-edit]')) {
-          row.backup = { responsavelId: row.responsavelId, dataInicio: row.dataInicio, dataFim: row.dataFim };
-          row.editing = true;
-        } else if (event.target.closest('[data-row-remove]')) {
-          responsaveisPeriodoRows = responsaveisPeriodoRows.filter(function (r) { return r.id !== row.id; });
-        } else {
+      function renderHistorico() {
+        if (!historicoRecords.length) {
+          historicoContainer.innerHTML = historicoEmptyHtml();
+          historicoOpenBtn.hidden = true;
           return;
         }
-        renderResponsaveisPeriodo();
-      });
-
-      responsaveisPeriodoList.addEventListener('change', function (event) {
-        var field = event.target.getAttribute('data-row-field');
-        var rowEl = event.target.closest('[data-row-id]');
-        if (!field || !rowEl) return;
-        var row = findRow(rowEl.getAttribute('data-row-id'));
-        if (!row) return;
-        row[field] = event.target.value;
-        // Escolheu um cadastrado: sugere o período dele (editável) se as datas ainda estão vazias.
-        if (field === 'responsavelId') {
-          var item = findResponsavel(row.responsavelId);
-          if (item && !row.dataInicio && !row.dataFim) {
-            row.dataInicio = item.dataInicio || '';
-            row.dataFim = item.dataFim || '';
-            renderResponsaveisPeriodo();
-          }
-        }
-      });
-
-      // Responsável da estrutura (o que a tabela e a árvore mostram): como só pode
-      // haver um, é o da linha salva; a escolha por vigência é só uma salvaguarda.
-      function pickCurrentResponsavel() {
-        return novaResponsavel.value;
+        historicoContainer.innerHTML = '<div class="structure-historico-scroll">' + historicoTableHtml(historicoRecords.slice(0, HISTORICO_PREVIEW)) + '</div>';
+        historicoOpenBtn.hidden = historicoRecords.length <= HISTORICO_PREVIEW;
       }
+
+      function openHistoricoModal() {
+        historicoModalBody.innerHTML = historicoTableHtml(historicoRecords);
+        historicoModalSubtitle.textContent = (editingNode && editingNode.description ? editingNode.description + ' · ' : '') +
+          historicoRecords.length + ' registros, do mais recente ao mais antigo.';
+        historicoModal.classList.add('is-visible');
+        window.setTimeout(function () { historicoModal.querySelector('.favorite-modal__close').focus(); }, 50);
+      }
+
+      function closeHistoricoModal() {
+        historicoModal.classList.remove('is-visible');
+        historicoOpenBtn.focus();
+      }
+
+      historicoOpenBtn.addEventListener('click', openHistoricoModal);
+      historicoModal.querySelectorAll('[data-historico-close]').forEach(function (button) {
+        button.addEventListener('click', closeHistoricoModal);
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && historicoModal.classList.contains('is-visible')) closeHistoricoModal();
+      });
+
+      // Tooltip escuro do design system só quando o texto está truncado (cell-clamp + data-full-text)
+
+      var floatingTooltip = document.createElement('div');
+      floatingTooltip.className = 'structure-floating-tooltip';
+      floatingTooltip.setAttribute('role', 'tooltip');
+      document.body.appendChild(floatingTooltip);
+
+      function hideFloatingTooltip() { floatingTooltip.classList.remove('is-visible'); }
+
+      document.addEventListener('mouseover', function (event) {
+        var target = event.target.closest && event.target.closest('.cell-clamp[data-full-text]');
+        if (!target || target.contains(event.relatedTarget)) return;
+        if (target.scrollWidth - target.clientWidth <= 1) return;
+        floatingTooltip.textContent = target.getAttribute('data-full-text');
+        floatingTooltip.style.left = '0px';
+        floatingTooltip.style.top = '0px';
+        floatingTooltip.classList.add('is-visible');
+        var rect = target.getBoundingClientRect();
+        var width = floatingTooltip.offsetWidth;
+        var height = floatingTooltip.offsetHeight;
+        var center = Math.min(Math.max(rect.left + rect.width / 2, width / 2 + 8), window.innerWidth - width / 2 - 8);
+        var below = rect.bottom + 8 + height <= window.innerHeight - 8;
+        floatingTooltip.style.left = (center - width / 2) + 'px';
+        floatingTooltip.style.top = (below ? rect.bottom + 8 : rect.top - height - 8) + 'px';
+      });
+      document.addEventListener('mouseout', function (event) {
+        var target = event.target.closest && event.target.closest('.cell-clamp[data-full-text]');
+        if (target && !target.contains(event.relatedTarget)) hideFloatingTooltip();
+      });
+      window.addEventListener('scroll', hideFloatingTooltip, true);
+      window.addEventListener('resize', hideFloatingTooltip);
+
+      function loadHistorico() {
+        if (!editingNode) { renderHistorico(); return; }
+        var extras = readExtras()[currentType + ':' + editingNode.id] || [];
+        fetch(HISTORICO_URL)
+          .then(function (res) { return res.json(); })
+          .then(function (data) { return (data[currentType] && data[currentType][editingNode.id]) || []; })
+          .catch(function () { return []; })
+          .then(function (base) {
+            historicoRecords = mergeHistorico(base, extras);
+            var current = historicoRecords[0];
+            if (selectedResp && !respBaseline.inicio && current && current.responsavel === selectedResp.nome) {
+              respBaseline.inicio = current.dataInicio || '';
+              respBaseline.fim = current.dataFim || '';
+              if (!respInicio.value) {
+                respInicio.value = respBaseline.inicio;
+                respFim.value = respBaseline.fim;
+                syncRespDates();
+              }
+            }
+            renderHistorico();
+          });
+      }
+
+      // Responsável da estrutura (o que a tabela e a árvore mostram)
+      function pickCurrentResponsavel() {
+        return selectedResp ? selectedResp.nome : '';
+      }
+
+      function respChanged() {
+        return pickCurrentResponsavel() !== respBaseline.nome ||
+          (respInicio.value || '') !== respBaseline.inicio ||
+          (respFim.value || '') !== respBaseline.fim;
+      }
+
+      function recordResponsavelChange(structureId) {
+        var nome = pickCurrentResponsavel();
+        if (!nome || !respChanged()) return;
+        var extras = readExtras();
+        var key = currentType + ':' + structureId;
+        var now = new Date();
+        var stamp = todayIso() + 'T' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':00';
+        extras[key] = [{
+          responsavel: nome,
+          dataInicio: respInicio.value,
+          dataFim: respFim.value || null,
+          alteradoEm: stamp,
+          alteradoPor: CURRENT_USER
+        }].concat(extras[key] || []);
+        try { sessionStorage.setItem(HISTORICO_EXTRAS_KEY, JSON.stringify(extras)); } catch (e) { /* sem persistência */ }
+      }
+
 
       function populateEditForm() {
         if (!editingNode) return;
@@ -1368,7 +1493,13 @@
         document.getElementById('novaComplemento').value = editingNode.complemento || '';
         document.getElementById('novaBairro').value = editingNode.bairro || '';
         novaLinha.value = editingNode.linhaNegocio || '';
-        novaResponsavel.value = editingNode.responsavel || '';
+        setSelectedResp(editingNode.responsavel || '');
+        if (selectedResp) {
+          respInicio.value = editingNode.responsavelInicio || '';
+          respFim.value = editingNode.responsavelFim || '';
+          respBaseline = { nome: selectedResp.nome, inicio: respInicio.value, fim: respFim.value };
+          syncRespDates();
+        }
         novaTipoPosicao.value = editingNode.tipoPosicao || '';
         novaTipoAcesso.value = editingNode.tipoAcessoList && editingNode.tipoAcessoList.length
           ? (editingNode.tipoAcessoList[0].value || editingNode.tipoAcessoList[0].label || editingNode.tipoAcessoList[0])
@@ -1394,7 +1525,42 @@
       }
 
       populateEditForm();
-      renderResponsaveisPeriodo();
+      loadHistorico();
+
+      // Histórico da estrutura: só existe depois da criação, então o botão some no cadastro.
+      var estruturaHistoricoBtn = document.getElementById('estruturaHistoricoOpen');
+      var estruturaHistorico = null;
+      function nameOfStructure(id) {
+        if (!id) return '';
+        var found = null;
+        ['vendas', 'tecnica', 'marketing'].some(function (area) {
+          var ctx = findNodeContext(treeFor(area), id);
+          if (ctx) { found = ctx.node; return true; }
+          return false;
+        });
+        return found ? found.description : '';
+      }
+      if (editingNode) {
+        estruturaHistorico = window.BipperHistoricoEstrutura.create({
+          type: currentType,
+          node: editingNode,
+          openButton: estruturaHistoricoBtn,
+          currentUser: CURRENT_USER,
+          nameOf: nameOfStructure,
+          parentId: editingParentId,
+          // Nome de outra estrutura da mesma área (usado só nos registros fictícios de "Hierarquia")
+          randomName: function (seed) {
+            var options = flattenTree(treeFor(currentType)).filter(function (item) {
+              return !editingExcludedIds.has(item.id) && item.id !== editingParentId;
+            });
+            return options.length ? options[seed % options.length].description : '';
+          },
+          getResponsavelRecords: function () { return historicoRecords; },
+          toast: showToast
+        });
+      } else {
+        estruturaHistoricoBtn.hidden = true;
+      }
 
       // Validação + submit
 
@@ -1425,16 +1591,22 @@
           return;
         }
 
-        if (currentType !== 'marketing' && cepField.value.replace(/\D/g, '').length !== 8) {
+        var cepDigits = cepField.value.replace(/\D/g, '');
+        if (currentType !== 'marketing' && cepDigits && cepDigits.length !== 8) {
           setCepError('Informe um CEP válido (00000-000).');
           cepField.focus();
           return;
         }
 
-        var emEdicao = responsaveisPeriodoRows.find(function (r) { return r.editing; });
-        if (emEdicao) {
-          showToast('error', 'Salve ou cancele o responsável que está em edição.');
-          responsaveisPeriodoList.querySelector('[data-row-id="' + emEdicao.id + '"]').scrollIntoView({ block: 'center', behavior: 'smooth' });
+        if (respRangeInvalid()) {
+          setRespFimError(true);
+          showToast('error', 'A data de fim da vigência não pode ser antes da data de início.');
+          respFim.focus();
+          return;
+        }
+        if (selectedResp && respChanged() && !respInicio.value) {
+          showToast('error', 'Informe o início da vigência do responsável.');
+          respInicio.focus();
           return;
         }
 
@@ -1478,8 +1650,11 @@
           marcas: currentType === 'vendas'
             ? serializeBrandSelections()
             : (editingNode ? (editingNode.marcas || []) : []),
-          responsaveisPeriodo: []
+          responsavelInicio: pickCurrentResponsavel() ? respInicio.value : '',
+          responsavelFim: pickCurrentResponsavel() ? respFim.value : ''
         };
+        recordResponsavelChange(node.id);
+        if (estruturaHistorico) estruturaHistorico.recordChanges(editingNode, editingParentId, node, node.parentId);
 
         try {
           sessionStorage.setItem('bipperNovaEstrutura', JSON.stringify({
@@ -1494,41 +1669,8 @@
       });
 
       applyFieldVisibility();
-
-      // Altura do formulário fixa: trocar de tipo (Vendas / Técnica / Marketing) mostra
-      // campos diferentes, mas a área dos campos ocupa sempre a altura do tipo mais alto,
-      // então a tela não "pula". Mede cada tipo e aplica a maior como min-height.
-      // Só no layout de duas colunas (no celular as colunas empilham e não vale reservar espaço).
-      var formColumns = document.querySelector('.structure-form-columns');
-      var equalizeTimer = null;
-
-      function equalizeFormHeight() {
-        formColumns.style.minHeight = '';
-        if (window.matchMedia('(max-width: 900px)').matches) {
-          if (novaMap) novaMap.invalidateSize();
-          return;
-        }
-        var original = currentType;
-        var tallest = 0;
-        ['vendas', 'tecnica', 'marketing'].forEach(function (type) {
-          currentType = type;
-          applyFieldVisibility();
-          tallest = Math.max(tallest, formColumns.getBoundingClientRect().height);
-        });
-        currentType = original;
-        applyFieldVisibility();
-        formColumns.style.minHeight = Math.ceil(tallest) + 'px';
-        if (novaMap) novaMap.invalidateSize();
-      }
-
-      equalizeFormHeight();
-      window.addEventListener('load', equalizeFormHeight);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalizeFormHeight);
-      window.addEventListener('resize', function () {
-        window.clearTimeout(equalizeTimer);
-        equalizeTimer = window.setTimeout(equalizeFormHeight, 120);
-      });
     })();
   </script>
 </body>
+
 </html>

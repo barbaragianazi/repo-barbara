@@ -14,7 +14,8 @@ Guia pratico da pasta `shared/`. A documentacao central do projeto fica no `READ
 - `base-components.css`: botoes, inputs, chips, cards, listas, modais, skeletons e grids reutilizaveis.
 - `app-shell.css`: sidebar, topbar, seletor de marca, perfil, notificacoes e estados responsivos.
 - `app-shell.js`: menu dinamico, sidebar, perfil, menu mobile, dropdown de marcas, persistencia e troca de logos.
-- `custom-select.js` + `custom-select.css`: popup customizado para `<select>`.
+- `custom-select.js` + `custom-select.css`: popup customizado para `<select>`. Também traz o estilo do multiselect com checkboxes (`.cs-multi-*`, `.cs-panel--columns`).
+- `custom-multiselect.js`: dropdown de seleção múltipla com checkboxes (opcionalmente reordenável); usa os estilos de `custom-select.css`.
 - `custom-date.js` + `custom-date.css`: calendario customizado para `<input type="date">`.
 - `master-page.html`: pagina mestre copiavel para iniciar uma nova tela com shell completo.
 - `brand-schema.json`: contrato para criar ou validar marcas.

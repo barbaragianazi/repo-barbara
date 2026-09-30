@@ -1067,6 +1067,11 @@ body.sidebar-collapsed .nav-group.has-children:focus-within .nav-submenu {
         transform: translateX(0);
     }
 
+    /* Fechado, o menu fica fora da tela; o botão de recolher (right:-30px) não pode aparecer na borda. */
+    .sidebar:not(.is-open) .brand__toggle {
+        visibility: hidden;
+    }
+
     .mobile-menu {
         display: flex;
         position: fixed;

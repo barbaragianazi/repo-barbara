@@ -234,6 +234,7 @@
     };
   </script>
   <script src="../../shared/app-shell.js"></script>
+  <script src="../../shared/focus-fullscreen.js"></script>
   <script src="../../shared/custom-select.js"></script>
   <script src="../../shared/data/payments.js"></script>
   <script src="../../shared/payment-detail-panel.js"></script>
@@ -1178,6 +1179,8 @@
 
     function setFocusMode(enabled) {
       document.body.classList.toggle('payments-focus-mode', enabled);
+      if (enabled) window.BipperFocusFullscreen.enter();
+      else window.BipperFocusFullscreen.exit();
       placeViewModeToggle(enabled);
       focusToggle.querySelector('span').textContent = enabled ? 'Sair do foco' : 'Modo foco';
       focusToggle.querySelector('i').className = enabled
@@ -1310,6 +1313,11 @@
     focusToggle.addEventListener('click', () => {
       setFocusMode(!document.body.classList.contains('payments-focus-mode'));
       requestAnimationFrame(updateGridTooltips);
+    });
+
+    // Esc (ou F11) na tela cheia: o navegador sai dela e o modo foco sai junto.
+    window.BipperFocusFullscreen.onExit(() => {
+      if (document.body.classList.contains('payments-focus-mode')) setFocusMode(false);
     });
 
     focusExitToggle.addEventListener('click', () => {

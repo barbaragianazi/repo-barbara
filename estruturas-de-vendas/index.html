@@ -88,51 +88,10 @@
             </div>
           </section>
 
-          <aside class="structure-registry-card summary-card" aria-label="Visualização e cadastro">
-            <div class="structure-registry">
-              <span class="structure-new-features__title">Visualização e cadastro</span>
-              <div class="structure-registry__controls">
-                <button type="button" class="btn btn-secondary" data-registry-open="responsaveis">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                  <span>Responsável</span>
-                </button>
-                <button type="button" class="btn btn-secondary" data-registry-open="linhasNegocio">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12.6 2.6a2 2 0 0 0-2.8 0l-7.2 7.2a2 2 0 0 0 0 2.8l7.6 7.6a2 2 0 0 0 2.8 0l7.2-7.2a2 2 0 0 0 0-2.8Z"></path>
-                    <circle cx="8.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"></circle>
-                  </svg>
-                  <span>Linha de negócio</span>
-                </button>
-              </div>
-            </div>
-          </aside>
-
           <aside class="structure-features-card summary-card" aria-label="Novidades do módulo">
             <div class="structure-new-features">
               <span class="structure-new-features__title">Novos modos de visualização</span>
               <div class="structure-new-features__controls">
-                <div class="view-mode-toggle view-mode-toggle--active-label" role="group" aria-label="Densidade das colunas" data-structure-density-toggle>
-                  <button type="button" class="is-active" data-structure-density="full" aria-label="Ver colunas completas" data-tooltip="Completo · mostra todas as colunas da estrutura">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M3 6h18"></path>
-                      <path d="M3 12h18"></path>
-                      <path d="M3 18h18"></path>
-                    </svg>
-                    <span>Completo</span>
-                  </button>
-                  <button type="button" data-structure-density="compact" aria-label="Ver colunas compactas" data-tooltip="Compacto · mostra só as colunas essenciais">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
-                      <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
-                      <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
-                      <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
-                    </svg>
-                    <span>Compacto</span>
-                  </button>
-                </div>
                 <div class="view-mode-toggle view-mode-toggle--active-label" role="group" aria-label="Modo de exibição" data-structure-view-toggle>
                   <button type="button" class="is-active" data-structure-view="table" aria-label="Ver como tabela" data-tooltip="Tabela · lista compacta em linhas">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -168,32 +127,32 @@
         </div>
 
         <div class="compact-tour compact-tour--inline" id="structureTour" role="status">
-          <strong id="structureTourTitle">Modo compacto ativo</strong>
+          <strong id="structureTourTitle">Dica</strong>
           <span id="structureTourText"></span>
           <label class="compact-tour__dismiss">
             <input type="checkbox" id="structureTourDismissForever">
             Não exibir novamente
           </label>
-          <button id="structureTourDismiss" type="button" aria-label="Fechar dica">Entendi</button>
+          <button id="structureTourDismiss" type="button" aria-label="Fechar dica">OK</button>
         </div>
 
         <div class="structure-table-card summary-card">
           <div class="structure-table-toolbar">
-            <div class="structure-area-tabs" role="tablist" aria-label="Área da estrutura">
-              <button type="button" class="is-active" role="tab" aria-selected="true" data-area="vendas">
+            <div class="view-mode-toggle view-mode-toggle--active-label structure-area-tabs" role="tablist" aria-label="Área da estrutura">
+              <button type="button" class="is-active" role="tab" aria-selected="true" data-area="vendas" aria-label="Estrutura de Vendas" data-tooltip="Vendas · hierarquia comercial e responsáveis">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M23 6 13.5 15.5l-5-5L1 18"></path>
                   <path d="M17 6h6v6"></path>
                 </svg>
                 <span>Vendas</span>
               </button>
-              <button type="button" role="tab" aria-selected="false" data-area="tecnica">
+              <button type="button" role="tab" aria-selected="false" data-area="tecnica" aria-label="Estrutura Técnica" data-tooltip="Técnica · hierarquia da equipe técnica">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"></path>
                 </svg>
                 <span>Técnica</span>
               </button>
-              <button type="button" role="tab" aria-selected="false" data-area="marketing">
+              <button type="button" role="tab" aria-selected="false" data-area="marketing" aria-label="Estrutura de Marketing" data-tooltip="Marketing · hierarquia da equipe de marketing">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="m3 11 18-5v12L3 14v-3z"></path>
                   <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
@@ -208,6 +167,14 @@
               <select id="structureLevelFilter" aria-label="Filtrar por nível"></select>
             </div>
             <div class="structure-table-toolbar__actions">
+              <div class="cs-multi-picker" id="structureColumnsPicker" hidden>
+                <span class="cs-multi-picker__label" id="structureColumnsLabel">Personalizar colunas</span>
+                <span class="cs-select">
+                  <button type="button" class="cs-multi-trigger" id="structureColumnsTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="structureColumnsLabel structureColumnsTrigger">
+                    <span id="structureColumnsSummary"></span>
+                  </button>
+                </span>
+              </div>
               <label class="structure-inactive-toggle" id="structureInactiveToggle">
                 <input type="checkbox" id="structureShowInactive" checked>
                 <span>Mostrar inativos</span>
@@ -398,27 +365,11 @@
         </div>
         <div class="structure-field">
           <label for="editResponsavel">Responsável</label>
-          <div class="structure-select-row">
-            <select id="editResponsavel"></select>
-            <button type="button" class="icon-btn structure-select-add" data-registry-quick-add="responsaveis" aria-label="Cadastrar novo responsável" data-tooltip="Cadastrar novo responsável">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 5v14"></path>
-                <path d="M5 12h14"></path>
-              </svg>
-            </button>
-          </div>
+          <select id="editResponsavel"></select>
         </div>
         <div class="structure-field">
           <label for="editLinha">Linha de negócio</label>
-          <div class="structure-select-row">
-            <select id="editLinha"></select>
-            <button type="button" class="icon-btn structure-select-add" data-registry-quick-add="linhasNegocio" aria-label="Cadastrar nova linha de negócio" data-tooltip="Cadastrar nova linha de negócio">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 5v14"></path>
-                <path d="M5 12h14"></path>
-              </svg>
-            </button>
-          </div>
+          <select id="editLinha"></select>
         </div>
         <div class="structure-edit-row">
           <div class="structure-field">
@@ -447,114 +398,11 @@
           <path d="m6 6 12 12"></path>
         </svg>
       </button>
-      <h2 class="favorite-modal__title">Excluir estrutura</h2>
+      <h2 class="favorite-modal__title" id="structureDeleteTitle">Excluir estrutura</h2>
       <p class="favorite-modal__description" id="structureDeleteMessage"></p>
       <div class="favorite-modal__actions">
-        <button type="button" class="favorite-modal__btn" data-structure-delete-close>Cancelar</button>
+        <button type="button" class="favorite-modal__btn" id="structureDeleteCancel" data-structure-delete-close>Cancelar</button>
         <button type="button" class="favorite-modal__btn favorite-modal__btn--primary" id="structureDeleteConfirm">Excluir</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="favorite-modal is-positive" id="structureRegistryFormModal" role="dialog" aria-modal="true" aria-label="Cadastro">
-    <button class="favorite-modal__backdrop" type="button" aria-label="Fechar" data-structure-registry-form-close></button>
-    <div class="favorite-modal__dialog">
-      <button class="favorite-modal__close" type="button" aria-label="Fechar" data-structure-registry-form-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M18 6 6 18"></path>
-          <path d="m6 6 12 12"></path>
-        </svg>
-      </button>
-      <h2 class="favorite-modal__title" id="structureRegistryFormTitle">Cadastrar responsável</h2>
-      <form id="structureRegistryForm">
-        <div class="structure-field">
-          <label for="structureRegistryFormName" id="structureRegistryFormLabel">Nome</label>
-          <input type="text" id="structureRegistryFormName" required>
-        </div>
-        <div class="structure-field-row" id="structureRegistryFormDates" hidden>
-          <div class="structure-field">
-            <label for="structureRegistryFormStart">Data de início</label>
-            <input type="date" id="structureRegistryFormStart" required>
-          </div>
-          <div class="structure-field">
-            <label for="structureRegistryFormEnd">Data de fim</label>
-            <input type="date" id="structureRegistryFormEnd" required>
-          </div>
-        </div>
-        <div class="favorite-modal__actions">
-          <button type="button" class="favorite-modal__btn" data-structure-registry-form-close>Cancelar</button>
-          <button type="submit" class="favorite-modal__btn favorite-modal__btn--primary">Salvar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="favorite-modal is-positive" id="structureRegistryViewModal" role="dialog" aria-modal="true" aria-label="Visualizar cadastros">
-    <button class="favorite-modal__backdrop" type="button" aria-label="Fechar" data-structure-registry-view-close></button>
-    <div class="favorite-modal__dialog">
-      <button class="favorite-modal__close" type="button" aria-label="Fechar" data-structure-registry-view-close>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M18 6 6 18"></path>
-          <path d="m6 6 12 12"></path>
-        </svg>
-      </button>
-      <h2 class="favorite-modal__title" id="structureRegistryViewTitle">Responsáveis cadastrados</h2>
-      <div class="structure-registry-view__toolbar">
-        <label class="structure-registry-search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="7"></circle>
-            <path d="m20 20-3.5-3.5"></path>
-          </svg>
-          <input type="search" id="structureRegistrySearch" placeholder="Pesquisar…">
-        </label>
-        <button type="button" class="btn btn-primary-acent" id="structureRegistryViewCreate">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 5v14"></path>
-            <path d="M5 12h14"></path>
-          </svg>
-          <span>Cadastrar</span>
-        </button>
-      </div>
-      <div class="structure-registry-sort" id="structureRegistrySort" hidden>
-        <div class="view-mode-toggle" role="group" aria-label="Ordenar responsáveis">
-          <button type="button" class="is-active" data-registry-sort="nome" aria-pressed="true">Nome (A–Z)</button>
-          <button type="button" data-registry-sort="vencer" aria-pressed="false">Prestes a vencer</button>
-          <button type="button" data-registry-sort="vencidos" aria-pressed="false">Vencidos recentemente</button>
-        </div>
-        <span class="structure-registry-sort__summary" id="structureRegistrySummary"></span>
-      </div>
-
-      <div class="structure-registry-inline" id="structureRegistryInline" hidden>
-        <form id="structureRegistryInlineForm">
-          <div class="structure-field">
-            <label for="registryInlineName" id="registryInlineNameLabel">Nome</label>
-            <input type="text" id="registryInlineName" required>
-          </div>
-          <div class="structure-field-row" id="registryInlineDates" hidden>
-            <div class="structure-field">
-              <label for="registryInlineStart">Data de início</label>
-              <input type="date" id="registryInlineStart" required>
-            </div>
-            <div class="structure-field">
-              <label for="registryInlineEnd">Data de fim</label>
-              <input type="date" id="registryInlineEnd" required>
-            </div>
-          </div>
-          <div class="favorite-modal__actions">
-            <button type="button" class="favorite-modal__btn" id="registryInlineCancel">Cancelar</button>
-            <button type="submit" class="favorite-modal__btn favorite-modal__btn--primary">Confirmar</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="structure-registry-list" id="structureRegistryList"></div>
-      <div class="structure-pagination-bar structure-registry-pagination" aria-label="Paginação dos cadastros">
-        <span id="structureRegistryPaginationSummary">Página 1 de 1</span>
-        <div class="structure-pagination-actions">
-          <button class="btn btn-secondary btn-sm" id="structureRegistryPrevPage" type="button">Anterior</button>
-          <div class="structure-page-buttons" id="structureRegistryPageButtons"></div>
-          <button class="btn btn-secondary btn-sm" id="structureRegistryNextPage" type="button">Próxima</button>
-        </div>
       </div>
     </div>
   </div>
@@ -575,9 +423,12 @@
     };
   </script>
   <script src="../shared/app-shell.js"></script>
+  <script src="../shared/focus-fullscreen.js"></script>
   <script src="../shared/custom-select.js"></script>
+  <script src="../shared/custom-multiselect.js"></script>
   <script src="../shared/custom-date.js"></script>
   <script src="../shared/grid-column-filters.js"></script>
+  <script src="historico-estrutura.js"></script>
   <script src="tree-view.js"></script>
   <script>
     (function () {
@@ -642,19 +493,10 @@
         return (areas && areas[area] && areas[area].tree) || [];
       }
 
-      function allTrees() {
-        var areas = (window.BipperSalesStructure && window.BipperSalesStructure.areas) || {};
-        return Object.keys(areas).map(function (key) { return areas[key].tree; }).filter(Boolean);
-      }
-
       var data = treeFor(DEFAULT_AREA);
       var registries = {
         responsaveis: (window.BipperSalesStructure && window.BipperSalesStructure.responsaveis) || [],
         linhasNegocio: (window.BipperSalesStructure && window.BipperSalesStructure.linhasNegocio) || []
-      };
-      var REGISTRY_META = {
-        responsaveis: { field: 'responsavel', label: 'Responsável', labelPlural: 'responsáveis', fieldLabel: 'Nome do responsável' },
-        linhasNegocio: { field: 'linhaNegocio', label: 'Linha de negócio', labelPlural: 'linhas de negócio', fieldLabel: 'Nome da linha de negócio' }
       };
       var AREA_LABELS = {
         vendas: { title: 'Estrutura de Venda', eyebrow: 'Estruturas de Vendas' },
@@ -664,34 +506,34 @@
       var AREA_COLUMNS = {
         vendas: [
           { field: 'description', label: 'Descrição', type: 'text', main: true },
-          { field: 'id', label: 'Código interno', type: 'text' },
-          { field: 'sap', label: 'Código SAP', type: 'text' },
           { field: 'responsavel', label: 'Responsável', type: 'list', person: true },
-          { field: 'cidade', label: 'Cidade', type: 'list', compact: true },
+          { field: 'cidade', label: 'Cidade', type: 'list' },
           { field: 'franquia', label: 'Franquia', type: 'list', boolean: true },
           { field: 'corDestaque', label: 'Cor destaque', type: 'list', color: true },
-          { field: 'tipoPosicao', label: 'Tipo(s) posição', type: 'list', chip: true, compact: true },
+          { field: 'tipoPosicao', label: 'Tipo(s) posição', type: 'list', chip: true },
           { field: 'tipoAcessoList', label: 'Tipo(s) acesso', type: 'list', list: true },
+          { field: 'id', label: 'Código interno', type: 'text' },
+          { field: 'sap', label: 'Código SAP', type: 'text' },
           { field: 'ativo', label: 'Ativo?', type: 'list', status: true }
         ],
         tecnica: [
           { field: 'description', label: 'Descrição', type: 'text', main: true },
-          { field: 'id', label: 'Código interno', type: 'text' },
-          { field: 'sap', label: 'Código SAP', type: 'text' },
           { field: 'responsavel', label: 'Responsável', type: 'list', person: true },
-          { field: 'cidade', label: 'Cidade', type: 'list', compact: true },
+          { field: 'cidade', label: 'Cidade', type: 'list' },
           { field: 'franquia', label: 'Franquia', type: 'list', boolean: true },
           { field: 'corDestaque', label: 'Cor destaque', type: 'list', color: true },
+          { field: 'id', label: 'Código interno', type: 'text' },
+          { field: 'sap', label: 'Código SAP', type: 'text' },
           { field: 'ativo', label: 'Ativo?', type: 'list', status: true }
         ],
         marketing: [
           { field: 'description', label: 'Descrição', type: 'text', main: true },
+          { field: 'responsavel', label: 'Responsável', type: 'list', person: true },
+          { field: 'linhaNegocio', label: 'Linha negócio', type: 'list' },
+          { field: 'tipoPosicao', label: 'Tipo(s) posição', type: 'list', chip: true },
+          { field: 'pais', label: 'País', type: 'list' },
           { field: 'id', label: 'Cód. interno', type: 'text' },
           { field: 'sap', label: 'Código SAP', type: 'text' },
-          { field: 'responsavel', label: 'Responsável', type: 'list', person: true },
-          { field: 'linhaNegocio', label: 'Linha negócio', type: 'list', compact: true },
-          { field: 'tipoPosicao', label: 'Tipo(s) posição', type: 'list', chip: true, compact: true },
-          { field: 'pais', label: 'País', type: 'list', compact: true },
           { field: 'ativo', label: 'Ativo?', type: 'list', status: true }
         ]
       };
@@ -717,7 +559,6 @@
       var searchInput = document.getElementById('structureSearchInput');
       var columnFiltersActive = document.getElementById('structureColumnFiltersActive');
 
-      var densityToggle = document.querySelector('[data-structure-density-toggle]');
       var viewToggle = document.querySelector('[data-structure-view-toggle]');
       var tableWrap = document.querySelector('[data-structure-panel="table"]');
 
@@ -746,49 +587,9 @@
       var deleteConfirm = document.getElementById('structureDeleteConfirm');
       var pendingDelete = null;
 
-      var registryFormModal = document.getElementById('structureRegistryFormModal');
-      var registryForm = document.getElementById('structureRegistryForm');
-      var registryFormTitle = document.getElementById('structureRegistryFormTitle');
-      var registryFormLabel = document.getElementById('structureRegistryFormLabel');
-      var registryFormName = document.getElementById('structureRegistryFormName');
-      var registryFormDates = document.getElementById('structureRegistryFormDates');
-      var registryFormStart = document.getElementById('structureRegistryFormStart');
-      var registryFormEnd = document.getElementById('structureRegistryFormEnd');
-
-      var registryViewModal = document.getElementById('structureRegistryViewModal');
-      var registryViewTitle = document.getElementById('structureRegistryViewTitle');
-      var registryViewCreate = document.getElementById('structureRegistryViewCreate');
-      var registrySearch = document.getElementById('structureRegistrySearch');
-      var registrySortBar = document.getElementById('structureRegistrySort');
-      var registrySummary = document.getElementById('structureRegistrySummary');
-      var registryList = document.getElementById('structureRegistryList');
-      var registryPaginationSummary = document.getElementById('structureRegistryPaginationSummary');
-      var registryPageButtons = document.getElementById('structureRegistryPageButtons');
-      var registryPrevPage = document.getElementById('structureRegistryPrevPage');
-      var registryNextPage = document.getElementById('structureRegistryNextPage');
-
-      var registryInline = document.getElementById('structureRegistryInline');
-      var registryInlineForm = document.getElementById('structureRegistryInlineForm');
-      var registryInlineNameLabel = document.getElementById('registryInlineNameLabel');
-      var registryInlineName = document.getElementById('registryInlineName');
-      var registryInlineDates = document.getElementById('registryInlineDates');
-      var registryInlineStart = document.getElementById('registryInlineStart');
-      var registryInlineEnd = document.getElementById('registryInlineEnd');
-      var registryInlineCancel = document.getElementById('registryInlineCancel');
-
       var toastStack = document.getElementById('structureToastStack');
 
-      var registryType = null;
-      var registryEditingId = null;
-      var registryContext = null;
-      var viewModalType = null;
-      var inlineEditingId = null;
-      var registryPage = 1;
-      var registryPageSize = 10;
-      var registrySort = 'nome';
-      var REGISTRY_EXPIRY_WINDOW = 30; // dias: dentro dessa janela o cadastro entra em "vence em breve"
-
-      var state = { view: 'table', density: 'full', collapsed: new Set(), page: 1, pageSize: 4, area: DEFAULT_AREA, search: '', showInactive: true };
+      var state = { view: 'table', collapsed: new Set(), page: 1, pageSize: 4, area: DEFAULT_AREA, search: '', showInactive: true };
       var nodesById = {};
       var parentById = {};
 
@@ -889,8 +690,46 @@
         }).join('');
       }
 
+      // Código interno exibido (#N): os dígitos do id. Só que ids como "ar-1", "mx-1" e "co-1" (ou
+      // "tec-1" e "tec-ar-1") têm os mesmos dígitos, então o código se repetia. Aqui, cada id ganha um
+      // código único dentro da área: o primeiro mantém os dígitos originais e os repetidos recebem
+      // o próximo número livre (depois do maior código da área). Estável entre renders.
+      var internalCodeMaps = {};
+
+      function digitsOf(id) {
+        return String(id == null ? '' : id).replace(/\D/g, '');
+      }
+
+      function internalCodeMap(area) {
+        if (internalCodeMaps[area]) return internalCodeMaps[area];
+        var map = { byId: {}, used: {}, max: 0 };
+        internalCodeMaps[area] = map;
+        var ids = [];
+        (function walk(nodes) {
+          (nodes || []).forEach(function (node) {
+            ids.push(String(node.id));
+            walk(node.children);
+          });
+        })(treeFor(area));
+        ids.forEach(function (id) { map.max = Math.max(map.max, Number(digitsOf(id)) || 0); });
+        ids.filter(function (id) { return /^\d+$/.test(id); }).forEach(function (id) { claimInternalCode(map, id); });
+        ids.forEach(function (id) { claimInternalCode(map, id); });
+        return map;
+      }
+
+      function claimInternalCode(map, id) {
+        if (map.byId[id] !== undefined) return map.byId[id];
+        var digits = digitsOf(id);
+        // ids gerados no navegador ("node-<timestamp>...") têm dígitos demais para virar código
+        var code = digits && digits.length <= 6 && !map.used[digits] ? digits : String(++map.max);
+        map.used[code] = true;
+        map.byId[id] = code;
+        return code;
+      }
+
       function displayInternalCode(value) {
-        return String(value == null ? '' : value).replace(/\D/g, '');
+        if (value == null || value === '') return '';
+        return claimInternalCode(internalCodeMap(state.area), String(value));
       }
 
       function toggleButton(node, expanded, hasChildren) {
@@ -904,19 +743,21 @@
       }
 
       var ICON_EDIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>';
+      var ICON_HISTORY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path><path d="M12 7v5l3 2"></path></svg>';
       var ICON_DELETE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"></path><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>';
 
       function rowActionsMarkup(node) {
         return (
-          '<button type="button" class="structure-row-action" data-edit="' + node.id + '" aria-label="Editar ' + node.description + '">' + ICON_EDIT + '</button>' +
-          '<button type="button" class="structure-row-action structure-row-action--danger" data-delete="' + node.id + '" aria-label="Excluir ' + node.description + '">' + ICON_DELETE + '</button>'
+          '<button type="button" class="structure-row-action" data-history="' + node.id + '" aria-label="Histórico de ' + node.description + '" data-tooltip="Histórico da estrutura">' + ICON_HISTORY + '</button>' +
+          '<button type="button" class="structure-row-action" data-edit="' + node.id + '" aria-label="Editar ' + node.description + '" data-tooltip="Editar estrutura">' + ICON_EDIT + '</button>' +
+          '<button type="button" class="structure-row-action structure-row-action--danger" data-delete="' + node.id + '" aria-label="Excluir ' + node.description + '" data-tooltip="Excluir estrutura">' + ICON_DELETE + '</button>'
         );
       }
 
       function personMarkup(node) {
         return node.responsavel
           ? '<span class="structure-person"><span class="structure-avatar">' + initials(node.responsavel) + '</span><span>' + node.responsavel + '</span></span>'
-          : '<span class="structure-person structure-person--empty">—</span>';
+          : '<button type="button" class="structure-unassigned" data-edit="' + node.id + '" aria-label="Sem responsável: atribuir responsável a ' + node.description + '" data-tooltip="Sem responsável definido. Clique para atribuir"><i aria-hidden="true"></i>Sem responsável</button>';
       }
 
       function directChildrenCount(node) {
@@ -946,27 +787,42 @@
         return '<span class="structure-row-guides" aria-hidden="true">' + rails + '</span>';
       }
 
+      // Colunas da área na ordem escolhida pelo usuário e o conjunto de campos
+      // visíveis; definidos a cada renderização da tabela
+      // (ver "Personalizar colunas" mais abaixo) e lidos linha a linha aqui.
+      var currentColumns = [];
+      var currentVisibleFields = new Set();
+
+      function isColumnHidden(column) {
+        return !column.main && !currentVisibleFields.has(column.field);
+      }
+
+      // O data-col-field liga a célula ao seu cabeçalho (larguras personalizadas).
+      function cellAttrs(column, extraClass) {
+        return (extraClass ? ' class="' + extraClass + '"' : '') + ' data-col-field="' + column.field + '"';
+      }
+
       function tableRowHtml(node, level, hasChildren) {
         var expanded = !state.collapsed.has(node.id);
         var typeLevel = Math.min(level, 3);
-        var cells = AREA_COLUMNS[state.area].map(function (column) {
+        var cells = currentColumns.filter(function (column) { return !isColumnHidden(column); }).map(function (column) {
           var value = node[column.field];
-          var cellClass = (!column.main && !column.person && !column.status && !column.compact) ? ' class="structure-column--compact-hidden"' : '';
+          var attrs = cellAttrs(column, column.main ? 'structure-cell--main' : '');
           if (column.main) {
-            return '<td class="structure-cell--main"><span class="structure-row-label">' + levelGuidesHtml(level) + toggleButton(node, expanded, hasChildren) +
+            return '<td' + attrs + '><span class="structure-row-label">' + levelGuidesHtml(level) + toggleButton(node, expanded, hasChildren) +
               '<button type="button" class="structure-description" data-level="' + typeLevel + '" data-detail="' + node.id + '">' + node.description + '</button>' + subordinateCountMarkup(node) + '</span></td>';
           }
-          if (column.person) return '<td>' + personMarkup(node) + '</td>';
+          if (column.person) return '<td' + attrs + '>' + personMarkup(node) + '</td>';
           if (column.status) {
             var statusClass = 'structure-status' + (node.ativo ? '' : ' structure-status--inactive');
-            return '<td><span class="' + statusClass + '"><span class="structure-status__dot"></span>' + (node.ativo ? 'Sim' : 'Não') + '</span></td>';
+            return '<td' + attrs + '><span class="' + statusClass + '"><span class="structure-status__dot"></span>' + (node.ativo ? 'Sim' : 'Não') + '</span></td>';
           }
-          if (column.boolean) return '<td' + cellClass + '>' + (value ? 'Sim' : 'Não') + '</td>';
-          if (column.color) return '<td' + cellClass + '><span class="structure-color-value"><i style="background:' + (value || '#d1d5db') + '"></i>' + (value || '—') + '</span></td>';
+          if (column.boolean) return '<td' + attrs + '>' + (value ? 'Sim' : 'Não') + '</td>';
+          if (column.color) return '<td' + attrs + '>' + (value ? '<span class="structure-color-value"><i style="background:' + value + '"></i>' + value + '</span>' : '') + '</td>';
           if (column.list) value = (value || []).map(function (item) { return item.label || item; }).join(', ');
           if (column.field === 'id') value = displayInternalCode(value);
-          if (column.chip) return '<td' + cellClass + '><span class="structure-chip">' + (value || '—') + '</span></td>';
-          return '<td' + cellClass + '>' + (value || '—') + '</td>';
+          if (column.chip) return '<td' + attrs + '>' + (value ? '<span class="structure-chip">' + value + '</span>' : '') + '</td>';
+          return '<td' + attrs + '>' + (value == null ? '' : value) + '</td>';
         }).join('');
 
         return (
@@ -1014,7 +870,34 @@
       }
 
       function renderTable(nodes, visibleIds) {
+        currentColumns = orderedColumns(state.area);
+        currentVisibleFields = visibleFieldSet(state.area);
         tbody.innerHTML = renderTableRows(nodes, 0, visibleIds);
+      }
+
+      // Histórico da estrutura: o mesmo modal do formulário (historico-estrutura.js), reaproveitado
+      // para qualquer linha da Tabela ou cartão da Árvore.
+      var structureHistory = null;
+
+      function nameOfStructure(id) {
+        return (id && nodesById[id]) ? nodesById[id].description : '';
+      }
+
+      function openStructureHistory(node, opener) {
+        if (!structureHistory) {
+          structureHistory = window.BipperHistoricoEstrutura.create({
+            type: state.area,
+            currentUser: 'Bárbara Gianazi',
+            nameOf: nameOfStructure,
+            loadResponsavelRecords: window.BipperHistoricoEstrutura.loadResponsaveis,
+            randomName: function (seed) {
+              var options = flattenAllNodes().filter(function (item) { return item.id !== node.id && item.id !== parentById[node.id]; });
+              return options.length ? options[seed % options.length].description : '';
+            },
+            toast: showToast
+          });
+        }
+        structureHistory.open({ node: node, type: state.area, parentId: parentById[node.id], opener: opener });
       }
 
       // Árvore: toda a renderização (cartões, drawer, filtro de nível)
@@ -1030,6 +913,8 @@
         hasSearch: function () { return Boolean(state.search); },
         getSearch: function () { return state.search; },
         onEdit: openEditModal,
+        onHistory: openStructureHistory,
+        onDelete: function (node) { openDeleteModal({ kind: 'node', id: node.id }); },
         formatCode: displayInternalCode,
         toast: showToast,
         rerender: function () {
@@ -1063,51 +948,8 @@
         }, 3200);
       }
 
-      // Cadastros (Responsável / Linha de negócio)
-
       function registryArray(type) {
         return registries[type];
-      }
-
-      function findRegistryItem(type, id) {
-        return registryArray(type).find(function (item) { return item.id === id; });
-      }
-
-      function nextRegistryId(type) {
-        return type + '-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-      }
-
-      function isDuplicateName(type, name, ignoreId) {
-        var normalized = name.trim().toLowerCase();
-        return registryArray(type).some(function (item) {
-          return item.id !== ignoreId && item.nome.trim().toLowerCase() === normalized;
-        });
-      }
-
-      function countUsage(type, name) {
-        // Responsavel/Linha de negocio sao compartilhados entre as areas, entao
-        // o uso precisa ser checado em todas as arvores, nao so na aba aberta.
-        var field = REGISTRY_META[type].field;
-        var count = 0;
-        function walk(nodes) {
-          nodes.forEach(function (node) {
-            if (node[field] === name) count += 1;
-            if (node.children && node.children.length) walk(node.children);
-          });
-        }
-        allTrees().forEach(walk);
-        return count;
-      }
-
-      function renameInTree(type, oldName, newName) {
-        var field = REGISTRY_META[type].field;
-        function walk(nodes) {
-          nodes.forEach(function (node) {
-            if (node[field] === oldName) node[field] = newName;
-            if (node.children && node.children.length) walk(node.children);
-          });
-        }
-        allTrees().forEach(walk);
       }
 
       function populateRegistrySelect(select, type, currentValue) {
@@ -1131,367 +973,6 @@
         window.BipperCustomSelect && window.BipperCustomSelect.enhanceAll(editPais.closest('.structure-field'));
       }
 
-      function refreshEditSelects() {
-        populateRegistrySelect(editResponsavel, 'responsaveis', editResponsavel.value);
-        populateRegistrySelect(editLinha, 'linhasNegocio', editLinha.value);
-      }
-
-      function openRegistryFormModal(type, context, editItem) {
-        registryType = type;
-        registryContext = context;
-        registryEditingId = editItem ? editItem.id : null;
-        registryFormTitle.textContent = (editItem ? 'Editar ' : 'Cadastrar ') + REGISTRY_META[type].label.toLowerCase();
-        registryFormLabel.textContent = REGISTRY_META[type].fieldLabel;
-        registryFormName.value = editItem ? editItem.nome : '';
-        var showDates = type === 'responsaveis';
-        registryFormDates.hidden = !showDates;
-        registryFormStart.required = showDates;
-        registryFormEnd.required = showDates;
-        registryFormStart.value = (editItem && editItem.dataInicio) || '';
-        registryFormEnd.value = (editItem && editItem.dataFim) || '';
-        registryFormModal.classList.add('is-visible');
-        window.BipperCustomDate && window.BipperCustomDate.enhanceAll(registryFormDates);
-        window.setTimeout(function () { registryFormName.focus(); }, 50);
-      }
-
-      function closeRegistryFormModal() {
-        registryFormModal.classList.remove('is-visible');
-        var context = registryContext;
-        registryContext = null;
-        registryEditingId = null;
-        if (context === 'quickAddResponsavel' || context === 'quickAddLinha') {
-          editModal.classList.add('is-visible');
-        }
-      }
-
-      registryForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        var name = registryFormName.value.trim();
-        if (!name) { showToast('error', 'Informe um nome antes de salvar.'); return; }
-        if (isDuplicateName(registryType, name, registryEditingId)) {
-          showToast('error', 'Já existe um cadastro com esse nome.');
-          return;
-        }
-        if (registryType === 'responsaveis' && registryFormEnd.value < registryFormStart.value) {
-          showToast('error', 'A data de fim não pode ser antes da data de início.');
-          return;
-        }
-
-        var label = REGISTRY_META[registryType].label;
-        var savedName = name;
-        var context = registryContext;
-        var dataInicio = registryType === 'responsaveis' ? registryFormStart.value : '';
-        var dataFim = registryType === 'responsaveis' ? registryFormEnd.value : '';
-
-        if (registryEditingId) {
-          var existing = findRegistryItem(registryType, registryEditingId);
-          var oldName = existing.nome;
-          existing.nome = name;
-          existing.dataInicio = dataInicio;
-          existing.dataFim = dataFim;
-          if (oldName !== name) renameInTree(registryType, oldName, name);
-          showToast('success', label + ' atualizado com sucesso.');
-        } else {
-          registryArray(registryType).push({ id: nextRegistryId(registryType), nome: name, dataInicio: dataInicio, dataFim: dataFim });
-          showToast('success', label + ' cadastrado com sucesso.');
-        }
-
-        closeRegistryFormModal();
-        render();
-
-        if (context === 'quickAddResponsavel') {
-          populateRegistrySelect(editResponsavel, 'responsaveis', savedName);
-        } else if (context === 'quickAddLinha') {
-          populateRegistrySelect(editLinha, 'linhasNegocio', savedName);
-        }
-      });
-
-      registryFormModal.querySelectorAll('[data-structure-registry-form-close]').forEach(function (button) {
-        button.addEventListener('click', closeRegistryFormModal);
-      });
-
-      // Dias entre hoje e a data (yyyy-mm-dd); negativo = já passou. Só data, sem hora.
-      function daysUntil(iso) {
-        var end = iso.split('-');
-        var now = new Date();
-        var endUtc = Date.UTC(Number(end[0]), Number(end[1]) - 1, Number(end[2]));
-        var nowUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-        return Math.round((endUtc - nowUtc) / 86400000);
-      }
-
-      // Situação do período: 'expired' (fim já passou), 'soon' (vence em até
-      // REGISTRY_EXPIRY_WINDOW dias, inclusive hoje), 'ok', ou null sem datas.
-      function registryStatus(item) {
-        if (!item.dataFim) return null;
-        var days = daysUntil(item.dataFim);
-        if (days < 0) {
-          return { kind: 'expired', days: days, label: days === -1 ? 'Vencido ontem' : 'Vencido há ' + (-days) + ' dias' };
-        }
-        if (days <= REGISTRY_EXPIRY_WINDOW) {
-          return { kind: 'soon', days: days, label: days === 0 ? 'Vence hoje' : (days === 1 ? 'Vence amanhã' : 'Vence em ' + days + ' dias') };
-        }
-        return { kind: 'ok', days: days, label: '' };
-      }
-
-      // A linha do tempo se divide em "hoje": de um lado os que ainda vão vencer
-      // (mais próximo primeiro), do outro os que já venceram (mais recente
-      // primeiro). As duas ordenações por data só diferem em qual lado vem antes.
-      // Sem data ficam sempre no fim; empate desempata pelo nome.
-      function sortRegistryItems(items) {
-        function byName(a, b) { return a.nome.localeCompare(b.nome, 'pt-BR'); }
-        if (registrySort === 'nome') return items.slice().sort(byName);
-        var expiredFirst = registrySort === 'vencidos';
-        function rank(item) {
-          var status = registryStatus(item);
-          if (!status) return 2;
-          return (status.kind === 'expired') === expiredFirst ? 0 : 1;
-        }
-        return items.slice().sort(function (a, b) {
-          var ra = rank(a);
-          var rb = rank(b);
-          if (ra !== rb) return ra - rb;
-          var sa = registryStatus(a);
-          var sb = registryStatus(b);
-          if (sa && sb && sa.days !== sb.days) {
-            return sa.kind === 'expired' ? sb.days - sa.days : sa.days - sb.days;
-          }
-          return byName(a, b);
-        });
-      }
-
-      function renderRegistrySummary(type) {
-        var expired = 0;
-        var soon = 0;
-        if (type === 'responsaveis') {
-          registryArray(type).forEach(function (item) {
-            var status = registryStatus(item);
-            if (status && status.kind === 'expired') expired += 1;
-            else if (status && status.kind === 'soon') soon += 1;
-          });
-        }
-        registrySummary.innerHTML =
-          '<span class="is-expired"><i></i>' + expired + (expired === 1 ? ' vencido' : ' vencidos') + '</span>' +
-          '<span class="is-soon"><i></i>' + soon + ' vence' + (soon === 1 ? '' : 'm') + ' em até ' + REGISTRY_EXPIRY_WINDOW + ' dias</span>';
-      }
-
-      function syncRegistrySortButtons() {
-        registrySortBar.querySelectorAll('[data-registry-sort]').forEach(function (button) {
-          var active = button.getAttribute('data-registry-sort') === registrySort;
-          button.classList.toggle('is-active', active);
-          button.setAttribute('aria-pressed', String(active));
-        });
-      }
-
-      function renderRegistryList(type) {
-        var items = registryArray(type);
-        var term = registrySearch.value.trim().toLowerCase();
-        var matched = term ? items.filter(function (item) { return item.nome.toLowerCase().indexOf(term) > -1; }) : items;
-        var filtered = sortRegistryItems(matched);
-        registrySortBar.hidden = type !== 'responsaveis';
-        if (type === 'responsaveis') renderRegistrySummary(type);
-        var totalPages = Math.max(1, Math.ceil(filtered.length / registryPageSize));
-        if (registryPage > totalPages) registryPage = totalPages;
-        var start = (registryPage - 1) * registryPageSize;
-        var pageItems = filtered.slice(start, start + registryPageSize);
-
-        registryPaginationSummary.textContent = filtered.length
-          ? 'Página ' + registryPage + ' de ' + totalPages + ' | ' + (start + 1) + '-' + (start + pageItems.length) + ' de ' + filtered.length + ' cadastros'
-          : 'Nenhum cadastro';
-        registryPrevPage.disabled = registryPage <= 1;
-        registryNextPage.disabled = registryPage >= totalPages;
-        registryPageButtons.innerHTML = Array.from({ length: totalPages }, function (_, index) {
-          var page = index + 1;
-          return '<button class="' + (page === registryPage ? 'is-active' : '') + '" type="button" data-registry-page="' + page + '">' + page + '</button>';
-        }).join('');
-
-        if (!items.length) {
-          registryList.innerHTML = '<p class="structure-registry-empty">Nenhum cadastro ainda.</p>';
-          return;
-        }
-        if (!filtered.length) {
-          registryList.innerHTML = '<p class="structure-registry-empty">Nenhum resultado para "' + registrySearch.value.trim() + '".</p>';
-          return;
-        }
-        registryList.innerHTML = pageItems.map(function (item) {
-          var period = type === 'responsaveis'
-            ? '<small>' + (item.dataInicio && item.dataFim ? formatRegistryDate(item.dataInicio) + ' a ' + formatRegistryDate(item.dataFim) : 'Período não informado') + '</small>'
-            : '';
-          var status = type === 'responsaveis' ? registryStatus(item) : null;
-          var badge = status && status.kind !== 'ok'
-            ? '<span class="structure-registry-badge structure-registry-badge--' + status.kind + '"><i></i>' + status.label + '</span>'
-            : '';
-          return (
-            '<div class="structure-registry-row">' +
-            '<span class="structure-registry-row__content"><strong>' + item.nome + '</strong>' + period + '</span>' +
-            '<span class="structure-registry-row__end">' + badge +
-            '<span class="structure-actions-inline">' +
-            '<button type="button" class="structure-row-action" data-registry-edit="' + item.id + '" aria-label="Editar ' + item.nome + '">' + ICON_EDIT + '</button>' +
-            '<button type="button" class="structure-row-action structure-row-action--danger" data-registry-delete="' + item.id + '" aria-label="Excluir ' + item.nome + '">' + ICON_DELETE + '</button>' +
-            '</span>' +
-            '</span>' +
-            '</div>'
-          );
-        }).join('');
-      }
-
-      function formatRegistryDate(value) {
-        return value.split('-').reverse().join('/');
-      }
-
-      function openRegistryViewModal(type) {
-        viewModalType = type;
-        registryViewTitle.textContent = REGISTRY_META[type].labelPlural.replace(/^./, function (c) { return c.toUpperCase(); }) + ' cadastrados';
-        registrySearch.value = '';
-        registryPage = 1;
-        registrySort = 'nome';
-        syncRegistrySortButtons();
-        closeRegistryInlineForm();
-        renderRegistryList(type);
-        registryViewModal.classList.add('is-visible');
-      }
-
-      registrySortBar.addEventListener('click', function (event) {
-        var button = event.target.closest('[data-registry-sort]');
-        if (!button || !viewModalType) return;
-        registrySort = button.getAttribute('data-registry-sort');
-        registryPage = 1;
-        registryList.scrollTop = 0;
-        syncRegistrySortButtons();
-        renderRegistryList(viewModalType);
-      });
-
-      registrySearch.addEventListener('input', function () {
-        registryPage = 1;
-        if (viewModalType) renderRegistryList(viewModalType);
-      });
-
-      registryPageButtons.addEventListener('click', function (event) {
-        var button = event.target.closest('[data-registry-page]');
-        if (!button || !viewModalType) return;
-        registryPage = Number(button.getAttribute('data-registry-page'));
-        registryList.scrollTop = 0;
-        renderRegistryList(viewModalType);
-      });
-
-      registryPrevPage.addEventListener('click', function () {
-        if (!viewModalType) return;
-        registryPage = Math.max(1, registryPage - 1);
-        registryList.scrollTop = 0;
-        renderRegistryList(viewModalType);
-      });
-
-      registryNextPage.addEventListener('click', function () {
-        if (!viewModalType) return;
-        registryPage += 1;
-        registryList.scrollTop = 0;
-        renderRegistryList(viewModalType);
-      });
-
-      function closeRegistryViewModal() {
-        registryViewModal.classList.remove('is-visible');
-        viewModalType = null;
-        closeRegistryInlineForm();
-      }
-
-      registryViewModal.querySelectorAll('[data-structure-registry-view-close]').forEach(function (button) {
-        button.addEventListener('click', closeRegistryViewModal);
-      });
-
-      // Cadastro inline dentro do modal Visualizar
-
-      function openRegistryInlineForm(editItem) {
-        var type = viewModalType;
-        inlineEditingId = editItem ? editItem.id : null;
-        registryInlineNameLabel.textContent = REGISTRY_META[type].fieldLabel;
-        registryInlineName.value = editItem ? editItem.nome : '';
-        var showDates = type === 'responsaveis';
-        registryInlineDates.hidden = !showDates;
-        registryInlineStart.required = showDates;
-        registryInlineEnd.required = showDates;
-        registryInlineStart.value = (editItem && editItem.dataInicio) || '';
-        registryInlineEnd.value = (editItem && editItem.dataFim) || '';
-        registryInline.hidden = false;
-        registryViewCreate.hidden = true;
-        window.setTimeout(function () { registryInlineName.focus(); }, 50);
-      }
-
-      function closeRegistryInlineForm() {
-        registryInline.hidden = true;
-        registryViewCreate.hidden = false;
-        inlineEditingId = null;
-      }
-
-      registryInlineCancel.addEventListener('click', closeRegistryInlineForm);
-
-      registryInlineForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        var type = viewModalType;
-        var name = registryInlineName.value.trim();
-        if (!name) { showToast('error', 'Informe um nome antes de confirmar.'); return; }
-        if (isDuplicateName(type, name, inlineEditingId)) {
-          showToast('error', 'Já existe um cadastro com esse nome.');
-          return;
-        }
-        if (type === 'responsaveis' && registryInlineEnd.value < registryInlineStart.value) {
-          showToast('error', 'A data de fim não pode ser antes da data de início.');
-          return;
-        }
-
-        var label = REGISTRY_META[type].label;
-        var dataInicio = type === 'responsaveis' ? registryInlineStart.value : '';
-        var dataFim = type === 'responsaveis' ? registryInlineEnd.value : '';
-
-        if (inlineEditingId) {
-          var existing = findRegistryItem(type, inlineEditingId);
-          var oldName = existing.nome;
-          existing.nome = name;
-          existing.dataInicio = dataInicio;
-          existing.dataFim = dataFim;
-          if (oldName !== name) renameInTree(type, oldName, name);
-          showToast('success', label + ' atualizado com sucesso.');
-        } else {
-          registryArray(type).push({ id: nextRegistryId(type), nome: name, dataInicio: dataInicio, dataFim: dataFim });
-          showToast('success', label + ' cadastrado com sucesso.');
-        }
-
-        closeRegistryInlineForm();
-        render();
-        refreshEditSelects();
-        renderRegistryList(type);
-      });
-
-      registryViewCreate.addEventListener('click', function () {
-        openRegistryInlineForm();
-      });
-
-      registryList.addEventListener('click', function (event) {
-        var editBtn = event.target.closest('[data-registry-edit]');
-        if (editBtn) {
-          var item = findRegistryItem(viewModalType, editBtn.getAttribute('data-registry-edit'));
-          if (item) openRegistryInlineForm(item);
-          return;
-        }
-        var deleteBtn = event.target.closest('[data-registry-delete]');
-        if (deleteBtn) {
-          var target = findRegistryItem(viewModalType, deleteBtn.getAttribute('data-registry-delete'));
-          if (!target) return;
-          var usage = countUsage(viewModalType, target.nome);
-          if (usage > 0) {
-            showToast('error', 'Não é possível excluir "' + target.nome + '": em uso por ' + usage + (usage === 1 ? ' estrutura.' : ' estruturas.'));
-            return;
-          }
-          closeRegistryInlineForm();
-          registryViewModal.classList.remove('is-visible');
-          openDeleteModal({ kind: 'registry', registryType: viewModalType, id: target.id, label: target.nome, returnToView: true });
-        }
-      });
-
-      document.querySelectorAll('[data-registry-open]').forEach(function (button) {
-        button.addEventListener('click', function () {
-          openRegistryViewModal(button.getAttribute('data-registry-open'));
-        });
-      });
-
       // Editar
 
       var editingId = null;
@@ -1507,14 +988,6 @@
         var button = event.target.closest('[data-flag]');
         if (!button) return;
         setEditAtivo(button.getAttribute('data-flag') === 'true');
-      });
-
-      editModal.querySelectorAll('[data-registry-quick-add]').forEach(function (button) {
-        button.addEventListener('click', function () {
-          var type = button.getAttribute('data-registry-quick-add');
-          editModal.classList.remove('is-visible');
-          openRegistryFormModal(type, type === 'responsaveis' ? 'quickAddResponsavel' : 'quickAddLinha');
-        });
       });
 
       function openEditModal(node) {
@@ -1573,51 +1046,36 @@
 
       function openDeleteModal(descriptor) {
         pendingDelete = descriptor;
-        var message;
-        if (descriptor.kind === 'node') {
-          var node = nodesById[descriptor.id];
-          var extra = countDescendants(node);
-          message = 'Tem certeza que deseja excluir "' + node.description + '"?';
-          if (extra > 0) {
-            message += ' Isso também remove ' + extra + (extra === 1 ? ' subestrutura vinculada.' : ' subestruturas vinculadas.');
-          }
-        } else {
-          message = 'Tem certeza que deseja excluir "' + descriptor.label + '"?';
-        }
-        deleteMessage.textContent = message;
+        var node = nodesById[descriptor.id];
+        var extra = countDescendants(node);
+        var blocked = extra > 0;
+        document.getElementById('structureDeleteTitle').textContent = blocked ? 'Não é possível excluir' : 'Excluir estrutura';
+        document.getElementById('structureDeleteCancel').textContent = blocked ? 'Entendi' : 'Cancelar';
+        deleteConfirm.hidden = blocked;
+        deleteMessage.textContent = blocked
+          ? '"' + node.description + '" possui ' + extra + (extra === 1 ? ' estrutura vinculada abaixo dela.' : ' estruturas vinculadas abaixo dela.') + ' Exclua ou mova essas estruturas antes de excluir este nível.'
+          : 'Tem certeza que deseja excluir "' + node.description + '"?';
         deleteModal.classList.add('is-visible');
       }
 
       function closeDeleteModal() {
         deleteModal.classList.remove('is-visible');
-        var reopenView = pendingDelete && pendingDelete.kind === 'registry' && pendingDelete.returnToView;
         pendingDelete = null;
-        if (reopenView && viewModalType) registryViewModal.classList.add('is-visible');
       }
 
       deleteConfirm.addEventListener('click', function () {
         if (!pendingDelete) return;
+        if (countDescendants(nodesById[pendingDelete.id]) > 0) return;
 
-        if (pendingDelete.kind === 'node') {
-          var container = findContainer(pendingDelete.id, data);
-          if (container) {
-            var index = container.findIndex(function (n) { return n.id === pendingDelete.id; });
-            if (index > -1) container.splice(index, 1);
-          }
-          closeDeleteModal();
-          rebuildIndex();
-          render();
-          showToast('success', 'Estrutura excluída com sucesso.');
-        } else {
-          var list = registryArray(pendingDelete.registryType);
-          var itemIndex = list.findIndex(function (item) { return item.id === pendingDelete.id; });
-          if (itemIndex > -1) list.splice(itemIndex, 1);
-          var deletedType = pendingDelete.registryType;
-          if (viewModalType === deletedType) renderRegistryList(deletedType);
-          closeDeleteModal();
-          refreshEditSelects();
-          showToast('success', REGISTRY_META[deletedType].label + ' excluído com sucesso.');
+        var container = findContainer(pendingDelete.id, data);
+        if (container) {
+          var index = container.findIndex(function (n) { return n.id === pendingDelete.id; });
+          if (index > -1) container.splice(index, 1);
         }
+        closeDeleteModal();
+        rebuildIndex();
+        render();
+        showToast('success', 'Estrutura excluída com sucesso.');
       });
 
       deleteModal.querySelectorAll('[data-structure-delete-close]').forEach(function (button) {
@@ -1626,8 +1084,6 @@
 
       document.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') return;
-        if (registryFormModal.classList.contains('is-visible')) { closeRegistryFormModal(); return; }
-        if (registryViewModal.classList.contains('is-visible')) { closeRegistryViewModal(); return; }
         if (editModal.classList.contains('is-visible')) closeEditModal();
         if (deleteModal.classList.contains('is-visible')) closeDeleteModal();
       });
@@ -1637,27 +1093,31 @@
       function positionTour() {
         if (!tour.classList.contains('is-visible')) return;
         var focusMode = document.body.classList.contains('structure-focus-mode');
-        var anchor = focusMode ? focusExit : densityToggle;
+        var anchor = focusMode ? focusExit : viewToggle;
         if (!anchor || !tourOffsetParent) return;
         var anchorRect = anchor.getBoundingClientRect();
         var parentRect = tourOffsetParent.getBoundingClientRect();
         tour.style.top = (anchorRect.bottom - parentRect.top + 10) + 'px';
-        tour.style.right = (parentRect.right - anchorRect.right) + 'px';
-        tour.style.left = 'auto';
+        // Alinha à direita do botão, mas nunca sai da tela: em telas estreitas
+        // o botão fica à esquerda e o aviso (até 360px) passaria do limite.
+        var left = anchorRect.right - parentRect.left - tour.offsetWidth;
+        var maxLeft = parentRect.width - tour.offsetWidth;
+        tour.style.left = Math.max(0, Math.min(left, maxLeft)) + 'px';
+        tour.style.right = 'auto';
       }
 
       function showTour(title, text) {
         if (window.__bipperNavTipsOff || document.body.classList.contains('structure-focus-mode')) return;
         tourTitle.textContent = title;
         tourText.innerHTML = text;
-        if (tourDismissForever) tourDismissForever.checked = false;
+        tourDismissForever.checked = false;
         tour.classList.add('is-visible');
         positionTour();
         requestAnimationFrame(positionTour);
       }
 
       function hideTour() {
-        if (tourDismissForever && tourDismissForever.checked) window.__bipperNavTipsOff = true;
+        if (tourDismissForever.checked) window.__bipperNavTipsOff = true;
         tour.classList.remove('is-visible');
       }
 
@@ -1682,10 +1142,9 @@
       // Aviso de rolagem horizontal — reaproveita o toast de dicas do topo.
       function showGridScrollTip() {
         if (state.view !== 'table' || tableWrap.hidden) return;
-        if (tableWrap.scrollWidth - tableWrap.clientWidth <= 8) return;
         showTour(
-          'Rolagem lateral do grid',
-          'Segure <kbd>Shift</kbd> e role o mouse — ou arraste com dois dedos no trackpad — para ver todas as colunas.'
+          'Dicas da tabela',
+          'Arraste para reorganizar ou redimensionar colunas. Use <kbd>Shift</kbd> + rolagem para navegar lateralmente.'
         );
       }
 
@@ -1696,24 +1155,24 @@
 
       // No modo foco tudo fora do card some (menu, cabeçalho, faixa própria), e o
       // card ocupa a tela inteira. Os controles que ainda precisam existir (trocar
-      // Tabela/Árvore, densidade e "Sair") passam para dentro da barra do card:
+      // Tabela/Árvore e "Sair") passam para dentro da barra do card:
       // movemos os mesmos botões (mesmos listeners) para lá, antes do "Sair".
       // Ao sair, os toggles voltam para o lugar original.
-      var viewControlsHome = densityToggle.parentElement;
+      var viewControlsHome = viewToggle.parentElement;
       var viewControlsAnchor = focusToggle;
 
       function placeViewControls(focusMode) {
         if (focusMode) {
-          focusControls.insertBefore(densityToggle, focusExit);
           focusControls.insertBefore(viewToggle, focusExit);
         } else {
-          viewControlsHome.insertBefore(densityToggle, viewControlsAnchor);
           viewControlsHome.insertBefore(viewToggle, viewControlsAnchor);
         }
       }
 
       function setFocusMode(enabled) {
         document.body.classList.toggle('structure-focus-mode', enabled);
+        if (enabled) window.BipperFocusFullscreen.enter();
+        else window.BipperFocusFullscreen.exit();
         focusToggle.querySelector('span').textContent = enabled ? 'Sair do foco' : 'Modo foco';
         focusIcon.innerHTML = enabled ? ICON_MINIMIZE : ICON_MAXIMIZE;
         focusControls.hidden = !enabled;
@@ -1733,6 +1192,10 @@
         setFocusMode(!document.body.classList.contains('structure-focus-mode'));
       });
       focusExit.addEventListener('click', function () { setFocusMode(false); });
+      // Esc (ou F11) na tela cheia: o navegador sai dela e o modo foco sai junto.
+      window.BipperFocusFullscreen.onExit(function () {
+        if (document.body.classList.contains('structure-focus-mode')) setFocusMode(false);
+      });
       document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' && document.body.classList.contains('structure-focus-mode')) setFocusMode(false);
       });
@@ -1796,7 +1259,10 @@
 
         // Inclui os 28px de padding horizontal da célula e uma pequena folga
         // para arredondamento de fonte, sem depender da página/expansão atual.
-        structureTable.style.setProperty('--structure-name-column-width', Math.ceil(widest + 36) + 'px');
+        // Largura arrastada pelo usuário (ver "Personalizar colunas") vale mais
+        // que a automática; o duplo clique na borda remove a personalizada.
+        var custom = areaPrefs(state.area).widths[mainFieldOf(state.area)];
+        structureTable.style.setProperty('--structure-name-column-width', (custom || Math.ceil(widest + 36)) + 'px');
       }
 
       function hasActiveStructureFilters() {
@@ -1827,6 +1293,355 @@
         );
       }
 
+      // Personalização das colunas da Tabela, guardada por estrutura (área) no
+      // localStorage: { order, visible, widths }.
+      //  - order:   ordem das colunas; "Ações" e "Descrição" são fixas nas duas
+      //             primeiras posições.
+      //  - visible: campos exibidos (padrão = todas as colunas da área). "Ações" e
+      //             "Descrição" nunca saem.
+      //  - widths:  largura em px por campo. Vazio = larguras automáticas; ao
+      //             arrastar a primeira borda todas as colunas visíveis são
+      //             "congeladas" e a tabela passa a layout fixo (como no Excel).
+      var COLUMN_PREFS_KEY = 'bipper.estruturas.colunas.v2';
+      var DEFAULT_COLUMN_WIDTH = 150;
+      var MIN_COLUMN_WIDTH = 64;
+      var RESIZE_HANDLE_TIP = 'Arraste para ajustar a largura · duplo clique para ajustar automaticamente';
+      var columnPrefs = loadColumnPrefs();
+      var columnWidthStyle = document.createElement('style');
+      document.head.appendChild(columnWidthStyle);
+
+      function loadColumnPrefs() {
+        try {
+          var parsed = JSON.parse(localStorage.getItem(COLUMN_PREFS_KEY) || '{}');
+          return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+        } catch (e) { return {}; }
+      }
+
+      function saveColumnPrefs() {
+        try { localStorage.setItem(COLUMN_PREFS_KEY, JSON.stringify(columnPrefs)); } catch (e) { /* sem persistência: vale só nesta sessão */ }
+      }
+
+      function areaPrefs(area) {
+        var prefs = columnPrefs[area];
+        if (!prefs || typeof prefs !== 'object') prefs = columnPrefs[area] = {};
+        if (!prefs.widths || typeof prefs.widths !== 'object' || Array.isArray(prefs.widths)) prefs.widths = {};
+        return prefs;
+      }
+
+      function mainFieldOf(area) {
+        return AREA_COLUMNS[area].filter(function (column) { return column.main; })[0].field;
+      }
+
+      function orderedColumns(area) {
+        var base = AREA_COLUMNS[area];
+        var rest = base.filter(function (column) { return !column.main; });
+        var saved = Array.isArray(areaPrefs(area).order) ? areaPrefs(area).order : [];
+        var sorted = [];
+        saved.forEach(function (field) {
+          var column = rest.filter(function (item) { return item.field === field; })[0];
+          if (column && sorted.indexOf(column) === -1) sorted.push(column);
+        });
+        rest.forEach(function (column) { if (sorted.indexOf(column) === -1) sorted.push(column); });
+        return base.filter(function (column) { return column.main; }).concat(sorted);
+      }
+
+      function allColumnFields(area) {
+        return AREA_COLUMNS[area].map(function (column) { return column.field; });
+      }
+
+      function visibleFieldSet(area) {
+        var saved = areaPrefs(area).visible;
+        var set = new Set(Array.isArray(saved) ? saved : allColumnFields(area));
+        set.add(mainFieldOf(area));
+        return set;
+      }
+
+      function isColumnShown(column) {
+        return !isColumnHidden(column);
+      }
+
+      function actionsColumnWidth() {
+        return parseInt(structureTable.style.getPropertyValue('--structure-actions-column-width'), 10) || 112;
+      }
+
+      function nameColumnWidth() {
+        return parseInt(structureTable.style.getPropertyValue('--structure-name-column-width'), 10) || 280;
+      }
+
+      // Larguras: com widths preenchido o layout vira fixo e a tabela ganha a
+      // soma exata das colunas visíveis; sem, volta ao comportamento automático.
+      function applyColumnWidths(columns) {
+        columns = columns || orderedColumns(state.area);
+        var widths = areaPrefs(state.area).widths;
+        var shown = columns.filter(isColumnShown);
+
+        if (!Object.keys(widths).length) {
+          structureTable.classList.remove('has-custom-widths');
+          columnWidthStyle.textContent = '';
+          structureTable.style.width = '';
+          structureTable.style.minWidth = (82 + shown.length * 145) + 'px';
+          return;
+        }
+
+        var total = actionsColumnWidth();
+        var rules = [];
+        shown.forEach(function (column) {
+          if (column.main) { total += nameColumnWidth(); return; }
+          var width = widths[column.field] || DEFAULT_COLUMN_WIDTH;
+          total += width;
+          rules.push('.structure-table.has-custom-widths [data-col-field="' + column.field + '"]{width:' + width + 'px;min-width:' + width + 'px;max-width:' + width + 'px}');
+        });
+        columnWidthStyle.textContent = rules.join('\n');
+        structureTable.classList.add('has-custom-widths');
+        structureTable.style.width = state.area === 'tecnica' ? 'max(100%, ' + total + 'px)' : total + 'px';
+        structureTable.style.minWidth = total + 'px';
+      }
+
+      // Move os <th> para a ordem escolhida, marca os ocultos e
+      // garante a alça de largura em cada cabeçalho. Chamado a cada render.
+      function applyColumnLayout() {
+        var columns = orderedColumns(state.area);
+        currentVisibleFields = visibleFieldSet(state.area);
+        var headers = {};
+        Array.prototype.forEach.call(structureTableHead.children, function (th) {
+          if (th.dataset.colField) headers[th.dataset.colField] = th;
+        });
+        columns.forEach(function (column) {
+          var th = headers[column.field];
+          if (!th) return;
+          structureTableHead.appendChild(th);
+          th.classList.toggle('structure-column--hidden', isColumnHidden(column));
+          th.draggable = !column.main;
+          if (!th.querySelector('.th-resize')) {
+            var handle = document.createElement('span');
+            handle.className = 'th-resize';
+            handle.setAttribute('data-tooltip', RESIZE_HANDLE_TIP);
+            th.appendChild(handle);
+          }
+        });
+        // Com a tabela oculta (Árvore) não há como medir as colunas.
+        if (state.view === 'table') syncStructureNameColumnWidth();
+        applyColumnWidths(columns);
+      }
+
+      function refreshColumns() {
+        window.clearTimeout(renderTimer);
+        renderContent();
+        syncColumnsPicker();
+      }
+
+      function moveColumn(field, targetField, after) {
+        if (field === targetField) return;
+        var order = orderedColumns(state.area)
+          .filter(function (column) { return !column.main; })
+          .map(function (column) { return column.field; })
+          .filter(function (item) { return item !== field; });
+        var at = order.indexOf(targetField);
+        if (at === -1) return;
+        order.splice(after ? at + 1 : at, 0, field);
+        areaPrefs(state.area).order = order;
+        saveColumnPrefs();
+        refreshColumns();
+        renderColumnsPanelList();
+      }
+
+      // Arrastar o título de uma coluna reordena (Descrição e Ações ficam fixas).
+      var draggedHeaderField = null;
+
+      function clearHeaderDropMarks() {
+        structureTableHead.querySelectorAll('.is-dragging, .is-drop-before, .is-drop-after').forEach(function (th) {
+          th.classList.remove('is-dragging', 'is-drop-before', 'is-drop-after');
+        });
+      }
+
+      structureTableHead.addEventListener('dragstart', function (event) {
+        var th = event.target.closest && event.target.closest('th[data-col-field]');
+        if (!th || th.dataset.colField === mainFieldOf(state.area)) { event.preventDefault(); return; }
+        draggedHeaderField = th.dataset.colField;
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', draggedHeaderField);
+        th.classList.add('is-dragging');
+        hideFloatingTooltip();
+      });
+
+      structureTableHead.addEventListener('dragover', function (event) {
+        if (!draggedHeaderField) return;
+        var th = event.target.closest('th[data-col-field]');
+        structureTableHead.querySelectorAll('.is-drop-before, .is-drop-after').forEach(function (item) {
+          item.classList.remove('is-drop-before', 'is-drop-after');
+        });
+        if (!th || th.dataset.colField === mainFieldOf(state.area) || th.dataset.colField === draggedHeaderField) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+        var rect = th.getBoundingClientRect();
+        th.classList.add(event.clientX > rect.left + rect.width / 2 ? 'is-drop-after' : 'is-drop-before');
+      });
+
+      structureTableHead.addEventListener('drop', function (event) {
+        var th = event.target.closest('th[data-col-field]');
+        if (!draggedHeaderField || !th) return;
+        event.preventDefault();
+        var field = draggedHeaderField;
+        var after = th.classList.contains('is-drop-after');
+        draggedHeaderField = null;
+        clearHeaderDropMarks();
+        moveColumn(field, th.dataset.colField, after);
+      });
+
+      structureTableHead.addEventListener('dragend', function () {
+        draggedHeaderField = null;
+        clearHeaderDropMarks();
+      });
+
+      // Congela as larguras atuais de todas as colunas visíveis antes da
+      // primeira personalização, para que só a coluna arrastada se mova.
+      function freezeColumnWidths() {
+        var widths = areaPrefs(state.area).widths;
+        if (Object.keys(widths).length) return;
+        orderedColumns(state.area).filter(isColumnShown).forEach(function (column) {
+          var th = structureTableHead.querySelector('th[data-col-field="' + column.field + '"]');
+          if (th) widths[column.field] = Math.round(th.getBoundingClientRect().width);
+        });
+      }
+
+      function setColumnWidth(field, width) {
+        areaPrefs(state.area).widths[field] = width;
+        if (field === mainFieldOf(state.area)) structureTable.style.setProperty('--structure-name-column-width', width + 'px');
+        applyColumnWidths();
+      }
+
+      structureTableHead.addEventListener('mousedown', function (event) {
+        var handle = event.target.closest('.th-resize');
+        if (!handle || event.button !== 0) return;
+        event.preventDefault();
+        event.stopPropagation();
+        hideFloatingTooltip();
+        var th = handle.parentElement;
+        var field = th.dataset.colField;
+        var startX = event.clientX;
+        var startWidth = Math.round(th.getBoundingClientRect().width);
+        var started = false;
+
+        function onMove(moveEvent) {
+          var delta = moveEvent.clientX - startX;
+          if (!started) {
+            if (Math.abs(delta) < 3) return;
+            started = true;
+            freezeColumnWidths();
+            document.body.classList.add('is-resizing-column');
+          }
+          setColumnWidth(field, Math.max(MIN_COLUMN_WIDTH, Math.round(startWidth + delta)));
+        }
+
+        function onUp() {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          document.body.classList.remove('is-resizing-column');
+          if (started) saveColumnPrefs();
+        }
+
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+
+      // Duplo clique na borda: ajusta ao maior conteúdo da coluna (cabeçalho e
+      // linhas exibidas), como no Excel. Na Descrição volta à largura automática.
+      function contentWidth(node) {
+        var range = document.createRange();
+        range.selectNodeContents(node);
+        return range.getBoundingClientRect().width;
+      }
+
+      function autoFitColumn(field) {
+        var prefs = areaPrefs(state.area);
+        if (field === mainFieldOf(state.area)) {
+          delete prefs.widths[field];
+        } else {
+          var th = structureTableHead.querySelector('th[data-col-field="' + field + '"]');
+          var label = th && th.querySelector('.th-sort__text');
+          // texto + seta de ordenação + botão de filtro + respiro do cabeçalho
+          var widest = (label ? contentWidth(label) : 0) + 56;
+          structureBody.querySelectorAll('td[data-col-field="' + field + '"]').forEach(function (td) {
+            var needed = Math.max(contentWidth(td) + 28, td.scrollWidth > td.clientWidth ? td.scrollWidth : 0);
+            widest = Math.max(widest, needed);
+          });
+          freezeColumnWidths();
+          prefs.widths[field] = Math.max(MIN_COLUMN_WIDTH, Math.ceil(widest) + 2);
+        }
+        saveColumnPrefs();
+        applyColumnLayout();
+      }
+
+      structureTableHead.addEventListener('dblclick', function (event) {
+        var handle = event.target.closest('.th-resize');
+        if (!handle) return;
+        event.preventDefault();
+        autoFitColumn(handle.parentElement.dataset.colField);
+      });
+
+      // Dropdown "Personalizar colunas" (multiselect, só na Tabela).
+      // O componente é o shared/custom-multiselect.js; aqui só ligamos os dados.
+      var columnsPicker = document.getElementById('structureColumnsPicker');
+      var columnsTrigger = document.getElementById('structureColumnsTrigger');
+      var columnsSummary = document.getElementById('structureColumnsSummary');
+      var ACTIONS_OPTION = '__actions';
+
+      function sameFields(a, b) {
+        return a.size === b.size && Array.from(a).every(function (field) { return b.has(field); });
+      }
+
+      // "Padrão" = todas as colunas, na ordem original e com larguras automáticas.
+      function columnsAreDefault() {
+        var area = state.area;
+        var inOriginalOrder = orderedColumns(area).every(function (column, index) { return column === AREA_COLUMNS[area][index]; });
+        return inOriginalOrder && !Object.keys(areaPrefs(area).widths).length &&
+          sameFields(visibleFieldSet(area), new Set(allColumnFields(area)));
+      }
+
+      var columnsMultiselect = window.BipperCustomMultiselect.create({
+        trigger: columnsTrigger,
+        label: 'Personalizar colunas',
+        resetLabel: 'Restaurar padrão',
+        getOptions: function () {
+          var set = visibleFieldSet(state.area);
+          return [{ value: ACTIONS_OPTION, label: 'Ações', checked: true, locked: true }].concat(
+            orderedColumns(state.area).map(function (column) {
+              return { value: column.field, label: column.label, checked: column.main || set.has(column.field), locked: !!column.main };
+            })
+          );
+        },
+        isDefault: columnsAreDefault,
+        onToggle: function (field, checked) {
+          var set = visibleFieldSet(state.area);
+          if (checked) set.add(field);
+          else set.delete(field);
+          areaPrefs(state.area).visible = Array.from(set);
+          saveColumnPrefs();
+          refreshColumns();
+        },
+        onReorder: moveColumn,
+        onReset: function () {
+          delete columnPrefs[state.area];
+          saveColumnPrefs();
+          refreshColumns();
+          renderColumnsPanelList();
+        }
+      });
+
+      function renderColumnsPanelList() { columnsMultiselect.refresh(); }
+      function closeColumnsPanel() { columnsMultiselect.close(); }
+
+      function syncColumnsPicker() {
+        var available = state.view === 'table';
+        columnsPicker.hidden = !available;
+        if (!available) { closeColumnsPanel(); return; }
+        var set = visibleFieldSet(state.area);
+        var columns = orderedColumns(state.area);
+        var shown = columns.filter(function (column) { return column.main || set.has(column.field); }).length + 1; // + Ações
+        columnsSummary.textContent = shown + ' de ' + (columns.length + 1) + ' colunas';
+        columnsMultiselect.update();
+      }
+
       // Busca livre + filtros de coluna (só na visão Tabela — a Árvore depende
       // da hierarquia pai/filho pros conectores visuais, então filtrar ali
       // quebraria o layout dos cards; troque pra Tabela pra filtrar).
@@ -1837,12 +1652,12 @@
 
       function syncTableSchema() {
         var columns = AREA_COLUMNS[state.area];
-        structureTable.style.minWidth = (82 + columns.length * 145) + 'px';
+        closeColumnsPanel();
+        // O cabeçalho nasce na ordem original: o motor de filtros associa cada
+        // coluna ao <th> pelo índice. A ordem/visibilidade escolhidas pelo
+        // usuário são aplicadas em seguida, movendo os próprios <th> de lugar.
         structureTableHead.innerHTML = '<th class="structure-cell--actions">Ações</th>' + columns.map(function (column) {
-          var classes = [];
-          if (column.main) classes.push('structure-cell--main');
-          if (!column.main && !column.person && !column.status && !column.compact) classes.push('structure-column--compact-hidden');
-          return '<th class="' + classes.join(' ') + '">' + column.label + '</th>';
+          return '<th class="' + (column.main ? 'structure-cell--main' : '') + '">' + column.label + '</th>';
         }).join('');
 
         structureFilters = window.BipperGridColumnFilters.create({
@@ -1865,6 +1680,9 @@
             render();
           }
         });
+
+        applyColumnLayout();
+        syncColumnsPicker();
       }
 
       syncTableSchema();
@@ -1930,7 +1748,7 @@
       function renderContent() {
         syncPanels();
         if (state.view === 'tree') { renderTreeView(); return; }
-        syncStructureNameColumnWidth();
+        applyColumnLayout();
 
         var computed = computeVisible();
         var visibleIds = computed.visibleIds;
@@ -2091,19 +1909,21 @@
         tableWrap.hidden = !isTable;
         treeEl.hidden = isTable;
         tableCard.classList.toggle('is-tree-view', !isTable);
-        // Busca e "Mostrar inativos" valem nas duas visões. Já a densidade, os
+        // Busca e "Mostrar inativos" valem nas duas visões. Já os
         // filtros por coluna (funil) e os botões de texto Expandir/Recolher são
         // só da Tabela; a Árvore tem seus próprios controles (data-tree-only).
-        densityToggle.hidden = !isTable;
         columnFiltersActive.hidden = !isTable;
         expandAllBtn.hidden = !isTable;
         collapseAllBtn.hidden = !isTable;
         document.querySelectorAll('[data-tree-only]').forEach(function (element) {
           element.hidden = isTable;
         });
+        syncColumnsPicker();
       }
 
       function handleRowActionClick(event) {
+        var historyBtn = event.target.closest('[data-history]');
+        if (historyBtn) { var historyNode = nodesById[historyBtn.getAttribute('data-history')]; if (historyNode) openStructureHistory(historyNode, historyBtn); return true; }
         var editBtn = event.target.closest('[data-edit]');
         if (editBtn) { var editNode = nodesById[editBtn.getAttribute('data-edit')]; if (editNode) openEditModal(editNode); return true; }
         var deleteBtn = event.target.closest('[data-delete]');
@@ -2126,20 +1946,6 @@
         if (row && row.getAttribute('data-has-children') === 'true') toggleNode(row.dataset.id);
       });
 
-      densityToggle.addEventListener('click', function (event) {
-        var button = event.target.closest('[data-structure-density]');
-        if (!button) return;
-        state.density = button.getAttribute('data-structure-density');
-        syncToggleGroup(densityToggle, 'data-structure-density', state.density);
-        tableCard.classList.toggle('is-density-compact', state.density === 'compact');
-        if (state.density === 'compact') {
-          showTour('Modo compacto ativo', 'São exibidas só as colunas essenciais. Clique no nome de uma estrutura para ver os detalhes completos ao lado.');
-        } else {
-          hideTour();
-          showGridScrollTip();
-        }
-      });
-
       viewToggle.addEventListener('click', function (event) {
         var button = event.target.closest('[data-structure-view]');
         if (!button || button.getAttribute('data-structure-view') === state.view) return;
@@ -2155,8 +1961,8 @@
       // Cada área é uma árvore de estruturas totalmente separada (dataset
       // próprio); só os cadastros de Responsável/Linha de negócio são
       // compartilhados entre elas. Trocar de área reindexa e pagina do zero,
-      // mas preserva a preferência de visualização (completo/compacto,
-      // tabela/árvore) do usuário.
+      // mas preserva a preferência de visualização
+      // (tabela/árvore) do usuário.
       function setArea(area) {
         if (area === state.area || !window.BipperSalesStructure.areas[area]) return;
         state.area = area;
@@ -2217,13 +2023,6 @@
           if (payload && payload.area && payload.node && window.BipperSalesStructure.areas[payload.area]) {
             var targetTree = treeFor(payload.area);
             var isEdit = payload.mode === 'edit';
-            if (isEdit) {
-              var currentContainer = findContainer(payload.node.id, targetTree);
-              if (currentContainer) {
-                var currentIndex = currentContainer.findIndex(function (item) { return item.id === payload.node.id; });
-                if (currentIndex > -1) currentContainer.splice(currentIndex, 1);
-              }
-            }
             var container = targetTree;
             if (payload.node.parentId) {
               var parentNode = findNodeInTree(targetTree, payload.node.parentId);
@@ -2232,7 +2031,18 @@
                 container = parentNode.children;
               }
             }
-            container.push(payload.node);
+            var currentContainer = isEdit ? findContainer(payload.node.id, targetTree) : null;
+            var currentIndex = currentContainer
+              ? currentContainer.findIndex(function (item) { return item.id === payload.node.id; })
+              : -1;
+
+            if (currentContainer === container && currentIndex > -1) {
+              // Atualizar dados não deve alterar a posição visual entre os irmãos.
+              container.splice(currentIndex, 1, payload.node);
+            } else {
+              if (currentIndex > -1) currentContainer.splice(currentIndex, 1);
+              container.push(payload.node);
+            }
             if (payload.area === state.area) {
               rebuildIndex();
               render();
@@ -2291,7 +2101,6 @@
         render();
       });
 
-      tableCard.classList.toggle('is-density-compact', state.density === 'compact');
       state.collapsed = new Set(allExpandableIds());
       syncAreaLabels(state.area);
       syncPanels();

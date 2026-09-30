@@ -83,6 +83,7 @@
 .structure-tree-tools {
     flex: none;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
     gap: 4px;
@@ -271,7 +272,10 @@
 }
 
 
+/* Contêiner nomeado: todos os cards decidem juntos entre 1 e 2 linhas (pela largura da
+   área da árvore), em vez de cada nível decidir pela própria largura. */
 .structure-tree {
+    container: structure-tree / inline-size;
     --tree-line: color-mix(in srgb, var(--muted) 38%, transparent);
     flex: 1 1 auto;
     min-height: 0;
@@ -339,7 +343,6 @@
 }
 
 .structure-tree-card {
-    container-type: inline-size;
     --level-color: var(--brand-primary);
     display: flex;
     flex-direction: column;
@@ -365,7 +368,7 @@
     background: var(--surface-2);
 }
 
-.structure-tree-card.is-inactive .structure-tree-card__name {
+.structure-tree-card.is-inactive .structure-tree-card__title {
     color: var(--muted);
 }
 
@@ -377,11 +380,61 @@
     background: rgba(var(--brand-primary-rgb), .16);
 }
 
+/* Card em uma linha só: título | responsável | SAP | local | subordinados | status, código e ações.
+   As colunas têm largura fixa e a última é ancorada à DIREITA: como todos os cards terminam
+   na mesma borda (só a margem esquerda muda com o nível), as colunas ficam alinhadas na
+   vertical em qualquer nível. */
 .structure-tree-card__top {
+    display: grid;
+    grid-template-columns: minmax(170px, 1fr) 140px 64px 76px 155px 160px 170px;
+    align-items: center;
+    gap: 6px 28px;
+    min-height: 26px;
+}
+
+.structure-tree-card__head {
     display: flex;
     align-items: center;
     gap: 6px;
-    min-height: 26px;
+    min-width: 0;
+}
+
+.structure-tree-card__cells {
+    display: contents;
+}
+
+.structure-tree-card__cell {
+    display: flex;
+    min-width: 0;
+}
+
+/* Área estreita (o card mais fundo não cabe numa linha): em todos os cards as informações
+   descem para uma segunda linha e quebram conforme o espaço. */
+@container structure-tree (max-width: 1300px) {
+    .structure-tree-card__top {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .structure-tree-card__top-end {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .structure-tree-card__cells {
+        display: flex;
+        flex-wrap: wrap;
+        grid-column: 1 / -1;
+        gap: 6px 20px;
+        padding-left: 28px;
+    }
+
+    .structure-tree-card__cell {
+        flex: 1 1 140px;
+    }
+
+    .structure-tree-card__cell:empty {
+        display: none;
+    }
 }
 
 .structure-tree-card__badge {
@@ -396,6 +449,32 @@
     text-transform: uppercase;
 }
 
+/* Título do card = Descrição da estrutura (igual à Tabela), na cor do nível. */
+.structure-tree-card__title {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: var(--fs-md);
+    font-weight: 800;
+    letter-spacing: normal;
+    line-height: var(--lh-snug);
+    text-align: left;
+    text-transform: none;
+    cursor: pointer;
+}
+
+.structure-tree-card__title-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.structure-tree-card__title:hover .structure-tree-card__title-text {
+    color: var(--brand-primary);
+    text-decoration: underline;
+}
+
 .structure-tree-card__badge-dot {
     width: 7px;
     height: 7px;
@@ -407,8 +486,8 @@
 .structure-tree-card__top-end {
     display: inline-flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 10px;
-    margin-left: auto;
 }
 
 .structure-tree-card__code {
@@ -440,85 +519,6 @@
 .structure-flow-card .structure-status--inactive {
     background: var(--surface-3);
     color: var(--muted);
-}
-
-.structure-tree-card__body {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) auto;
-    gap: 4px 20px;
-    padding-left: 28px;
-}
-
-.structure-tree-card__details {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    align-self: end;
-    justify-self: end;
-    height: 30px;
-    padding: 0 12px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--surface);
-    color: var(--ink);
-    font-size: var(--fs-xs);
-    font-weight: 700;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: background-color .12s ease, border-color .12s ease, color .12s ease;
-}
-
-.structure-tree-card__details svg {
-    width: 14px;
-    height: 14px;
-    flex: none;
-    color: var(--muted);
-}
-
-.structure-tree-card__details:hover {
-    border-color: rgba(var(--brand-primary-rgb), .4);
-    background: var(--surface-3);
-}
-
-.structure-tree-card__details:hover svg {
-    color: var(--brand-primary);
-}
-
-@container (max-width: 980px) {
-    .structure-tree-card__details {
-        grid-column: 1 / -1;
-    }
-}
-
-.structure-tree-card__col {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-}
-
-.structure-tree-card__name {
-    align-self: flex-start;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--ink);
-    font: inherit;
-    font-size: var(--fs-md);
-    font-weight: 700;
-    line-height: var(--lh-snug);
-    text-align: left;
-    cursor: pointer;
-}
-
-.structure-tree-card__name:hover {
-    color: var(--brand-primary);
-    text-decoration: underline;
-}
-
-.structure-tree-card__sub {
-    color: var(--muted);
-    font-size: var(--fs-xs);
 }
 
 .structure-tree-card__meta-item {
@@ -673,23 +673,11 @@
     box-shadow: 0 0 0 2px rgba(var(--brand-primary-rgb), .3), var(--shadow-sm);
 }
 
-.structure-flow-card__top {
-    display: flex;
+.structure-flow-card__foot-start {
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
     gap: 6px;
-    min-height: 18px;
-}
-
-.structure-flow-card .structure-tree-card__badge {
-    flex: 1 1 auto;
-    overflow: hidden;
-}
-
-.structure-flow-card__badge-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    min-width: 0;
 }
 
 .structure-flow-card .structure-tree-card__code {
@@ -704,10 +692,10 @@
     border: 0;
     background: none;
     overflow: hidden;
-    color: var(--ink);
+    color: var(--level-color);
     font: inherit;
     font-size: var(--fs-md);
-    font-weight: 700;
+    font-weight: 800;
     line-height: var(--lh-snug);
     text-align: left;
     cursor: pointer;
@@ -745,6 +733,12 @@
 
 @media (max-width: 900px) {
     .structure-tree-toolbar-hint .structure-tree-hint span {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .structure-tree-toolbar-hint {
         display: none;
     }
 }
@@ -1131,20 +1125,6 @@
     background: var(--brand-secondary);
 }
 
-@media (max-width: 900px) {
-    .structure-tree-card__body {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .structure-tree-card__col:first-child {
-        grid-column: 1 / -1;
-    }
-
-    .structure-tree-card__details {
-        grid-column: 1 / -1;
-    }
-}
-
 @media (max-width: 640px) {
 
     .structure-bento--s4,
@@ -1185,12 +1165,7 @@
         width: 12px;
     }
 
-    .structure-tree-card__top {
-        flex-wrap: wrap;
-    }
-
-    .structure-tree-card__body {
-        grid-template-columns: minmax(0, 1fr);
+    .structure-tree-card__cells {
         padding-left: 0;
     }
 
@@ -1260,7 +1235,6 @@
     background: color-mix(in srgb, var(--level-color) 9%, var(--surface));
 }
 
-.structure-flow__world.is-lod .structure-flow-card__top,
 .structure-flow__world.is-lod .structure-flow-card__meta,
 .structure-flow__world.is-lod .structure-flow-card__foot {
     display: none;

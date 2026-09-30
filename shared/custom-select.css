@@ -106,3 +106,168 @@
     color: var(--muted);
     cursor: not-allowed;
 }
+
+/* Multiselect com checkboxes (primeiro uso: "Personalizar colunas" em
+   estruturas-de-vendas). Gatilho = botão dentro de .cs-select (mesmo chevron dos
+   selects); painel = .cs-panel.cs-panel--columns, com lista reordenável por
+   arrastar (.cs-columns-option) e rodapé de ação (.cs-columns-footer). */
+
+.cs-multi-picker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cs-multi-picker[hidden] {
+    display: none;
+}
+
+.cs-multi-picker__label {
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.cs-multi-picker .cs-select {
+    width: auto;
+}
+
+.cs-multi-picker .cs-select::after {
+    right: 13px;
+    width: 7px;
+    height: 7px;
+}
+
+.cs-multi-trigger {
+    display: inline-flex;
+    align-items: center;
+    min-width: 150px;
+    height: 32px;
+    padding: 0 34px 0 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    white-space: nowrap;
+    outline: 0;
+    cursor: pointer;
+}
+
+.cs-multi-trigger:focus-visible,
+.cs-multi-picker .cs-select.is-open .cs-multi-trigger {
+    border-color: rgba(var(--brand-primary-rgb), .45);
+    box-shadow: 0 0 0 3px rgba(var(--brand-primary-rgb), .1);
+}
+
+.cs-panel--columns {
+    display: flex;
+    flex-direction: column;
+    max-height: none;
+    overflow: visible;
+}
+
+.cs-columns-list {
+    max-height: min(320px, 50vh);
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.cs-columns-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 8px;
+    cursor: default;
+}
+
+.cs-columns-option__grip {
+    flex: none;
+    width: 12px;
+    color: var(--muted);
+    font-size: 11px;
+    text-align: center;
+}
+
+.cs-columns-option[draggable="true"] .cs-columns-option__grip {
+    cursor: grab;
+}
+
+.cs-columns-option__label {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    padding: 9px 0;
+    cursor: pointer;
+}
+
+.cs-columns-option__label input {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    flex: none;
+    accent-color: var(--brand-primary);
+    cursor: pointer;
+}
+
+.cs-columns-option.is-locked {
+    color: var(--muted);
+}
+
+.cs-columns-option.is-locked:hover {
+    background: transparent;
+}
+
+.cs-columns-option.is-locked .cs-columns-option__label,
+.cs-columns-option.is-locked .cs-columns-option__label input {
+    cursor: not-allowed;
+}
+
+.cs-columns-option.is-dragging {
+    opacity: .45;
+}
+
+.cs-columns-option.is-drop-before {
+    box-shadow: inset 0 2px 0 var(--brand-primary);
+}
+
+.cs-columns-option.is-drop-after {
+    box-shadow: inset 0 -2px 0 var(--brand-primary);
+}
+
+.cs-columns-footer {
+    flex: none;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--line);
+}
+
+.cs-columns-reset {
+    width: 100%;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--brand-primary);
+    font: inherit;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+.cs-columns-reset:hover:not(:disabled) {
+    background: rgba(var(--brand-primary-rgb), .1);
+}
+
+.cs-columns-reset:disabled {
+    color: var(--muted);
+    cursor: not-allowed;
+    opacity: .6;
+}

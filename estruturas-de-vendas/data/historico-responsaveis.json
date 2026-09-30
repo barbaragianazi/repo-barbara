@@ -1,0 +1,1992 @@
+{
+  "_descricao": "Histórico de alterações do responsável por estrutura (mock). Registros ordenados do mais recente para o mais antigo. dataFim nulo = vigência sem data de término.",
+  "vendas": {
+    "1": [
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2025-03-10",
+        "dataFim": null,
+        "alteradoEm": "2025-03-07T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "2": [
+      {
+        "responsavel": "Simone Leiderman",
+        "dataInicio": "2026-02-23",
+        "dataFim": "2027-11-21",
+        "alteradoEm": "2026-02-21T10:54:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "3": [
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2026-01-16",
+        "dataFim": "2027-12-10",
+        "alteradoEm": "2026-01-16T17:20:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "4": [
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2025-12-09",
+        "dataFim": null,
+        "alteradoEm": "2025-12-04T15:44:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "11": [
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2026-05-24",
+        "dataFim": "2026-12-02",
+        "alteradoEm": "2026-05-23T10:34:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2026-03-04",
+        "dataFim": "2026-05-23",
+        "alteradoEm": "2026-03-03T09:59:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2025-06-14",
+        "dataFim": "2026-03-03",
+        "alteradoEm": "2025-06-13T14:19:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Simone Leiderman",
+        "dataInicio": "2024-05-20",
+        "dataFim": "2025-06-13",
+        "alteradoEm": "2024-05-19T17:07:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2023-07-15",
+        "dataFim": "2024-05-19",
+        "alteradoEm": "2023-07-13T16:20:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "12": [
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2025-08-09",
+        "dataFim": null,
+        "alteradoEm": "2025-08-05T08:39:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2025-03-21",
+        "dataFim": "2025-08-08",
+        "alteradoEm": "2025-03-16T08:08:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2024-04-14",
+        "dataFim": "2025-03-20",
+        "alteradoEm": "2024-04-14T10:57:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2023-07-05",
+        "dataFim": "2024-04-13",
+        "alteradoEm": "2023-07-01T10:01:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2022-11-14",
+        "dataFim": "2023-07-04",
+        "alteradoEm": "2022-11-10T08:24:00",
+        "alteradoPor": "Aline Prado"
+      }
+    ],
+    "42": [
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2025-12-22",
+        "dataFim": "2027-10-22",
+        "alteradoEm": "2025-12-19T15:41:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2025-05-23",
+        "dataFim": "2025-12-21",
+        "alteradoEm": "2025-05-19T17:28:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2024-11-02",
+        "dataFim": "2025-05-22",
+        "alteradoEm": "2024-10-29T15:40:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Simone Leiderman",
+        "dataInicio": "2023-11-09",
+        "dataFim": "2024-11-01",
+        "alteradoEm": "2023-11-04T17:38:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2022-11-29",
+        "dataFim": "2023-11-08",
+        "alteradoEm": "2022-11-27T08:55:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2022-05-05",
+        "dataFim": "2022-11-28",
+        "alteradoEm": "2022-05-01T10:05:00",
+        "alteradoPor": "Aline Prado"
+      }
+    ],
+    "44": [
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2025-07-20",
+        "dataFim": "2026-11-22",
+        "alteradoEm": "2025-07-20T14:31:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2024-11-11",
+        "dataFim": "2025-07-19",
+        "alteradoEm": "2024-11-11T17:22:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2024-05-16",
+        "dataFim": "2024-11-10",
+        "alteradoEm": "2024-05-12T11:27:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2024-03-07",
+        "dataFim": "2024-05-15",
+        "alteradoEm": "2024-03-07T09:31:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2023-08-29",
+        "dataFim": "2024-03-06",
+        "alteradoEm": "2023-08-26T10:13:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Simone Leiderman",
+        "dataInicio": "2022-11-24",
+        "dataFim": "2023-08-28",
+        "alteradoEm": "2022-11-21T17:44:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "49": [
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2026-01-02",
+        "dataFim": "2026-07-18",
+        "alteradoEm": "2025-12-29T11:47:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2025-09-26",
+        "dataFim": "2026-01-01",
+        "alteradoEm": "2025-09-21T10:28:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "61": [
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2026-03-30",
+        "dataFim": "2027-05-02",
+        "alteradoEm": "2026-03-30T08:35:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2025-03-15",
+        "dataFim": "2026-03-29",
+        "alteradoEm": "2025-03-13T13:31:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2024-04-05",
+        "dataFim": "2025-03-14",
+        "alteradoEm": "2024-04-02T17:46:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Paulina Chávez",
+        "dataInicio": "2023-11-19",
+        "dataFim": "2024-04-04",
+        "alteradoEm": "2023-11-18T09:35:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2023-02-16",
+        "dataFim": "2023-11-18",
+        "alteradoEm": "2023-02-16T16:23:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2022-07-27",
+        "dataFim": "2023-02-15",
+        "alteradoEm": "2022-07-22T12:14:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2022-05-14",
+        "dataFim": "2022-07-26",
+        "alteradoEm": "2022-05-10T14:53:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "64": [
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2026-03-08",
+        "dataFim": "2027-05-02",
+        "alteradoEm": "2026-03-06T11:19:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2025-11-21",
+        "dataFim": "2026-03-07",
+        "alteradoEm": "2025-11-18T13:23:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2025-06-28",
+        "dataFim": "2025-11-20",
+        "alteradoEm": "2025-06-24T12:10:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2024-07-01",
+        "dataFim": "2025-06-27",
+        "alteradoEm": "2024-06-29T17:37:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2023-06-30",
+        "dataFim": "2024-06-30",
+        "alteradoEm": "2023-06-27T16:47:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2022-10-01",
+        "dataFim": "2023-06-29",
+        "alteradoEm": "2022-10-01T15:59:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2021-12-30",
+        "dataFim": "2022-09-30",
+        "alteradoEm": "2021-12-28T11:41:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2021-10-05",
+        "dataFim": "2021-12-29",
+        "alteradoEm": "2021-10-03T09:25:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "71": [
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2025-12-25",
+        "dataFim": "2026-11-13",
+        "alteradoEm": "2025-12-23T11:59:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2025-02-20",
+        "dataFim": "2025-12-24",
+        "alteradoEm": "2025-02-16T16:02:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2024-09-11",
+        "dataFim": "2025-02-19",
+        "alteradoEm": "2024-09-11T09:15:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2023-11-30",
+        "dataFim": "2024-09-10",
+        "alteradoEm": "2023-11-27T15:17:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2023-05-11",
+        "dataFim": "2023-11-29",
+        "alteradoEm": "2023-05-10T09:11:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Tomás Silva",
+        "dataInicio": "2022-12-24",
+        "dataFim": "2023-05-10",
+        "alteradoEm": "2022-12-21T08:43:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2022-04-15",
+        "dataFim": "2022-12-23",
+        "alteradoEm": "2022-04-11T08:55:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "72": [
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2026-05-07",
+        "dataFim": "2027-10-12",
+        "alteradoEm": "2026-05-07T16:54:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2025-06-15",
+        "dataFim": "2026-05-06",
+        "alteradoEm": "2025-06-10T17:19:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2024-10-11",
+        "dataFim": "2025-06-14",
+        "alteradoEm": "2024-10-09T09:13:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2024-04-18",
+        "dataFim": "2024-10-10",
+        "alteradoEm": "2024-04-13T15:59:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2023-10-04",
+        "dataFim": "2024-04-17",
+        "alteradoEm": "2023-09-30T11:43:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2023-06-11",
+        "dataFim": "2023-10-03",
+        "alteradoEm": "2023-06-06T13:02:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2022-06-21",
+        "dataFim": "2023-06-10",
+        "alteradoEm": "2022-06-18T12:12:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "73": [
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2025-07-23",
+        "dataFim": "2027-04-29",
+        "alteradoEm": "2025-07-18T10:49:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2024-08-12",
+        "dataFim": "2025-07-22",
+        "alteradoEm": "2024-08-12T16:56:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2024-03-25",
+        "dataFim": "2024-08-11",
+        "alteradoEm": "2024-03-21T08:54:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2024-01-18",
+        "dataFim": "2024-03-24",
+        "alteradoEm": "2024-01-13T09:35:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2023-09-06",
+        "dataFim": "2024-01-17",
+        "alteradoEm": "2023-09-05T13:41:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2023-01-03",
+        "dataFim": "2023-09-05",
+        "alteradoEm": "2023-01-01T17:52:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2022-05-22",
+        "dataFim": "2023-01-02",
+        "alteradoEm": "2022-05-22T16:35:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "74": [],
+    "76": [
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2026-08-24",
+        "dataFim": null,
+        "alteradoEm": "2026-08-22T08:33:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Simone Leiderman",
+        "dataInicio": "2025-09-01",
+        "dataFim": "2026-08-23",
+        "alteradoEm": "2025-09-01T09:45:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2025-04-17",
+        "dataFim": "2025-08-31",
+        "alteradoEm": "2025-04-16T09:41:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2024-03-28",
+        "dataFim": "2025-04-16",
+        "alteradoEm": "2024-03-28T16:20:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2023-09-19",
+        "dataFim": "2024-03-27",
+        "alteradoEm": "2023-09-16T11:03:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Tomás Silva",
+        "dataInicio": "2023-01-10",
+        "dataFim": "2023-09-18",
+        "alteradoEm": "2023-01-09T11:49:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2022-07-30",
+        "dataFim": "2023-01-09",
+        "alteradoEm": "2022-07-29T16:42:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2021-11-17",
+        "dataFim": "2022-07-29",
+        "alteradoEm": "2021-11-13T11:50:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "77": [
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2025-10-26",
+        "dataFim": "2026-07-16",
+        "alteradoEm": "2025-10-26T08:49:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2025-03-20",
+        "dataFim": "2025-10-25",
+        "alteradoEm": "2025-03-20T13:48:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "78": [
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2026-03-22",
+        "dataFim": null,
+        "alteradoEm": "2026-03-18T13:25:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2025-03-24",
+        "dataFim": "2026-03-21",
+        "alteradoEm": "2025-03-19T12:42:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2024-06-09",
+        "dataFim": "2025-03-23",
+        "alteradoEm": "2024-06-07T09:16:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2023-12-11",
+        "dataFim": "2024-06-08",
+        "alteradoEm": "2023-12-09T08:34:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2023-03-30",
+        "dataFim": "2023-12-10",
+        "alteradoEm": "2023-03-29T13:13:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2022-08-14",
+        "dataFim": "2023-03-29",
+        "alteradoEm": "2022-08-11T08:01:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2022-01-23",
+        "dataFim": "2022-08-13",
+        "alteradoEm": "2022-01-22T17:56:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2021-02-21",
+        "dataFim": "2022-01-22",
+        "alteradoEm": "2021-02-20T17:32:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2020-09-04",
+        "dataFim": "2021-02-20",
+        "alteradoEm": "2020-09-02T14:31:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "ar-1": [
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2025-04-14",
+        "dataFim": null,
+        "alteradoEm": "2025-04-11T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "ar-2": [
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2026-08-05",
+        "dataFim": "2028-01-21",
+        "alteradoEm": "2026-08-01T10:23:00",
+        "alteradoPor": "Bárbara Gianazi"
+      }
+    ],
+    "ar-3": [
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2026-06-28",
+        "dataFim": null,
+        "alteradoEm": "2026-06-23T11:02:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "ar-4": [
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2026-05-21",
+        "dataFim": "2028-02-27",
+        "alteradoEm": "2026-05-21T15:15:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "ar-5": [
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2026-04-13",
+        "dataFim": "2026-11-02",
+        "alteradoEm": "2026-04-09T13:41:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "mx-1": [
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2025-05-05",
+        "dataFim": null,
+        "alteradoEm": "2025-05-02T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "mx-2": [
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2026-05-03",
+        "dataFim": null,
+        "alteradoEm": "2026-04-28T10:02:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2025-08-05",
+        "dataFim": "2026-05-02",
+        "alteradoEm": "2025-08-01T15:01:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2024-08-12",
+        "dataFim": "2025-08-04",
+        "alteradoEm": "2024-08-12T08:59:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2023-08-14",
+        "dataFim": "2024-08-11",
+        "alteradoEm": "2023-08-14T08:53:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2022-11-28",
+        "dataFim": "2023-08-13",
+        "alteradoEm": "2022-11-24T16:06:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2022-02-15",
+        "dataFim": "2022-11-27",
+        "alteradoEm": "2022-02-13T09:48:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2021-02-23",
+        "dataFim": "2022-02-14",
+        "alteradoEm": "2021-02-21T15:09:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2020-12-01",
+        "dataFim": "2021-02-22",
+        "alteradoEm": "2020-11-27T11:45:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2020-02-07",
+        "dataFim": "2020-11-30",
+        "alteradoEm": "2020-02-02T10:04:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2019-05-26",
+        "dataFim": "2020-02-06",
+        "alteradoEm": "2019-05-26T17:08:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "mx-3": [
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2025-07-19",
+        "dataFim": "2027-07-27",
+        "alteradoEm": "2025-07-14T12:52:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2024-08-11",
+        "dataFim": "2025-07-18",
+        "alteradoEm": "2024-08-09T08:45:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2024-05-03",
+        "dataFim": "2024-08-10",
+        "alteradoEm": "2024-05-03T10:55:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2023-12-13",
+        "dataFim": "2024-05-02",
+        "alteradoEm": "2023-12-13T08:13:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2023-06-12",
+        "dataFim": "2023-12-12",
+        "alteradoEm": "2023-06-10T15:13:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Paulina Chávez",
+        "dataInicio": "2022-08-12",
+        "dataFim": "2023-06-11",
+        "alteradoEm": "2022-08-12T14:20:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2021-11-14",
+        "dataFim": "2022-08-11",
+        "alteradoEm": "2021-11-11T15:38:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "mx-4": [
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2025-11-29",
+        "dataFim": "2027-02-10",
+        "alteradoEm": "2025-11-25T17:47:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2024-12-03",
+        "dataFim": "2025-11-28",
+        "alteradoEm": "2024-12-03T17:42:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2024-03-24",
+        "dataFim": "2024-12-02",
+        "alteradoEm": "2024-03-24T13:48:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2023-05-01",
+        "dataFim": "2024-03-23",
+        "alteradoEm": "2023-04-30T09:40:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2023-01-14",
+        "dataFim": "2023-04-30",
+        "alteradoEm": "2023-01-14T10:23:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2022-07-24",
+        "dataFim": "2023-01-13",
+        "alteradoEm": "2022-07-19T13:09:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2021-09-08",
+        "dataFim": "2022-07-23",
+        "alteradoEm": "2021-09-06T10:12:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "mx-5": [
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2026-04-10",
+        "dataFim": "2028-01-10",
+        "alteradoEm": "2026-04-08T11:42:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2025-03-26",
+        "dataFim": "2026-04-09",
+        "alteradoEm": "2025-03-22T17:39:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2025-01-07",
+        "dataFim": "2025-03-25",
+        "alteradoEm": "2025-01-07T16:41:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2024-07-07",
+        "dataFim": "2025-01-06",
+        "alteradoEm": "2024-07-06T10:06:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2023-07-13",
+        "dataFim": "2024-07-06",
+        "alteradoEm": "2023-07-10T16:32:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2022-07-04",
+        "dataFim": "2023-07-12",
+        "alteradoEm": "2022-06-29T11:59:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2021-07-01",
+        "dataFim": "2022-07-03",
+        "alteradoEm": "2021-06-29T16:45:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "co-1": [
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2025-06-02",
+        "dataFim": null,
+        "alteradoEm": "2025-05-30T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "co-2": [
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2025-08-29",
+        "dataFim": "2027-10-08",
+        "alteradoEm": "2025-08-26T15:45:00",
+        "alteradoPor": "Bárbara Gianazi"
+      }
+    ],
+    "co-3": [
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2025-08-26",
+        "dataFim": "2026-08-31",
+        "alteradoEm": "2025-08-22T11:30:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2024-08-21",
+        "dataFim": "2025-08-25",
+        "alteradoEm": "2024-08-18T13:03:00",
+        "alteradoPor": "Aline Prado"
+      }
+    ],
+    "co-4": [
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2026-08-08",
+        "dataFim": null,
+        "alteradoEm": "2026-08-04T17:14:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "co-5": [
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2026-07-01",
+        "dataFim": "2027-12-03",
+        "alteradoEm": "2026-06-28T17:03:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ]
+  },
+  "tecnica": {
+    "tec-1": [
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2025-03-17",
+        "dataFim": null,
+        "alteradoEm": "2025-03-14T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "tec-2": [
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2025-11-14",
+        "dataFim": null,
+        "alteradoEm": "2025-11-10T09:01:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2025-08-11",
+        "dataFim": "2025-11-13",
+        "alteradoEm": "2025-08-11T15:18:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2024-11-09",
+        "dataFim": "2025-08-10",
+        "alteradoEm": "2024-11-08T13:12:00",
+        "alteradoPor": "Bárbara Gianazi"
+      }
+    ],
+    "tec-3": [
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2025-10-07",
+        "dataFim": null,
+        "alteradoEm": "2025-10-03T16:46:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2025-08-01",
+        "dataFim": "2025-10-06",
+        "alteradoEm": "2025-08-01T09:59:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2024-11-15",
+        "dataFim": "2025-07-31",
+        "alteradoEm": "2024-11-11T15:13:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "tec-4": [
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2025-08-30",
+        "dataFim": "2027-11-26",
+        "alteradoEm": "2025-08-27T13:04:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2024-09-30",
+        "dataFim": "2025-08-29",
+        "alteradoEm": "2024-09-27T14:09:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2023-10-01",
+        "dataFim": "2024-09-29",
+        "alteradoEm": "2023-09-26T10:36:00",
+        "alteradoPor": "Aline Prado"
+      }
+    ],
+    "tec-9": [
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2026-04-16",
+        "dataFim": null,
+        "alteradoEm": "2026-04-11T16:15:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2025-08-28",
+        "dataFim": "2026-04-15",
+        "alteradoEm": "2025-08-25T16:05:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2025-03-17",
+        "dataFim": "2025-08-27",
+        "alteradoEm": "2025-03-14T14:18:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2024-03-26",
+        "dataFim": "2025-03-16",
+        "alteradoEm": "2024-03-24T15:44:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "tec-5": [
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2025-07-22",
+        "dataFim": "2027-12-14",
+        "alteradoEm": "2025-07-21T10:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2025-02-01",
+        "dataFim": "2025-07-21",
+        "alteradoEm": "2025-02-01T11:07:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2024-10-14",
+        "dataFim": "2025-01-31",
+        "alteradoEm": "2024-10-14T10:54:00",
+        "alteradoPor": "Aline Prado"
+      }
+    ],
+    "tec-6": [
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2026-08-08",
+        "dataFim": null,
+        "alteradoEm": "2026-08-03T16:01:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2025-09-28",
+        "dataFim": "2026-08-07",
+        "alteradoEm": "2025-09-26T13:02:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2025-03-01",
+        "dataFim": "2025-09-27",
+        "alteradoEm": "2025-03-01T09:16:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2024-10-14",
+        "dataFim": "2025-02-28",
+        "alteradoEm": "2024-10-10T14:31:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "tec-10": [
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2026-01-23",
+        "dataFim": "2028-01-21",
+        "alteradoEm": "2026-01-19T08:09:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "tec-7": [
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2026-07-01",
+        "dataFim": "2028-01-20",
+        "alteradoEm": "2026-06-28T15:22:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2026-01-05",
+        "dataFim": "2026-06-30",
+        "alteradoEm": "2025-12-31T15:04:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2025-04-19",
+        "dataFim": "2026-01-04",
+        "alteradoEm": "2025-04-17T10:30:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2024-04-08",
+        "dataFim": "2025-04-18",
+        "alteradoEm": "2024-04-06T14:22:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "tec-8": [
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2026-05-24",
+        "dataFim": "2028-02-08",
+        "alteradoEm": "2026-05-23T13:48:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2025-06-13",
+        "dataFim": "2026-05-23",
+        "alteradoEm": "2025-06-11T12:03:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2024-07-12",
+        "dataFim": "2025-06-12",
+        "alteradoEm": "2024-07-09T10:48:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2023-10-11",
+        "dataFim": "2024-07-11",
+        "alteradoEm": "2023-10-11T14:29:00",
+        "alteradoPor": "Bárbara Gianazi"
+      }
+    ],
+    "tec-11": [
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2025-12-16",
+        "dataFim": null,
+        "alteradoEm": "2025-12-11T12:46:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "tec-12": [
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2025-10-26",
+        "dataFim": "2026-08-25",
+        "alteradoEm": "2025-10-21T09:31:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2025-08-05",
+        "dataFim": "2025-10-25",
+        "alteradoEm": "2025-07-31T12:29:00",
+        "alteradoPor": "Bárbara Gianazi"
+      }
+    ],
+    "tec-ar-1": [
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2025-04-22",
+        "dataFim": null,
+        "alteradoEm": "2025-04-19T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "tec-ar-2": [
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2025-11-01",
+        "dataFim": "2026-12-28",
+        "alteradoEm": "2025-10-27T14:19:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2025-03-01",
+        "dataFim": "2025-10-31",
+        "alteradoEm": "2025-03-01T12:36:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2024-05-21",
+        "dataFim": "2025-02-28",
+        "alteradoEm": "2024-05-18T11:15:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2023-06-21",
+        "dataFim": "2024-05-20",
+        "alteradoEm": "2023-06-18T17:30:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2022-06-18",
+        "dataFim": "2023-06-20",
+        "alteradoEm": "2022-06-13T16:59:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2021-06-14",
+        "dataFim": "2022-06-17",
+        "alteradoEm": "2021-06-12T13:43:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2020-08-31",
+        "dataFim": "2021-06-13",
+        "alteradoEm": "2020-08-26T12:29:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2019-11-03",
+        "dataFim": "2020-08-30",
+        "alteradoEm": "2019-10-31T17:29:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2019-04-13",
+        "dataFim": "2019-11-02",
+        "alteradoEm": "2019-04-10T14:11:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2018-05-21",
+        "dataFim": "2019-04-12",
+        "alteradoEm": "2018-05-18T16:49:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "tec-ar-3": [
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2026-03-13",
+        "dataFim": "2027-11-26",
+        "alteradoEm": "2026-03-10T09:14:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2025-06-22",
+        "dataFim": "2026-03-12",
+        "alteradoEm": "2025-06-18T12:33:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2025-03-06",
+        "dataFim": "2025-06-21",
+        "alteradoEm": "2025-03-03T14:09:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2024-08-28",
+        "dataFim": "2025-03-05",
+        "alteradoEm": "2024-08-24T08:57:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2023-11-11",
+        "dataFim": "2024-08-27",
+        "alteradoEm": "2023-11-09T12:09:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2023-03-17",
+        "dataFim": "2023-11-10",
+        "alteradoEm": "2023-03-15T13:43:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2022-12-08",
+        "dataFim": "2023-03-16",
+        "alteradoEm": "2022-12-08T08:14:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "tec-ar-4": [
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2026-07-24",
+        "dataFim": "2027-06-13",
+        "alteradoEm": "2026-07-22T13:09:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Javiera Muñoz",
+        "dataInicio": "2025-10-14",
+        "dataFim": "2026-07-23",
+        "alteradoEm": "2025-10-12T11:30:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2025-01-25",
+        "dataFim": "2025-10-13",
+        "alteradoEm": "2025-01-21T17:02:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2024-01-15",
+        "dataFim": "2025-01-24",
+        "alteradoEm": "2024-01-11T09:23:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Simone Leiderman",
+        "dataInicio": "2023-06-15",
+        "dataFim": "2024-01-14",
+        "alteradoEm": "2023-06-14T08:08:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2022-12-31",
+        "dataFim": "2023-06-14",
+        "alteradoEm": "2022-12-29T14:58:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2022-03-04",
+        "dataFim": "2022-12-30",
+        "alteradoEm": "2022-03-01T16:43:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ]
+  },
+  "marketing": {
+    "mkt-1": [
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2025-03-24",
+        "dataFim": null,
+        "alteradoEm": "2025-03-21T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "mkt-2": [
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2026-08-17",
+        "dataFim": null,
+        "alteradoEm": "2026-08-15T16:57:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2025-10-22",
+        "dataFim": "2026-08-16",
+        "alteradoEm": "2025-10-18T13:08:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2024-12-23",
+        "dataFim": "2025-10-21",
+        "alteradoEm": "2024-12-21T16:10:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Simone Leiderman",
+        "dataInicio": "2024-06-06",
+        "dataFim": "2024-12-22",
+        "alteradoEm": "2024-06-05T12:15:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Paulina Chávez",
+        "dataInicio": "2023-06-15",
+        "dataFim": "2024-06-05",
+        "alteradoEm": "2023-06-11T08:03:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2022-07-10",
+        "dataFim": "2023-06-14",
+        "alteradoEm": "2022-07-10T09:12:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "mkt-3": [
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2025-11-03",
+        "dataFim": null,
+        "alteradoEm": "2025-11-03T14:23:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2025-06-19",
+        "dataFim": "2025-11-02",
+        "alteradoEm": "2025-06-18T10:07:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2024-06-05",
+        "dataFim": "2025-06-18",
+        "alteradoEm": "2024-06-02T16:28:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2024-02-28",
+        "dataFim": "2024-06-04",
+        "alteradoEm": "2024-02-23T13:22:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2023-07-18",
+        "dataFim": "2024-02-27",
+        "alteradoEm": "2023-07-15T15:39:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2022-08-24",
+        "dataFim": "2023-07-17",
+        "alteradoEm": "2022-08-22T08:04:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "mkt-4": [
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2026-03-15",
+        "dataFim": null,
+        "alteradoEm": "2026-03-11T11:49:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2025-05-14",
+        "dataFim": "2026-03-14",
+        "alteradoEm": "2025-05-11T17:06:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2025-01-10",
+        "dataFim": "2025-05-13",
+        "alteradoEm": "2025-01-06T17:46:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Denise Rodrigues",
+        "dataInicio": "2024-02-19",
+        "dataFim": "2025-01-09",
+        "alteradoEm": "2024-02-16T14:29:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2023-11-18",
+        "dataFim": "2024-02-18",
+        "alteradoEm": "2023-11-17T11:14:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2023-01-06",
+        "dataFim": "2023-11-17",
+        "alteradoEm": "2023-01-02T17:55:00",
+        "alteradoPor": "Aline Prado"
+      }
+    ],
+    "mkt-9": [
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2025-09-18",
+        "dataFim": "2026-10-29",
+        "alteradoEm": "2025-09-18T17:53:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Paulina Chávez",
+        "dataInicio": "2025-02-03",
+        "dataFim": "2025-09-17",
+        "alteradoEm": "2025-02-01T17:48:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2024-04-28",
+        "dataFim": "2025-02-02",
+        "alteradoEm": "2024-04-23T10:21:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2023-04-19",
+        "dataFim": "2024-04-27",
+        "alteradoEm": "2023-04-14T08:35:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2022-11-17",
+        "dataFim": "2023-04-18",
+        "alteradoEm": "2022-11-15T09:52:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "mkt-5": [
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2026-07-25",
+        "dataFim": null,
+        "alteradoEm": "2026-07-23T09:14:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2026-03-04",
+        "dataFim": "2026-07-24",
+        "alteradoEm": "2026-03-04T14:04:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2025-08-17",
+        "dataFim": "2026-03-03",
+        "alteradoEm": "2025-08-12T17:04:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2025-01-05",
+        "dataFim": "2025-08-16",
+        "alteradoEm": "2025-01-04T14:36:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2024-03-21",
+        "dataFim": "2025-01-04",
+        "alteradoEm": "2024-03-21T17:49:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Rodrigo Quispe",
+        "dataInicio": "2023-05-22",
+        "dataFim": "2024-03-20",
+        "alteradoEm": "2023-05-21T17:47:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "mkt-6": [
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2025-10-11",
+        "dataFim": null,
+        "alteradoEm": "2025-10-11T16:40:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2024-12-04",
+        "dataFim": "2025-10-10",
+        "alteradoEm": "2024-12-01T11:03:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2024-03-04",
+        "dataFim": "2024-12-03",
+        "alteradoEm": "2024-03-04T17:22:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Ricardo Benítez",
+        "dataInicio": "2023-11-03",
+        "dataFim": "2024-03-03",
+        "alteradoEm": "2023-10-30T15:15:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2022-10-15",
+        "dataFim": "2023-11-02",
+        "alteradoEm": "2022-10-13T12:42:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2022-01-21",
+        "dataFim": "2022-10-14",
+        "alteradoEm": "2022-01-18T09:54:00",
+        "alteradoPor": "Bárbara Gianazi"
+      }
+    ],
+    "mkt-10": [
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2026-05-17",
+        "dataFim": null,
+        "alteradoEm": "2026-05-16T16:05:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2026-03-15",
+        "dataFim": "2026-05-16",
+        "alteradoEm": "2026-03-10T14:37:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2025-07-20",
+        "dataFim": "2026-03-14",
+        "alteradoEm": "2025-07-20T08:26:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2024-06-25",
+        "dataFim": "2025-07-19",
+        "alteradoEm": "2024-06-22T09:50:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2023-09-14",
+        "dataFim": "2024-06-24",
+        "alteradoEm": "2023-09-14T14:20:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Sofía Hernández",
+        "dataInicio": "2023-05-06",
+        "dataFim": "2023-09-13",
+        "alteradoEm": "2023-05-02T14:01:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2023-02-20",
+        "dataFim": "2023-05-05",
+        "alteradoEm": "2023-02-20T11:57:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2022-12-08",
+        "dataFim": "2023-02-19",
+        "alteradoEm": "2022-12-04T17:23:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2022-01-15",
+        "dataFim": "2022-12-07",
+        "alteradoEm": "2022-01-11T11:40:00",
+        "alteradoPor": "Marcos Tavares"
+      }
+    ],
+    "mkt-7": [
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2026-02-20",
+        "dataFim": "2027-09-28",
+        "alteradoEm": "2026-02-17T09:03:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2025-08-15",
+        "dataFim": "2026-02-19",
+        "alteradoEm": "2025-08-15T08:54:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Edson Ploncoski",
+        "dataInicio": "2024-10-15",
+        "dataFim": "2025-08-14",
+        "alteradoEm": "2024-10-10T14:35:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2023-11-16",
+        "dataFim": "2024-10-14",
+        "alteradoEm": "2023-11-12T16:42:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Tomás Silva",
+        "dataInicio": "2023-01-13",
+        "dataFim": "2023-11-15",
+        "alteradoEm": "2023-01-12T08:33:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "mkt-8": [
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2026-07-03",
+        "dataFim": "2027-04-14",
+        "alteradoEm": "2026-07-01T13:58:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2025-12-07",
+        "dataFim": "2026-07-02",
+        "alteradoEm": "2025-12-03T08:51:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Catarina Lopes",
+        "dataInicio": "2025-08-01",
+        "dataFim": "2025-12-06",
+        "alteradoEm": "2025-07-27T17:28:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2025-01-24",
+        "dataFim": "2025-07-31",
+        "alteradoEm": "2025-01-19T17:08:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2024-06-08",
+        "dataFim": "2025-01-23",
+        "alteradoEm": "2024-06-04T13:43:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "mkt-11": [
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2025-08-03",
+        "dataFim": null,
+        "alteradoEm": "2025-07-29T13:31:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2024-12-15",
+        "dataFim": "2025-08-02",
+        "alteradoEm": "2024-12-14T10:35:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2024-02-06",
+        "dataFim": "2024-12-14",
+        "alteradoEm": "2024-02-06T15:19:00",
+        "alteradoPor": "Henrique Duarte"
+      },
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2023-11-05",
+        "dataFim": "2024-02-05",
+        "alteradoEm": "2023-11-04T17:40:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2023-02-11",
+        "dataFim": "2023-11-04",
+        "alteradoEm": "2023-02-10T17:59:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2022-11-06",
+        "dataFim": "2023-02-10",
+        "alteradoEm": "2022-11-03T16:05:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Paulina Chávez",
+        "dataInicio": "2022-07-25",
+        "dataFim": "2022-11-05",
+        "alteradoEm": "2022-07-24T13:21:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Danielle Damasceno",
+        "dataInicio": "2022-05-10",
+        "dataFim": "2022-07-24",
+        "alteradoEm": "2022-05-06T14:46:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Tomás Silva",
+        "dataInicio": "2021-12-25",
+        "dataFim": "2022-05-09",
+        "alteradoEm": "2021-12-25T12:39:00",
+        "alteradoPor": "Bárbara Gianazi"
+      }
+    ],
+    "mkt-12": [
+      {
+        "responsavel": "Camila Torres",
+        "dataInicio": "2025-08-17",
+        "dataFim": "2026-07-16",
+        "alteradoEm": "2025-08-16T13:20:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Simone Leiderman",
+        "dataInicio": "2024-11-29",
+        "dataFim": "2025-08-16",
+        "alteradoEm": "2024-11-25T15:58:00",
+        "alteradoPor": "Renata Moraes"
+      }
+    ],
+    "mkt-ar-1": [
+      {
+        "responsavel": "Valentina Rossi",
+        "dataInicio": "2025-05-12",
+        "dataFim": null,
+        "alteradoEm": "2025-05-09T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "mkt-ar-2": [
+      {
+        "responsavel": "Fernanda Vargas",
+        "dataInicio": "2025-11-11",
+        "dataFim": "2027-08-14",
+        "alteradoEm": "2025-11-07T10:54:00",
+        "alteradoPor": "Renata Moraes"
+      },
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2025-06-09",
+        "dataFim": "2025-11-10",
+        "alteradoEm": "2025-06-06T09:07:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Lucía Fernández",
+        "dataInicio": "2024-10-26",
+        "dataFim": "2025-06-08",
+        "alteradoEm": "2024-10-23T09:23:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "mkt-ar-3": [
+      {
+        "responsavel": "Sara Silva",
+        "dataInicio": "2025-10-04",
+        "dataFim": "2027-09-01",
+        "alteradoEm": "2025-10-02T17:20:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Andrés Castro",
+        "dataInicio": "2024-11-16",
+        "dataFim": "2025-10-03",
+        "alteradoEm": "2024-11-16T16:06:00",
+        "alteradoPor": "Bárbara Gianazi"
+      },
+      {
+        "responsavel": "Lucas Fernández",
+        "dataInicio": "2024-01-20",
+        "dataFim": "2024-11-15",
+        "alteradoEm": "2024-01-16T09:41:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "mkt-mx-1": [
+      {
+        "responsavel": "Diego Ramírez",
+        "dataInicio": "2025-06-16",
+        "dataFim": null,
+        "alteradoEm": "2025-06-13T09:30:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "mkt-mx-2": [
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2026-01-05",
+        "dataFim": "2026-12-02",
+        "alteradoEm": "2025-12-31T09:33:00",
+        "alteradoPor": "Aline Prado"
+      },
+      {
+        "responsavel": "Fabio Feitosa",
+        "dataInicio": "2025-09-25",
+        "dataFim": "2026-01-04",
+        "alteradoEm": "2025-09-22T15:29:00",
+        "alteradoPor": "Patrícia Nogueira"
+      }
+    ],
+    "mkt-mx-3": [
+      {
+        "responsavel": "Jaquiel Bampi",
+        "dataInicio": "2025-11-28",
+        "dataFim": null,
+        "alteradoEm": "2025-11-28T14:56:00",
+        "alteradoPor": "Patrícia Nogueira"
+      },
+      {
+        "responsavel": "Mariana Gómez",
+        "dataInicio": "2025-06-16",
+        "dataFim": "2025-11-27",
+        "alteradoEm": "2025-06-15T13:20:00",
+        "alteradoPor": "Henrique Duarte"
+      }
+    ],
+    "mkt-mx-4": [
+      {
+        "responsavel": "Gleidson Salles",
+        "dataInicio": "2025-10-21",
+        "dataFim": "2027-01-08",
+        "alteradoEm": "2025-10-20T14:25:00",
+        "alteradoPor": "Marcos Tavares"
+      },
+      {
+        "responsavel": "Martina Gómez",
+        "dataInicio": "2025-07-05",
+        "dataFim": "2025-10-20",
+        "alteradoEm": "2025-06-30T08:44:00",
+        "alteradoPor": "Aline Prado"
+      }
+    ]
+  }
+}

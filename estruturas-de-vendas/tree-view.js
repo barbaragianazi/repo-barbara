@@ -28,9 +28,12 @@
 
   var ICONS = {
     info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>',
+    history: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path><path d="M12 7v5l3 2"></path></svg>',
     edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>',
+    trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"></path><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>',
     person: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
     user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path></svg>',
+    tag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6a2 2 0 0 0-1.4-.6H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>',
     pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.7 7-11.5A7 7 0 0 0 5 9.5C5 14.3 12 21 12 21Z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>',
     users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"></circle><circle cx="5" cy="19" r="2"></circle><circle cx="19" cy="19" r="2"></circle><path d="M12 7v4"></path><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"></path></svg>',
     minus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path></svg>',
@@ -148,10 +151,16 @@
       return 'Último nível da ramificação';
     }
 
+    function subordinatesTip(node) {
+      return directChildrenCount(node)
+        ? 'Estruturas que ficam diretamente abaixo desta na hierarquia'
+        : 'Esta estrutura não possui estruturas abaixo dela';
+    }
+
     function toggleMarkup(node, expanded, hasChildren) {
       if (!hasChildren) return '<span class="structure-toggle structure-toggle--leaf" aria-hidden="true"></span>';
       var label = (expanded ? 'Recolher ' : 'Expandir ') + node.description;
-      return '<button type="button" class="structure-toggle" data-toggle="' + esc(node.id) + '" aria-expanded="' + expanded + '" aria-label="' + esc(label) + '">' + ICONS.chevron + '</button>';
+      return '<button type="button" class="structure-toggle" data-toggle="' + esc(node.id) + '" aria-expanded="' + expanded + '" aria-label="' + esc(label) + '" data-tip="' + (expanded ? 'Recolher subestruturas' : 'Expandir subestruturas') + '">' + ICONS.chevron + '</button>';
     }
 
     function hl(text) {
@@ -174,14 +183,21 @@
       return searchState.matchedIds.has(id) ? ' is-match' : ' is-ancestor';
     }
 
-    function metaItem(icon, text, html) {
+    // "tip" explica o campo no hover (balão escuro); data-tip-full na parte interna mostra o valor completo quando cortado.
+    function metaItem(icon, text, html, tip) {
       if (!text) return '';
-      return '<span class="structure-tree-card__meta-item">' + icon + '<span data-tip-full="' + esc(text) + '">' + (html || esc(text)) + '</span></span>';
+      return '<span class="structure-tree-card__meta-item"' + (tip ? ' data-tip="' + esc(tip) + '"' : '') + '>' + icon + '<span data-tip-full="' + esc(text) + '">' + (html || esc(text)) + '</span></span>';
     }
 
     function personItem(node) {
-      if (node.responsavel) return metaItem(ICONS.person, node.responsavel, hl(node.responsavel));
-      return '<span class="structure-tree-card__meta-item is-empty" role="img" aria-label="Sem responsável">' + ICONS.person + '<span aria-hidden="true">—</span></span>';
+      if (node.responsavel) return metaItem(ICONS.person, node.responsavel, hl(node.responsavel), 'Responsável atual pela estrutura');
+      return '<button type="button" class="structure-unassigned" data-edit="' + esc(node.id) + '" aria-label="Sem responsável: atribuir responsável a ' + esc(node.description) + '" data-tip="Sem responsável definido. Clique para atribuir"><i aria-hidden="true"></i>Sem responsável</button>';
+    }
+
+    // Uma célula por informação, sempre presente (mesmo vazia): é ela que mantém
+    // as colunas alinhadas entre os cards de níveis diferentes.
+    function cell(html) {
+      return '<div class="structure-tree-card__cell">' + html + '</div>';
     }
 
     function cardHtml(node, level, hasChildren, expanded) {
@@ -192,33 +208,26 @@
 
       return (
         '<article class="structure-tree-card' + (node.ativo ? '' : ' is-inactive') + markClass(node.id) + '" data-id="' + esc(node.id) + '" data-has-children="' + hasChildren + '" style="--level-color:' + color + '">' +
-        '<header class="structure-tree-card__top">' +
+        '<div class="structure-tree-card__top">' +
+        '<div class="structure-tree-card__head">' +
         toggleMarkup(node, expanded, hasChildren) +
-        '<span class="structure-tree-card__badge"><span class="structure-tree-card__badge-dot"></span>' + esc(badgeLabel(node, level)) + '</span>' +
+        '<button type="button" class="structure-tree-card__badge structure-tree-card__title" data-detail="' + esc(node.id) + '" data-tip="Ver detalhes"><span class="structure-tree-card__badge-dot"></span><span class="structure-tree-card__title-text">' + hl(node.description) + '</span></button>' +
+        '</div>' +
+        '<div class="structure-tree-card__cells">' +
+        cell(personItem(node)) +
+        cell('<span class="structure-tree-card__code" data-tip="Código interno da estrutura">#' + esc(formatCode(node.id)) + '</span>') +
+        cell(metaItem(ICONS.tag, node.sap, null, 'Código SAP da estrutura')) +
+        cell(metaItem(ICONS.pin, local, null, 'Localização da estrutura (município · país)')) +
+        cell(metaItem(ICONS.users, subordinatesLabel(node), null, subordinatesTip(node))) +
+        '</div>' +
         '<span class="structure-tree-card__top-end">' +
-        '<span class="' + statusClass + '"><span class="structure-status__dot"></span><span>' + (node.ativo ? 'Ativo' : 'Inativo') + '</span></span>' +
-        '<span class="structure-tree-card__code">#' + esc(formatCode(node.id)) + '</span>' +
+        '<span class="' + statusClass + '" data-tip="' + (node.ativo ? 'Estrutura ativa' : 'Estrutura inativa') + '"><span class="structure-status__dot"></span><span>' + (node.ativo ? 'Ativo' : 'Inativo') + '</span></span>' +
         '<span class="structure-tree-card__actions">' +
-        '<button type="button" class="structure-row-action" data-detail="' + esc(node.id) + '" aria-label="Ver detalhes de ' + esc(node.description) + '">' + ICONS.info + '</button>' +
-        '<button type="button" class="structure-row-action" data-edit="' + esc(node.id) + '" aria-label="Editar ' + esc(node.description) + '">' + ICONS.edit + '</button>' +
+        '<button type="button" class="structure-row-action" data-history="' + esc(node.id) + '" aria-label="Histórico de ' + esc(node.description) + '" data-tip="Histórico da estrutura">' + ICONS.history + '</button>' +
+        '<button type="button" class="structure-row-action" data-edit="' + esc(node.id) + '" aria-label="Editar ' + esc(node.description) + '" data-tip="Editar estrutura">' + ICONS.edit + '</button>' +
+        '<button type="button" class="structure-row-action structure-row-action--danger" data-delete="' + esc(node.id) + '" aria-label="Excluir ' + esc(node.description) + '" data-tip="Excluir estrutura">' + ICONS.trash + '</button>' +
         '</span>' +
         '</span>' +
-        '</header>' +
-        '<div class="structure-tree-card__body">' +
-        '<div class="structure-tree-card__col">' +
-        '<button type="button" class="structure-tree-card__name" data-detail="' + esc(node.id) + '" data-tip="Ver detalhes">' + hl(node.description) + '</button>' +
-        '<span class="structure-tree-card__sub">' + hl(formatCode(node.id)) + ' · ' + hl(node.tipoPosicao || NOT_INFORMED) + '</span>' +
-        '</div>' +
-        '<div class="structure-tree-card__col">' +
-        personItem(node) +
-        metaItem(ICONS.user, detalhes.usuario) +
-        '</div>' +
-        '<div class="structure-tree-card__col">' +
-        metaItem(ICONS.pin, local) +
-        metaItem(ICONS.users, subordinatesLabel(node)) +
-        '</div>' +
-        '<button type="button" class="structure-tree-card__details" data-detail="' + esc(node.id) + '" aria-label="Ver detalhes">' +
-        ICONS.panel + '<span>Ver detalhes</span></button>' +
         '</div>' +
         '</article>'
       );
@@ -338,21 +347,21 @@
 
       return (
         '<article class="structure-flow-card' + (node.ativo ? '' : ' is-inactive') + markClass(node.id) + '" data-flow-id="' + esc(node.id) + '" data-has-children="' + hasChildren + '" style="left:' + item.x + 'px;top:' + item.y + 'px;width:' + FLOW.cardW + 'px;height:' + FLOW.cardH + 'px;--level-color:' + color + '">' +
-        '<header class="structure-flow-card__top">' +
-        '<span class="structure-tree-card__badge"><span class="structure-tree-card__badge-dot"></span><span class="structure-flow-card__badge-text" data-tip-full="' + esc(badgeLabel(node, item.level)) + '">' + esc(badgeLabel(node, item.level)) + '</span></span>' +
-        '<span class="structure-tree-card__code">#' + hl(formatCode(node.id)) + '</span>' +
-        '</header>' +
         '<button type="button" class="structure-flow-card__name" data-detail="' + esc(node.id) + '" data-tip="Ver detalhes" data-tip-full="' + esc(node.description) + '">' + hl(node.description) + '</button>' +
         '<div class="structure-flow-card__meta">' +
         personItem(node) +
-        metaItem(ICONS.pin, local) +
+        metaItem(ICONS.tag, node.sap, null, 'Código SAP da estrutura') +
+        metaItem(ICONS.pin, local, null, 'Localização da estrutura (município · país)') +
         '</div>' +
         '<footer class="structure-flow-card__foot">' +
-        '<span class="' + statusClass + '"><span class="structure-status__dot"></span><span>' + (node.ativo ? 'Ativo' : 'Inativo') + '</span></span>' +
+        '<span class="structure-flow-card__foot-start">' +
+        '<span class="' + statusClass + '" data-tip="' + (node.ativo ? 'Estrutura ativa' : 'Estrutura inativa') + '"><span class="structure-status__dot"></span><span>' + (node.ativo ? 'Ativo' : 'Inativo') + '</span></span>' +
+        '<span class="structure-tree-card__code" data-tip="Código interno da estrutura">#' + hl(formatCode(node.id)) + '</span>' +
+        '</span>' +
         '<span class="structure-tree-card__actions">' +
-        '<button type="button" class="structure-row-action" data-detail="' + esc(node.id) + '" aria-label="Ver detalhes de ' + esc(node.description) + '">' + ICONS.info + '</button>' +
+        '<button type="button" class="structure-row-action" data-history="' + esc(node.id) + '" aria-label="Histórico de ' + esc(node.description) + '" data-tip="Histórico da estrutura">' + ICONS.history + '</button>' +
         '<span class="structure-row-action" data-inert aria-hidden="true">' + ICONS.focus + '</span>' +
-        '<button type="button" class="structure-row-action" data-edit="' + esc(node.id) + '" aria-label="Editar ' + esc(node.description) + '">' + ICONS.edit + '</button>' +
+        '<button type="button" class="structure-row-action" data-edit="' + esc(node.id) + '" aria-label="Editar ' + esc(node.description) + '" data-tip="Editar estrutura">' + ICONS.edit + '</button>' +
         '</span>' +
         '</footer>' +
         handle +
@@ -827,6 +836,20 @@
         return;
       }
 
+      var history = event.target.closest('[data-history]');
+      if (history) {
+        var historyNode = opts.getNode(history.getAttribute('data-history'));
+        if (historyNode) opts.onHistory(historyNode, history);
+        return;
+      }
+
+      var del = event.target.closest('[data-delete]');
+      if (del) {
+        var delNode = opts.getNode(del.getAttribute('data-delete'));
+        if (delNode) opts.onDelete(delNode);
+        return;
+      }
+
       var card = event.target.closest('.structure-tree-card, .structure-flow-card');
       if (card && card.getAttribute('data-has-children') === 'true') toggleNode(card.dataset.id || card.dataset.flowId);
     });
@@ -847,6 +870,11 @@
     function showTip(element) {
       var full = element.getAttribute('data-tip-full');
       var text = (full && isClipped(element)) ? full : element.getAttribute('data-tip');
+      if (!text && full && element.parentElement) {
+        // Texto interno que não está cortado: usa a explicação do campo (data-tip do item que o contém).
+        var outer = element.parentElement.closest('[data-tip]');
+        text = outer ? outer.getAttribute('data-tip') : '';
+      }
       if (!text) { hideTip(); return; }
       tip.textContent = text;
       tip.style.left = '0px';
