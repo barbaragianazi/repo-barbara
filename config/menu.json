@@ -29,15 +29,15 @@
               ]
             },
             {
-              "key": "estruturas-de-vendas",
+              "key": "estruturas",
               "label": "Estruturas",
               "icon": "hierarchy",
-              "href": "/estruturas-de-vendas/index.html",
+              "href": "/estruturas/index.html",
               "children": [
                 {
-                  "key": "estruturas-de-vendas-visualizar-estrutura",
-                  "label": "Estrutura de Venda",
-                  "href": "/estruturas-de-vendas/index.html"
+                  "key": "estruturas-visualizar-estrutura",
+                  "label": "Visualizar estruturas",
+                  "href": "/estruturas/index.html"
                 }
               ]
             }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Estrutura de Venda - Repo Barbara</title>
+  <title>Estruturas - Repo Barbara</title>
   <link rel="icon" type="image/png" href="../shared/assets/logos/fav-icon.png">
   <link rel="stylesheet" href="../shared/design-tokens.css">
   <link rel="stylesheet" href="../shared/base-components.css">
@@ -413,8 +413,8 @@
   <script src="data/details-mock.js"></script>
   <script>
     window.BipperShellConfig = {
-      app: 'estruturas-de-vendas',
-      active: 'estruturas-de-vendas-visualizar-estrutura',
+      app: 'estruturas',
+      active: 'estruturas-visualizar-estrutura',
       assetPathPrefix: '../',
       publicPage: true
     };
@@ -648,7 +648,7 @@
         pageTitle.textContent = labels.title;
         document.title = labels.title + ' - Repo Barbara';
 
-        var menuLink = document.querySelector('[data-nav-key="estruturas-de-vendas-visualizar-estrutura"]');
+        var menuLink = document.querySelector('[data-nav-key="estruturas-visualizar-estrutura"]');
         if (menuLink) {
           var menuLabel = menuLink.querySelector('.nav-submenu__label');
           if (menuLabel) menuLabel.textContent = labels.title;

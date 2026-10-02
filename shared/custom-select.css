@@ -108,7 +108,7 @@
 }
 
 /* Multiselect com checkboxes (primeiro uso: "Personalizar colunas" em
-   estruturas-de-vendas). Gatilho = botão dentro de .cs-select (mesmo chevron dos
+   estruturas). Gatilho = botão dentro de .cs-select (mesmo chevron dos
    selects); painel = .cs-panel.cs-panel--columns, com lista reordenável por
    arrastar (.cs-columns-option) e rodapé de ação (.cs-columns-footer). */
 
