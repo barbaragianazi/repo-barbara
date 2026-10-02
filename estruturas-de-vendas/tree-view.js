@@ -35,6 +35,8 @@
     user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path></svg>',
     tag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6a2 2 0 0 0-1.4-.6H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>',
     pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.7 7-11.5A7 7 0 0 0 5 9.5C5 14.3 12 21 12 21Z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>',
+    briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>',
+    idcard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><circle cx="9" cy="11" r="2"></circle><path d="M6.2 16a3 3 0 0 1 5.6 0"></path><path d="M15 10h3"></path><path d="M15 14h3"></path></svg>',
     users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"></circle><circle cx="5" cy="19" r="2"></circle><circle cx="19" cy="19" r="2"></circle><path d="M12 7v4"></path><path d="M5 17v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"></path></svg>',
     minus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path></svg>',
     focus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg>',
@@ -55,12 +57,11 @@
     var formatCode = opts.formatCode || function (value) { return value; };
     var NOT_INFORMED = 'Não informado';
 
-    var state = { mode: 'lines', level: 0, collapsed: new Set(), anchor: null, resetScroll: false, zoom: 1, fitAfterRender: false };
+    var state = { mode: 'lines', collapsed: new Set(), anchor: null, resetScroll: false, zoom: 1, fitAfterRender: false };
     var hoverId = null;
 
     var searchState = { active: false, query: '', matchedIds: new Set() };
 
-    var levelSelect = document.getElementById('structureLevelFilter');
     var toolButtons = {
       'expand-all': document.querySelector('[data-tree-action="expand-all"]'),
       'collapse-all': document.querySelector('[data-tree-action="collapse-all"]'),
@@ -76,7 +77,6 @@
     var zoomValue = zoomPop.querySelector('[data-zoom-value]');
     var zoomOut = zoomPop.querySelector('[data-zoom-step="-1"]');
     var zoomIn = zoomPop.querySelector('[data-zoom-step="1"]');
-    var renderedDepth = -1;
 
     function roots() { return opts.getRoots(); }
 
@@ -89,10 +89,6 @@
         });
       })(roots(), 0);
       return flat;
-    }
-
-    function maxDepth() {
-      return flatten().reduce(function (max, item) { return Math.max(max, item.level + 1); }, 0);
     }
 
     function expandableIds() {
@@ -118,7 +114,6 @@
       var visibleIds = new Set();
       var matched = [];
       flatten().forEach(function (item) {
-        if (state.level && item.level + 1 > state.level) return;
         if (opts.matches(item.node)) matched.push(item.node);
       });
       matched.forEach(function (node) {
@@ -196,15 +191,192 @@
 
     // Uma célula por informação, sempre presente (mesmo vazia): é ela que mantém
     // as colunas alinhadas entre os cards de níveis diferentes.
-    function cell(html) {
-      return '<div class="structure-tree-card__cell">' + html + '</div>';
+    function cell(name, html) {
+      return '<div class="structure-tree-card__cell" data-col="' + name + '">' + html + '</div>';
+    }
+
+    // ---- Colunas da Árvore --------------------------------------------------
+    // Personalização guardada por estrutura (área) no localStorage:
+    // { order, visible }. Vale para a Árvore em linhas e para os dois
+    // Flows (ordem e visibilidade). É
+    // independente da personalização da Tabela. "Descrição" e "Status" são fixos.
+    var COLUMN_PREFS_KEY = 'bipper.estruturas.arvore.colunas.v1';
+    var COLUMN_GAP = 20;
+    var NAME_COLUMN_MIN = 150;
+    var ACTIONS_COLUMN_WIDTH = 170;
+    var CONTAINER_PADDING = 28;
+    var CARD_CHROME = 26;
+    var LEVEL_INDENT = 41;
+    var NAME_OPTION = '__name';
+    var STATUS_OPTION = '__status';
+
+    var COLUMN_DEFS = {
+      responsavel: { label: 'Responsável', width: 140 },
+      linhaNegocio: { label: 'Linha negócio', width: 140 },
+      tipoPosicao: { label: 'Tipo(s) posição', width: 175 },
+      id: { label: 'Cód. interno', width: 52 },
+      sap: { label: 'Código SAP', width: 84 },
+      local: { label: 'Localização', width: 160 },
+      subordinados: { label: 'Subordinados', width: 155 }
+    };
+
+    // Linha de negócio só existe em Marketing; Tipo de posição em Vendas e
+    // Marketing. A Técnica não muda.
+    var AREA_COLUMNS = {
+      vendas: ['responsavel', 'tipoPosicao', 'id', 'sap', 'local', 'subordinados'],
+      tecnica: ['responsavel', 'id', 'sap', 'local', 'subordinados'],
+      marketing: ['responsavel', 'linhaNegocio', 'tipoPosicao', 'id', 'sap', 'local', 'subordinados']
+    };
+
+    var columnPrefs = loadColumnPrefs();
+    var shownNow = [];
+    var renderedMaxLevel = 0;
+
+    function loadColumnPrefs() {
+      try {
+        var parsed = JSON.parse(localStorage.getItem(COLUMN_PREFS_KEY) || '{}');
+        return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+      } catch (e) { return {}; }
+    }
+
+    function saveColumnPrefs() {
+      try { localStorage.setItem(COLUMN_PREFS_KEY, JSON.stringify(columnPrefs)); } catch (e) { /* sem persistência: vale só nesta sessão */ }
+    }
+
+    function currentArea() {
+      var area = opts.getArea();
+      return AREA_COLUMNS[area] ? area : 'vendas';
+    }
+
+    function areaPrefs(area) {
+      var prefs = columnPrefs[area];
+      if (!prefs || typeof prefs !== 'object') prefs = columnPrefs[area] = {};
+      return prefs;
+    }
+
+    function orderedFields(area) {
+      var base = AREA_COLUMNS[area];
+      var saved = Array.isArray(areaPrefs(area).order) ? areaPrefs(area).order : [];
+      var sorted = [];
+      saved.forEach(function (name) { if (base.indexOf(name) > -1 && sorted.indexOf(name) === -1) sorted.push(name); });
+      base.forEach(function (name) { if (sorted.indexOf(name) === -1) sorted.push(name); });
+      return sorted;
+    }
+
+    function visibleSet(area) {
+      var saved = areaPrefs(area).visible;
+      return new Set(Array.isArray(saved) ? saved : AREA_COLUMNS[area]);
+    }
+
+    function shownFields() {
+      var area = currentArea();
+      var set = visibleSet(area);
+      return orderedFields(area).filter(function (name) { return set.has(name); });
+    }
+
+    function columnWidth(name) {
+      return COLUMN_DEFS[name].width;
+    }
+
+    function gridTemplate() {
+      var area = currentArea();
+      return 'minmax(' + NAME_COLUMN_MIN + 'px, 1fr) ' +
+        shownNow.map(function (name) { return columnWidth(name) + 'px'; }).join(' ') + ' ' + ACTIONS_COLUMN_WIDTH + 'px';
+    }
+
+    // Largura mínima para o card mais fundo caber em uma linha só; abaixo disso
+    // as informações descem para uma segunda linha (classe is-stacked).
+    function requiredTreeWidth() {
+      var area = currentArea();
+      var widths = shownNow.reduce(function (sum, name) { return sum + columnWidth(name); }, 0);
+      var tracks = shownNow.length + 2;
+      return CONTAINER_PADDING + CARD_CHROME + renderedMaxLevel * LEVEL_INDENT + NAME_COLUMN_MIN + widths + ACTIONS_COLUMN_WIDTH + (tracks - 1) * COLUMN_GAP;
+    }
+
+    function applyColumnTemplate() {
+      if (state.mode !== 'lines') { host.classList.remove('is-stacked'); return; }
+      host.style.setProperty('--tree-cols', gridTemplate());
+      if (host.clientWidth) host.classList.toggle('is-stacked', host.clientWidth < requiredTreeWidth());
+    }
+
+    function columnContent(name, node) {
+      var detalhes = node.detalhes || {};
+      switch (name) {
+        case 'responsavel':
+          return personItem(node);
+        case 'linhaNegocio':
+          return metaItem(ICONS.briefcase, node.linhaNegocio, hl(node.linhaNegocio), 'Linha de negócio da estrutura');
+        case 'tipoPosicao':
+          return metaItem(ICONS.idcard, node.tipoPosicao, hl(node.tipoPosicao), 'Tipo de posição da estrutura');
+        case 'id':
+          return '<span class="structure-tree-card__code" data-tip="Código interno da estrutura">#' + esc(formatCode(node.id)) + '</span>';
+        case 'sap':
+          return metaItem(ICONS.tag, node.sap, null, 'Código SAP da estrutura');
+        case 'local':
+          return metaItem(ICONS.pin, [detalhes.municipio, node.pais].filter(Boolean).join(' · '), null, 'Localização da estrutura (município · país)');
+        case 'subordinados':
+          return metaItem(ICONS.users, subordinatesLabel(node), null, subordinatesTip(node));
+      }
+      return '';
+    }
+
+    // API usada pelo "Personalizar colunas" do index.html quando a Árvore está ativa.
+    function columnOptions() {
+      var area = currentArea();
+      var set = visibleSet(area);
+      return [{ value: NAME_OPTION, label: 'Descrição', checked: true, locked: true }]
+        .concat(orderedFields(area).map(function (name) {
+          return { value: name, label: COLUMN_DEFS[name].label, checked: set.has(name) };
+        }))
+        .concat([{ value: STATUS_OPTION, label: 'Status', checked: true, locked: true }]);
+    }
+
+    function columnsSummary() {
+      var area = currentArea();
+      return (shownFields().length + 2) + ' de ' + (AREA_COLUMNS[area].length + 2) + ' colunas';
+    }
+
+    function columnsAreDefault() {
+      var area = currentArea();
+      var inOriginalOrder = orderedFields(area).every(function (name, index) { return name === AREA_COLUMNS[area][index]; });
+      return inOriginalOrder && visibleSet(area).size === AREA_COLUMNS[area].length &&
+        AREA_COLUMNS[area].every(function (name) { return visibleSet(area).has(name); });
+    }
+
+    function columnsChanged() {
+      saveColumnPrefs();
+      opts.rerender();
+      opts.onColumnsChange();
+    }
+
+    function toggleColumn(name, checked) {
+      var area = currentArea();
+      var set = visibleSet(area);
+      if (checked) set.add(name);
+      else set.delete(name);
+      areaPrefs(area).visible = Array.from(set);
+      columnsChanged();
+    }
+
+    function moveColumn(name, targetName, after) {
+      if (name === targetName) return;
+      var area = currentArea();
+      var order = orderedFields(area).filter(function (item) { return item !== name; });
+      var at = order.indexOf(targetName);
+      if (at === -1 || AREA_COLUMNS[area].indexOf(name) === -1) return;
+      order.splice(after ? at + 1 : at, 0, name);
+      areaPrefs(area).order = order;
+      columnsChanged();
+    }
+
+    function resetColumns() {
+      delete columnPrefs[currentArea()];
+      columnsChanged();
     }
 
     function cardHtml(node, level, hasChildren, expanded) {
       var color = levelColors[level % levelColors.length];
-      var detalhes = node.detalhes || {};
       var statusClass = 'structure-status' + (node.ativo ? '' : ' structure-status--inactive');
-      var local = [detalhes.municipio, node.pais].filter(Boolean).join(' · ');
 
       return (
         '<article class="structure-tree-card' + (node.ativo ? '' : ' is-inactive') + markClass(node.id) + '" data-id="' + esc(node.id) + '" data-has-children="' + hasChildren + '" style="--level-color:' + color + '">' +
@@ -214,11 +386,7 @@
         '<button type="button" class="structure-tree-card__badge structure-tree-card__title" data-detail="' + esc(node.id) + '" data-tip="Ver detalhes"><span class="structure-tree-card__badge-dot"></span><span class="structure-tree-card__title-text">' + hl(node.description) + '</span></button>' +
         '</div>' +
         '<div class="structure-tree-card__cells">' +
-        cell(personItem(node)) +
-        cell('<span class="structure-tree-card__code" data-tip="Código interno da estrutura">#' + esc(formatCode(node.id)) + '</span>') +
-        cell(metaItem(ICONS.tag, node.sap, null, 'Código SAP da estrutura')) +
-        cell(metaItem(ICONS.pin, local, null, 'Localização da estrutura (município · país)')) +
-        cell(metaItem(ICONS.users, subordinatesLabel(node), null, subordinatesTip(node))) +
+        shownNow.map(function (name) { return cell(name, columnContent(name, node)); }).join('') +
         '</div>' +
         '<span class="structure-tree-card__top-end">' +
         '<span class="' + statusClass + '" data-tip="' + (node.ativo ? 'Estrutura ativa' : 'Estrutura inativa') + '"><span class="structure-status__dot"></span><span>' + (node.ativo ? 'Ativo' : 'Inativo') + '</span></span>' +
@@ -234,6 +402,7 @@
     }
 
     function nodeHtml(node, level, visibleIds) {
+      if (level > renderedMaxLevel) renderedMaxLevel = level;
       var children = (node.children || []).filter(function (child) { return visibleIds.has(child.id); });
       var hasChildren = children.length > 0;
       var expanded = !state.collapsed.has(node.id);
@@ -244,7 +413,16 @@
     }
 
 
-    var FLOW = { cardW: 216, cardH: 148, levelGap: 64, siblingGap: 20, rootGap: 56, pad: 40 };
+    // A altura do card depende de quantas informações estão visíveis (ver flowMetaFields).
+    var FLOW = { cardW: 300, cardH: 148, levelGap: 64, siblingGap: 20, rootGap: 56, pad: 40 };
+    var FLOW_CARD_BASE_H = 91;
+    var FLOW_META_LINE_H = 19;
+
+    // No card do flow o código interno vive no rodapé e os subordinados já aparecem
+    // no botão de expandir; as demais colunas viram linhas, na ordem escolhida.
+    function flowMetaFields() {
+      return shownNow.filter(function (name) { return name !== 'id' && name !== 'subordinados'; });
+    }
 
     var FLOW_HINT_HTML = '<div class="structure-flow-hint">Clique e arraste para mover · Use Ctrl + roda do mouse para zoom · Duplo clique no fundo para ajustar</div>';
 
@@ -335,9 +513,7 @@
     function flowCardHtml(item) {
       var node = item.node;
       var color = levelColors[item.level % levelColors.length];
-      var detalhes = node.detalhes || {};
       var statusClass = 'structure-status' + (node.ativo ? '' : ' structure-status--inactive');
-      var local = [detalhes.municipio, node.pais].filter(Boolean).join(' · ');
       var hasChildren = item.childCount > 0;
       var handleLabel = (item.expanded ? 'Recolher ' : 'Expandir ') + node.description;
 
@@ -349,14 +525,12 @@
         '<article class="structure-flow-card' + (node.ativo ? '' : ' is-inactive') + markClass(node.id) + '" data-flow-id="' + esc(node.id) + '" data-has-children="' + hasChildren + '" style="left:' + item.x + 'px;top:' + item.y + 'px;width:' + FLOW.cardW + 'px;height:' + FLOW.cardH + 'px;--level-color:' + color + '">' +
         '<button type="button" class="structure-flow-card__name" data-detail="' + esc(node.id) + '" data-tip="Ver detalhes" data-tip-full="' + esc(node.description) + '">' + hl(node.description) + '</button>' +
         '<div class="structure-flow-card__meta">' +
-        personItem(node) +
-        metaItem(ICONS.tag, node.sap, null, 'Código SAP da estrutura') +
-        metaItem(ICONS.pin, local, null, 'Localização da estrutura (município · país)') +
+        flowMetaFields().map(function (name) { return columnContent(name, node); }).join('') +
         '</div>' +
         '<footer class="structure-flow-card__foot">' +
         '<span class="structure-flow-card__foot-start">' +
         '<span class="' + statusClass + '" data-tip="' + (node.ativo ? 'Estrutura ativa' : 'Estrutura inativa') + '"><span class="structure-status__dot"></span><span>' + (node.ativo ? 'Ativo' : 'Inativo') + '</span></span>' +
-        '<span class="structure-tree-card__code" data-tip="Código interno da estrutura">#' + hl(formatCode(node.id)) + '</span>' +
+        (shownNow.indexOf('id') > -1 ? '<span class="structure-tree-card__code" data-tip="Código interno da estrutura">#' + hl(formatCode(node.id)) + '</span>' : '') +
         '</span>' +
         '<span class="structure-tree-card__actions">' +
         '<button type="button" class="structure-row-action" data-history="' + esc(node.id) + '" aria-label="Histórico de ' + esc(node.description) + '" data-tip="Histórico da estrutura">' + ICONS.history + '</button>' +
@@ -391,6 +565,7 @@
       var previous = flowViewport();
       var previousScroll = previous ? { left: previous.scrollLeft, top: previous.scrollTop } : null;
 
+      FLOW.cardH = FLOW_CARD_BASE_H + FLOW_META_LINE_H * flowMetaFields().length;
       var layout = flowLayout(layoutItems(visibleRoots, 0, visibleIds), horizontal);
       host.innerHTML =
         '<div class="structure-flow structure-flow--' + (horizontal ? 'h' : 'v') + '" data-flow-viewport>' +
@@ -546,18 +721,6 @@
       });
     }
 
-    function syncLevelOptions() {
-      var depth = maxDepth();
-      if (state.level > depth) state.level = 0;
-      if (depth !== renderedDepth) {
-        var options = ['<option value="0">Todos os níveis</option>'];
-        for (var i = 1; i <= depth; i++) options.push('<option value="' + i + '">Até o nível ' + i + '</option>');
-        levelSelect.innerHTML = options.join('');
-        renderedDepth = depth;
-      }
-      levelSelect.value = String(state.level);
-    }
-
     function syncTools(visibleIds) {
       var expandable = flatten().filter(function (item) {
         return visibleIds.has(item.node.id) && (item.node.children || []).some(function (child) { return visibleIds.has(child.id); });
@@ -574,7 +737,6 @@
     }
 
     function render() {
-      syncLevelOptions();
       var computed = computeVisible();
       var visibleIds = computed.visibleIds;
       var visibleRoots = roots().filter(function (node) { return visibleIds.has(node.id); });
@@ -585,6 +747,8 @@
         matchedIds: new Set(computed.matched.map(function (node) { return node.id; }))
       };
 
+      shownNow = shownFields();
+      renderedMaxLevel = 0;
       host.classList.toggle('is-flow', state.mode !== 'lines');
       if (!visibleRoots.length) {
         host.innerHTML = '';
@@ -593,6 +757,7 @@
       } else {
         renderFlow(visibleRoots, visibleIds);
       }
+      applyColumnTemplate();
       syncTools(visibleIds);
       return { empty: visibleRoots.length === 0 };
     }
@@ -635,13 +800,7 @@
       opts.rerender();
     }
 
-    function setLevel(value) {
-      state.level = Number(value) || 0;
-      opts.onFilterChange();
-    }
-
     function restore() {
-      state.level = 0;
       state.zoom = 1;
       state.resetScroll = true;
       state.collapsed = defaultCollapsed();
@@ -651,7 +810,6 @@
     }
 
     function resetForNewData() {
-      state.level = 0;
       state.collapsed = defaultCollapsed();
     }
 
@@ -959,6 +1117,7 @@
 
     if (window.ResizeObserver) {
       new window.ResizeObserver(function () {
+        applyColumnTemplate();
         var viewport = flowViewport();
         if (!viewport) return;
         var previous = flowPad;
@@ -1020,7 +1179,6 @@
       if (button && !button.disabled) setMode(button.getAttribute('data-tree-mode'));
     });
 
-    levelSelect.addEventListener('change', function () { setLevel(levelSelect.value); });
     toolButtons['expand-all'].addEventListener('click', function () { if (!this.disabled) expandAll(); });
     toolButtons['collapse-all'].addEventListener('click', function () { if (!this.disabled) collapseAll(); });
     toolButtons.restore.addEventListener('click', restore);
@@ -1032,10 +1190,16 @@
       reveal: reveal,
       onEnter: onEnter,
       resetForNewData: resetForNewData,
-      resetLevel: function () { state.level = 0; },
-      getLevel: function () { return state.level; },
       openDrawer: openDrawer,
-      closeDrawer: closeDrawer
+      closeDrawer: closeDrawer,
+      columns: {
+        options: columnOptions,
+        summary: columnsSummary,
+        isDefault: columnsAreDefault,
+        toggle: toggleColumn,
+        reorder: moveColumn,
+        reset: resetColumns
+      }
     };
   }
 

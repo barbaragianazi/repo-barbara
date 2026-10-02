@@ -2142,6 +2142,7 @@ body.structure-focus-mode .structure-table thead th {
 .structure-evt-card {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     margin-top: 14px;
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
@@ -2410,7 +2411,13 @@ body.structure-focus-mode .structure-table thead th {
 
 .structure-evt-actions {
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
+    margin-top: 20px;
+}
+
+.structure-evt-actions .favorite-modal__btn {
+    flex-shrink: 0;
 }
 
 .structure-evt-actions .favorite-modal__btn {

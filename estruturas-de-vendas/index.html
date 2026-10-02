@@ -139,6 +139,13 @@
         <div class="structure-table-card summary-card">
           <div class="structure-table-toolbar">
             <div class="view-mode-toggle view-mode-toggle--active-label structure-area-tabs" role="tablist" aria-label="Área da estrutura">
+              <button type="button" role="tab" aria-selected="false" data-area="marketing" aria-label="Estrutura de Marketing" data-tooltip="Marketing · hierarquia da equipe de marketing">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m3 11 18-5v12L3 14v-3z"></path>
+                  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                </svg>
+                <span>Marketing</span>
+              </button>
               <button type="button" class="is-active" role="tab" aria-selected="true" data-area="vendas" aria-label="Estrutura de Vendas" data-tooltip="Vendas · hierarquia comercial e responsáveis">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M23 6 13.5 15.5l-5-5L1 18"></path>
@@ -152,20 +159,10 @@
                 </svg>
                 <span>Técnica</span>
               </button>
-              <button type="button" role="tab" aria-selected="false" data-area="marketing" aria-label="Estrutura de Marketing" data-tooltip="Marketing · hierarquia da equipe de marketing">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="m3 11 18-5v12L3 14v-3z"></path>
-                  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
-                </svg>
-                <span>Marketing</span>
-              </button>
             </div>
             <label class="structure-search-field">
               <input id="structureSearchInput" type="search" placeholder="Pesquisar estruturas">
             </label>
-            <div class="structure-level-filter" data-tree-only hidden>
-              <select id="structureLevelFilter" aria-label="Filtrar por nível"></select>
-            </div>
             <div class="structure-table-toolbar__actions">
               <div class="cs-multi-picker" id="structureColumnsPicker" hidden>
                 <span class="cs-multi-picker__label" id="structureColumnsLabel">Personalizar colunas</span>
@@ -909,6 +906,11 @@
         getRoots: function () { return data; },
         getNode: function (id) { return nodesById[id]; },
         getParentId: function (id) { return parentById[id]; },
+        getArea: function () { return state.area; },
+        onColumnsChange: function () {
+          syncColumnsPicker();
+          renderColumnsPanelList();
+        },
         matches: matchesSearch,
         hasSearch: function () { return Boolean(state.search); },
         getSearch: function () { return state.search; },
@@ -1579,7 +1581,9 @@
         autoFitColumn(handle.parentElement.dataset.colField);
       });
 
-      // Dropdown "Personalizar colunas" (multiselect, só na Tabela).
+      // Dropdown "Personalizar colunas" (multiselect), na Tabela e na Árvore. Cada
+      // visão tem a sua personalização: a da Tabela vive aqui; a da Árvore (linhas
+      // e flows, compartilhada) vive em tree-view.js (tree.columns).
       // O componente é o shared/custom-multiselect.js; aqui só ligamos os dados.
       var columnsPicker = document.getElementById('structureColumnsPicker');
       var columnsTrigger = document.getElementById('structureColumnsTrigger');
@@ -1592,6 +1596,7 @@
 
       // "Padrão" = todas as colunas, na ordem original e com larguras automáticas.
       function columnsAreDefault() {
+        if (state.view === 'tree') return tree.columns.isDefault();
         var area = state.area;
         var inOriginalOrder = orderedColumns(area).every(function (column, index) { return column === AREA_COLUMNS[area][index]; });
         return inOriginalOrder && !Object.keys(areaPrefs(area).widths).length &&
@@ -1603,6 +1608,7 @@
         label: 'Personalizar colunas',
         resetLabel: 'Restaurar padrão',
         getOptions: function () {
+          if (state.view === 'tree') return tree.columns.options();
           var set = visibleFieldSet(state.area);
           return [{ value: ACTIONS_OPTION, label: 'Ações', checked: true, locked: true }].concat(
             orderedColumns(state.area).map(function (column) {
@@ -1612,6 +1618,7 @@
         },
         isDefault: columnsAreDefault,
         onToggle: function (field, checked) {
+          if (state.view === 'tree') { tree.columns.toggle(field, checked); return; }
           var set = visibleFieldSet(state.area);
           if (checked) set.add(field);
           else set.delete(field);
@@ -1619,8 +1626,12 @@
           saveColumnPrefs();
           refreshColumns();
         },
-        onReorder: moveColumn,
+        onReorder: function (field, targetField, after) {
+          if (state.view === 'tree') tree.columns.reorder(field, targetField, after);
+          else moveColumn(field, targetField, after);
+        },
         onReset: function () {
+          if (state.view === 'tree') { tree.columns.reset(); return; }
           delete columnPrefs[state.area];
           saveColumnPrefs();
           refreshColumns();
@@ -1632,13 +1643,15 @@
       function closeColumnsPanel() { columnsMultiselect.close(); }
 
       function syncColumnsPicker() {
-        var available = state.view === 'table';
-        columnsPicker.hidden = !available;
-        if (!available) { closeColumnsPanel(); return; }
-        var set = visibleFieldSet(state.area);
-        var columns = orderedColumns(state.area);
-        var shown = columns.filter(function (column) { return column.main || set.has(column.field); }).length + 1; // + Ações
-        columnsSummary.textContent = shown + ' de ' + (columns.length + 1) + ' colunas';
+        columnsPicker.hidden = false;
+        if (state.view === 'tree') {
+          columnsSummary.textContent = tree.columns.summary();
+        } else {
+          var set = visibleFieldSet(state.area);
+          var columns = orderedColumns(state.area);
+          var shown = columns.filter(function (column) { return column.main || set.has(column.field); }).length + 1; // + Ações
+          columnsSummary.textContent = shown + ' de ' + (columns.length + 1) + ' colunas';
+        }
         columnsMultiselect.update();
       }
 
@@ -1787,7 +1800,6 @@
       function treeEmptyMarkup() {
         var filters = [];
         if (state.search) filters.push('Busca: “' + escapeHtml(state.search) + '”');
-        if (tree.getLevel()) filters.push('Até o nível ' + tree.getLevel());
         if (!state.showInactive) filters.push('Inativas ocultas');
         if (!filters.length) return emptyStateMarkup(false);
 
@@ -2096,7 +2108,6 @@
         showInactiveInput.checked = true;
         state.page = 1;
         searchInput.value = '';
-        tree.resetLevel();
         structureFilters.clear();
         render();
       });

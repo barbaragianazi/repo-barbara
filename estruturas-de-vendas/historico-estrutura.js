@@ -30,10 +30,10 @@
 
   // Ordem das colunas: o que mudou primeiro; quem e quando por último.
   var COLUMNS = [
-    { field: 'tipo', label: 'Evento', type: 'list', width: '12%' },
-    { field: 'campo', label: 'Campo', type: 'list', width: '15%' },
+    { field: 'tipo', label: 'Evento', type: 'list', width: '15%' },
+    { field: 'campo', label: 'Campo', type: 'list', width: '13%' },
     { field: 'anterior', label: 'Valor anterior', type: 'text', width: '21%' },
-    { field: 'novo', label: 'Valor novo', type: 'text', width: '24%' },
+    { field: 'novo', label: 'Valor novo', type: 'text', width: '23%' },
     { field: 'usuario', label: 'Usuário', type: 'list', width: '14%' },
     { field: 'data', label: 'Data e hora', type: 'date', width: '14%' }
   ];

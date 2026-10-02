@@ -31,6 +31,8 @@
     var ICON_GRIP = '<i class="fa-solid fa-grip-vertical cs-columns-option__grip" aria-hidden="true"></i>';
     var ICON_LOCK = '<i class="fa-solid fa-lock cs-columns-option__grip" aria-hidden="true"></i>';
 
+    var ICON_RESET = '<i class="fa-solid fa-arrow-rotate-left cs-columns-reset__icon" aria-hidden="true"></i>';
+
     function escapeHtml(value) {
         return String(value).replace(/[&<>"']/g, function (char) {
             return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
@@ -113,7 +115,7 @@
             panel.setAttribute('role', 'dialog');
             panel.setAttribute('aria-label', config.label || '');
             panel.innerHTML = '<ul class="cs-columns-list" role="listbox" aria-multiselectable="true"></ul>' +
-                (config.resetLabel ? '<div class="cs-columns-footer"><button type="button" class="cs-columns-reset" data-multi-reset>' + escapeHtml(config.resetLabel) + '</button></div>' : '');
+                (config.resetLabel ? '<div class="cs-columns-footer"><button type="button" class="cs-columns-reset" data-multi-reset>' + ICON_RESET + '<span>' + escapeHtml(config.resetLabel) + '</span></button></div>' : '');
             document.body.appendChild(panel);
             trigger.setAttribute('aria-expanded', 'true');
             wrapper.classList.add('is-open');

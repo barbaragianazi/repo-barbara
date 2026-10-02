@@ -145,7 +145,7 @@
                       <input type="text" id="novaSap">
                     </div>
 
-                    <div class="structure-field" data-field-for="vendas tecnica marketing">
+                    <div class="structure-field structure-field--full" data-field-for="vendas tecnica marketing">
                       <label for="respPickerInput">Responsável atual</label>
                       <div class="structure-select-row structure-combobox" id="respPickerCombobox">
                         <input type="text" id="respPickerInput" class="structure-parent-picker-trigger"
@@ -163,18 +163,6 @@
                         <ul class="structure-combobox-panel" id="respPickerListbox" role="listbox"
                           aria-label="Responsáveis"></ul>
                       </div>
-                    </div>
-
-                    <div class="structure-field structure-field--span-3" data-field-for="vendas tecnica marketing">
-                      <label for="novaRespInicio">Início da vigência</label>
-                      <input type="date" id="novaRespInicio" disabled>
-                    </div>
-
-                    <div class="structure-field structure-field--span-3" data-field-for="vendas tecnica marketing">
-                      <label for="novaRespFim">Fim da vigência</label>
-                      <input type="date" id="novaRespFim" disabled aria-describedby="novaRespFimError">
-                      <span class="structure-field__error" id="novaRespFimError">A data de fim não pode ser antes da
-                        data de início.</span>
                     </div>
 
 
@@ -1110,11 +1098,8 @@
       var respOpenBtn = document.getElementById('respPickerOpen');
       var respCombobox = document.getElementById('respPickerCombobox');
       var respListbox = document.getElementById('respPickerListbox');
-      var respInicio = document.getElementById('novaRespInicio');
-      var respFim = document.getElementById('novaRespFim');
-      var respFimWrap = respFim.closest('.structure-field');
       var selectedResp = null; // { nome }
-      var respBaseline = { nome: '', inicio: '', fim: '' };
+      var respBaseline = { nome: '' };
       var respOptions = [];
       var respActiveIndex = -1;
 
@@ -1150,25 +1135,6 @@
 
       function normalizeText(text) {
         return String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-      }
-
-      function setRespFimError(hasError) {
-        respFimWrap.classList.toggle('has-error', hasError);
-        if (hasError) respFim.setAttribute('aria-invalid', 'true');
-        else respFim.removeAttribute('aria-invalid');
-      }
-
-      function respRangeInvalid() {
-        return !!(respInicio.value && respFim.value && respFim.value < respInicio.value);
-      }
-
-      function syncRespDates() {
-        var has = !!selectedResp;
-        respInicio.disabled = !has;
-        respFim.disabled = !has;
-        if (!has) { respInicio.value = ''; respFim.value = ''; }
-        respFim.min = respInicio.value || '';
-        setRespFimError(false);
       }
 
       function reconcileRespCombobox() {
@@ -1215,15 +1181,8 @@
         reconcileRespCombobox();
       }
 
-      // Trocar de responsável sugere início hoje e sem data fim (ambos editáveis).
       function setSelectedResp(nome) {
-        var changed = (selectedResp ? selectedResp.nome : '') !== nome;
         selectedResp = nome ? { nome: nome } : null;
-        if (changed) {
-          respInicio.value = selectedResp ? todayIso() : '';
-          respFim.value = '';
-        }
-        syncRespDates();
         reconcileRespCombobox();
       }
 
@@ -1281,12 +1240,6 @@
         if (respCombobox.contains(event.target)) return;
         closeRespCombobox();
       });
-      respInicio.addEventListener('change', function () {
-        respFim.min = respInicio.value || '';
-        setRespFimError(respRangeInvalid());
-      });
-      respFim.addEventListener('change', function () { setRespFimError(respRangeInvalid()); });
-
       // Histórico de responsáveis
 
       var historicoContainer = document.getElementById('responsaveisHistorico');
@@ -1427,16 +1380,6 @@
           .catch(function () { return []; })
           .then(function (base) {
             historicoRecords = mergeHistorico(base, extras);
-            var current = historicoRecords[0];
-            if (selectedResp && !respBaseline.inicio && current && current.responsavel === selectedResp.nome) {
-              respBaseline.inicio = current.dataInicio || '';
-              respBaseline.fim = current.dataFim || '';
-              if (!respInicio.value) {
-                respInicio.value = respBaseline.inicio;
-                respFim.value = respBaseline.fim;
-                syncRespDates();
-              }
-            }
             renderHistorico();
           });
       }
@@ -1447,9 +1390,7 @@
       }
 
       function respChanged() {
-        return pickCurrentResponsavel() !== respBaseline.nome ||
-          (respInicio.value || '') !== respBaseline.inicio ||
-          (respFim.value || '') !== respBaseline.fim;
+        return pickCurrentResponsavel() !== respBaseline.nome;
       }
 
       function recordResponsavelChange(structureId) {
@@ -1461,8 +1402,8 @@
         var stamp = todayIso() + 'T' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':00';
         extras[key] = [{
           responsavel: nome,
-          dataInicio: respInicio.value,
-          dataFim: respFim.value || null,
+          dataInicio: todayIso(),
+          dataFim: null,
           alteradoEm: stamp,
           alteradoPor: CURRENT_USER
         }].concat(extras[key] || []);
@@ -1494,12 +1435,7 @@
         document.getElementById('novaBairro').value = editingNode.bairro || '';
         novaLinha.value = editingNode.linhaNegocio || '';
         setSelectedResp(editingNode.responsavel || '');
-        if (selectedResp) {
-          respInicio.value = editingNode.responsavelInicio || '';
-          respFim.value = editingNode.responsavelFim || '';
-          respBaseline = { nome: selectedResp.nome, inicio: respInicio.value, fim: respFim.value };
-          syncRespDates();
-        }
+        if (selectedResp) respBaseline = { nome: selectedResp.nome };
         novaTipoPosicao.value = editingNode.tipoPosicao || '';
         novaTipoAcesso.value = editingNode.tipoAcessoList && editingNode.tipoAcessoList.length
           ? (editingNode.tipoAcessoList[0].value || editingNode.tipoAcessoList[0].label || editingNode.tipoAcessoList[0])
@@ -1598,18 +1534,6 @@
           return;
         }
 
-        if (respRangeInvalid()) {
-          setRespFimError(true);
-          showToast('error', 'A data de fim da vigência não pode ser antes da data de início.');
-          respFim.focus();
-          return;
-        }
-        if (selectedResp && respChanged() && !respInicio.value) {
-          showToast('error', 'Informe o início da vigência do responsável.');
-          respInicio.focus();
-          return;
-        }
-
         var tipoPosicao = editingNode ? (editingNode.tipoPosicao || '') : '';
         var tipoPosicaoList = [];
         var tipoAcessoList = editingNode ? (editingNode.tipoAcessoList || []) : [];
@@ -1649,9 +1573,7 @@
           estruturasTecnicaIds: currentType === 'vendas' && novaEstruturaTecnica.value ? [novaEstruturaTecnica.value] : [],
           marcas: currentType === 'vendas'
             ? serializeBrandSelections()
-            : (editingNode ? (editingNode.marcas || []) : []),
-          responsavelInicio: pickCurrentResponsavel() ? respInicio.value : '',
-          responsavelFim: pickCurrentResponsavel() ? respFim.value : ''
+            : (editingNode ? (editingNode.marcas || []) : [])
         };
         recordResponsavelChange(node.id);
         if (estruturaHistorico) estruturaHistorico.recordChanges(editingNode, editingParentId, node, node.parentId);
